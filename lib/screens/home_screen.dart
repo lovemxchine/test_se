@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../components/button_field.dart';
 import '../components/text_field.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final emailController = TextEditingController();
+  final userController = TextEditingController();
   final passwordController = TextEditingController();
+  loginWithPassword() {}
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,7 @@ class HomeScreen extends StatelessWidget {
             // alignment: AlignmentDirectional(0, -0.10),
             child: Container(
               width: 300,
-              height: 272,
+              height: 282,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -120,25 +122,25 @@ class HomeScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             RichText(
-                              text: const TextSpan(
+                              text: TextSpan(
                                 children: [
                                   TextSpan(
                                     text: "LOGIN",
-                                    style: TextStyle(
-                                      color: Color(0xff3C696F),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      fontFamily: 'Mitr',
+                                    style: GoogleFonts.mitr(
+                                      textStyle: const TextStyle(
+                                          color: Color(0xff3C696F),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ),
-                                  TextSpan(text: " "),
+                                  const TextSpan(text: "  "),
                                   TextSpan(
                                     text: "เข้าสู่ระบบ",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      fontFamily: 'Mitr',
+                                    style: GoogleFonts.mitr(
+                                      textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   )
                                 ],
@@ -149,18 +151,60 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Form(
-                      child: MyTextField(
-                        hintText: "Enter your Username",
-                        controller: emailController,
-                        obscureText: false,
-                        labelText: "Username",
+                      child: Column(
+                        children: [
+                          MyTextField(
+                            hintText: "Enter your Username",
+                            controller: userController,
+                            obscureText: false,
+                            labelText: "Username",
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          MyTextField(
+                            hintText: "Enter your Password",
+                            controller: passwordController,
+                            obscureText: false,
+                            labelText: "Password",
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          MyButton(onTap: loginWithPassword, hinText: 'LogIn'),
+                        ],
                       ),
                     )
                   ],
                 ),
               ),
             ),
-          )
+          ),
+          //text สมัครรหัส
+          //text สมัครรหัส
+          Positioned(
+            top: 540,
+            left: 0,
+            right: 0,
+            child: Container(
+              alignment: Alignment.center,
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.pop(context);
+                },
+                child: Text(
+                  'Register',
+                  style: GoogleFonts.mitr(
+                    textStyle: const TextStyle(
+                      color: Color.fromARGB(255, 49, 93, 101),
+                      decoration: TextDecoration.underline,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

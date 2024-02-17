@@ -16,7 +16,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
@@ -25,7 +25,7 @@ class MyTextField extends StatelessWidget {
           hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           contentPadding:
-              const EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: Colors.grey),
