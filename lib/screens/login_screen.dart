@@ -68,7 +68,7 @@ class Login extends StatelessWidget {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: "Logout",
+                                    text: "LogIn",
                                     style: GoogleFonts.mitr(
                                       textStyle: const TextStyle(
                                           color: Color(0xff3C696F),
