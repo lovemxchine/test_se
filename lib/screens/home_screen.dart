@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,11 +13,11 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         children: [
           Align(
-            alignment: AlignmentDirectional(0, -1.34),
+            alignment: const AlignmentDirectional(0, -1.34),
             child: Container(
               width: 415,
               height: 393,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Color(0xff396870),
@@ -27,10 +28,10 @@ class HomeScreen extends StatelessWidget {
                   end: AlignmentDirectional(0, 1),
                 ),
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(56),
-                  bottomRight: Radius.circular(56),
-                  topLeft: Radius.circular(0),
-                  topRight: Radius.circular(0),
+                  bottomLeft: Radius.circular(48),
+                  bottomRight: Radius.circular(48),
+                  // topLeft: Radius.circular(0),
+                  // topRight: Radius.circular(0),
                 ),
               ),
             ),
@@ -71,7 +72,7 @@ class HomeScreen extends StatelessWidget {
             child: Container(
               width: 300,
               height: 272,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -87,35 +88,43 @@ class HomeScreen extends StatelessWidget {
                   topRight: Radius.circular(24),
                 ),
               ),
-              alignment: AlignmentDirectional(0, 0),
+              alignment: const AlignmentDirectional(0, 0),
               child: Align(
-                alignment: AlignmentDirectional(0, 0),
+                alignment: const AlignmentDirectional(0, 0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0, 0),
+                      alignment: const AlignmentDirectional(0, 0),
                       child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Row(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              'LOGIN',
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                fontFamily: 'Mitr',
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              'เข้าสู่ระบบ',
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                fontFamily: 'Mitr',
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
+                            RichText(
+                              text: const TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "LOGIN",
+                                    style: TextStyle(
+                                      color: Color(0xff3C696F),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      fontFamily: 'Mitr',
+                                    ),
+                                  ),
+                                  TextSpan(text: " "),
+                                  TextSpan(
+                                    text: "เข้าสู่ระบบ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      fontFamily: 'Mitr',
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                           ],
@@ -127,144 +136,8 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           )
-
-          // Align(
-          //   alignment: AlignmentDirectional(0, -0.09),
-          //   child: Container(
-          //     width: 300,
-          //     height: 272,
-          //     decoration: BoxDecoration(
-          //       color: Colors.white,
-          //       boxShadow: [
-          //         BoxShadow(
-          //           blurRadius: 10,
-          //           color: Color(0xA2000000),
-          //           offset: Offset(2, 2),
-          //         )
-          //       ],
-          //       borderRadius: BorderRadius.circular(16),
-          //     ),
-          //     alignment: AlignmentDirectional(0, 0),
-          //     child: Align(
-          //       alignment: AlignmentDirectional(0, 0),
-          //       child: Column(
-          //         mainAxisSize: MainAxisSize.max,
-          //         crossAxisAlignment: CrossAxisAlignment.stretch,
-          //         children: [
-          //           Align(
-          //             alignment: AlignmentDirectional(0, 0),
-          //             child: Padding(
-          //               padding: EdgeInsets.all(20),
-          //               child: Text('LOGIN เข้าสู่ระบบ',
-          //                   textAlign: TextAlign.end, style: TextStyle()),
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
-      // Padding(
-      //   padding: const EdgeInsets.fromLTRB(10, 50, 10, 20),
-      //   child: SingleChildScrollView(
-      //     child:
-      //     Stack(children: [
-      //   Align(
-      //     alignment: AlignmentDirectional(0, -0.9),
-      //     child: Container(
-      //       width: 311,
-      //       height: 266,
-      //       decoration: BoxDecoration(
-      //         gradient: LinearGradient(
-      //           colors: [
-      //             Color(0xff396870),
-      //             Color(0xff17333C),
-      //           ],
-      //           stops: [0, 1],
-      //           begin: AlignmentDirectional(0, -1),
-      //           end: AlignmentDirectional(0, 1),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      //   Align(
-      //     alignment: AlignmentDirectional(0, 0),
-      //     child: Container(
-      //       child: Column(
-      //         // mainAxisSize: MainAxisSize.max,
-      //         crossAxisAlignment: CrossAxisAlignment.stretch,
-      //         children: [
-      //           SizedBox(
-      //             height: 60,
-      //             width: 200,
-      //             child: ElevatedButton.icon(
-      //               onPressed: () {},
-      //               icon: Icon(Icons.home),
-      //               label: Text(
-      //                 'test',
-      //                 style: TextStyle(fontSize: 20),
-      //               ),
-      //             ),
-      //           ),
-      //           Align(
-      //             alignment: AlignmentDirectional(0, 0),
-      //             child: Padding(
-      //               padding: EdgeInsets.all(20),
-      //               child: Text(
-      //                 'LOGIN เข้าสู่ระบบ',
-      //                 textAlign: TextAlign.end,
-      //                 // style: TextStyle()
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      //   // Align(
-      //   //   alignment: AlignmentDirectional(0, 0),
-      //   //   child: Row(
-      //   //     mainAxisAlignment: MainAxisAlignment.center,
-      //   //     children: [
-      //   //       Container(
-      //   //         child: Column(
-      //   //           children: [
-      //   //             SizedBox(
-      //   //               height: 60,
-      //   //               width: 200,
-      //   //               child: ElevatedButton.icon(
-      //   //                 onPressed: () {},
-      //   //                 icon: Icon(Icons.home),
-      //   //                 label: Text(
-      //   //                   'test',
-      //   //                   style: TextStyle(fontSize: 20),
-      //   //                 ),
-      //   //               ),
-      //   //             ),
-      //   //             SizedBox(
-      //   //               height: 20,
-      //   //             ),
-      //   //             SizedBox(
-      //   //               height: 60,
-      //   //               width: 200,
-      //   //               child: ElevatedButton.icon(
-      //   //                 onPressed: () {},
-      //   //                 icon: Icon(Icons.home),
-      //   //                 label: Text(
-      //   //                   'test',
-      //   //                   style: TextStyle(fontSize: 20),
-      //   //                 ),
-      //   //               ),
-      //   //             ),
-      //   //           ],
-      //   //         ),
-      //   //       ),
-      //   //     ],
-      //   //   ),
-      //   // ),
-      // ]),
     );
     // ),
     // );
