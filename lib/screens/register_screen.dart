@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_se/screens/login_screen.dart';
 
 import '../components/button_field.dart';
 import '../components/text_field.dart';
 import '../widgets/logo_image.dart';
 import '../widgets/logo_zone.dart';
-import 'register_screen.dart';
 
-class Login extends StatelessWidget {
-  Login({super.key});
+class Register extends StatelessWidget {
+  Register({super.key});
   final userController = TextEditingController();
   final passwordController = TextEditingController();
-  loginWithPassword() {}
+  final confirmPasswordController = TextEditingController();
+
+  registerWithPassword() {}
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class Login extends StatelessWidget {
             // alignment: AlignmentDirectional(0, -0.10),
             child: Container(
               width: 300,
-              height: 282,
+              height: 340,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -68,7 +70,7 @@ class Login extends StatelessWidget {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: "LogIn",
+                                    text: "Register",
                                     style: GoogleFonts.mitr(
                                       textStyle: const TextStyle(
                                           color: Color(0xff3C696F),
@@ -78,7 +80,7 @@ class Login extends StatelessWidget {
                                   ),
                                   const TextSpan(text: "  "),
                                   TextSpan(
-                                    text: "เข้าสู่ระบบ",
+                                    text: "สมัครใช้งาน",
                                     style: GoogleFonts.mitr(
                                       textStyle: const TextStyle(
                                           color: Colors.black,
@@ -112,9 +114,19 @@ class Login extends StatelessWidget {
                             labelText: "Password",
                           ),
                           const SizedBox(
-                            height: 24,
+                            height: 20,
                           ),
-                          MyButton(onTap: loginWithPassword, hinText: 'LogIn'),
+                          MyTextField(
+                            hintText: "Confirm your Password",
+                            controller: confirmPasswordController,
+                            obscureText: false,
+                            labelText: "Confirm Password",
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          MyButton(
+                              onTap: registerWithPassword, hinText: 'Register')
                         ],
                       ),
                     )
@@ -125,7 +137,7 @@ class Login extends StatelessWidget {
           ),
           //text สมัครรหัส
           Positioned(
-            top: 540,
+            top: 600,
             left: 0,
             right: 0,
             child: Container(
@@ -134,11 +146,11 @@ class Login extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Register()),
+                    MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
                 child: Text(
-                  'Register',
+                  'Login',
                   style: GoogleFonts.mitr(
                     textStyle: const TextStyle(
                       color: Color.fromARGB(255, 49, 93, 101),
