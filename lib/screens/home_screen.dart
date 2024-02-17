@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../components/text_field.dart';
+
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +16,12 @@ class HomeScreen extends StatelessWidget {
       // ),
       body: Stack(
         children: [
-          Align(
-            alignment: const AlignmentDirectional(0, -1.34),
+          //โซน logo , logo zone
+          Positioned(
+            top: -50,
+            left: -5,
+            right: -5,
+            // alignment: const AlignmentDirectional(0, -1.34),
             child: Container(
               width: 415,
               height: 393,
@@ -24,8 +32,8 @@ class HomeScreen extends StatelessWidget {
                     Color(0xff17333C),
                   ],
                   stops: [0, 1],
-                  begin: AlignmentDirectional(0, -1),
-                  end: AlignmentDirectional(0, 1),
+                  begin: AlignmentDirectional(0, -0.8),
+                  end: AlignmentDirectional(0, 1.5),
                 ),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(48),
@@ -36,39 +44,48 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: AlignmentDirectional(0, -0.8),
-            child: Container(
-              width: 110,
-              height: 110,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 10,
-                    color: Color(0x33000000),
-                    offset: Offset(0, 2),
-                  )
-                ],
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    width: 300,
-                    height: 200,
-                    fit: BoxFit.cover,
-                    alignment: Alignment(0, 0),
+          // รูป logo
+          Positioned(
+            top: 80,
+            left: 0,
+            right: 0,
+            child: Align(
+              child: Container(
+                width: 110,
+                height: 110,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 10,
+                      color: Color(0x33000000),
+                      offset: Offset(0, 2),
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Align(
+                  alignment: const AlignmentDirectional(0, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      width: 300,
+                      height: 200,
+                      fit: BoxFit.cover,
+                      alignment: const Alignment(0, 0),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-          Align(
-            alignment: AlignmentDirectional(0, -0.10),
+          //โซน login
+          Positioned(
+            top: 250,
+            left: 50,
+            right: 50,
+            // alignment: AlignmentDirectional(0, -0.10),
             child: Container(
               width: 300,
               height: 272,
@@ -131,6 +148,14 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Form(
+                      child: MyTextField(
+                        hintText: "Enter your Username",
+                        controller: emailController,
+                        obscureText: false,
+                        labelText: "Username",
+                      ),
+                    )
                   ],
                 ),
               ),
