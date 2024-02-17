@@ -22,9 +22,9 @@ class Login extends StatelessWidget {
       body: Stack(
         children: [
           //โซน logo , logo zone
-          LogoZone(),
+          const LogoZone(),
           // รูป logo
-          LogoImage(),
+          const LogoImage(),
           //โซน login
           Positioned(
             top: 250,
@@ -68,7 +68,7 @@ class Login extends StatelessWidget {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: "LogIn",
+                                    text: "Logout",
                                     style: GoogleFonts.mitr(
                                       textStyle: const TextStyle(
                                           color: Color(0xff3C696F),
