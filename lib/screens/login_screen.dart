@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../components/button_field.dart';
 import '../components/text_field.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class Login extends StatelessWidget {
+  Login({super.key});
   final userController = TextEditingController();
   final passwordController = TextEditingController();
   loginWithPassword() {}
