@@ -24,9 +24,9 @@ class Register extends StatelessWidget {
       body: Stack(
         children: [
           //โซน logo , logo zone
-          LogoZone(),
+          const LogoZone(),
           // รูป logo
-          LogoImage(),
+          const LogoImage(),
           //โซน login
           Positioned(
             top: 250,
