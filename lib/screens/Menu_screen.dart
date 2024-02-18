@@ -32,9 +32,12 @@ class Menu extends StatelessWidget {
           children: [
             Positioned(
               top: 5,
+              right: 0,
+              left: 0,
+              bottom: 0,
               child: Container(
                 width: 412,
-                height: 800,
+                height: 1000,
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 231, 227, 227),
                   borderRadius: BorderRadius.only(
@@ -42,8 +45,11 @@ class Menu extends StatelessWidget {
                     topRight: Radius.circular(20),
                   ),
                 ),
-                child: const Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.max,
+                  children: [Container(
+                  )
+                  ],
                 ),
               ),
             ),
