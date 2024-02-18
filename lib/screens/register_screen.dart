@@ -121,8 +121,7 @@ class Register extends StatelessWidget {
                             height: 20,
                           ),
                           MyButton(
-                              onTap: registerWithPassword,
-                              hinText: 'Re21gister')
+                              onTap: registerWithPassword, hinText: 'Register')
                         ],
                       ),
                     )
