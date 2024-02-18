@@ -43,12 +43,7 @@ class Login extends StatelessWidget {
                     offset: Offset(2, 2),
                   )
                 ],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(24)),
               ),
               alignment: const AlignmentDirectional(0, 0),
               child: Align(
