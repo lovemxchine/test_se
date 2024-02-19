@@ -16,7 +16,7 @@ class Login extends StatelessWidget {
   void loginWithPassword(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Menu()),
+      MaterialPageRoute(builder: (context) => Menu()),
     );
   }
 

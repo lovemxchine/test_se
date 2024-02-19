@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:test_se/screens/login_screen.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends StatefulWidget {
   const Menu({super.key});
 
-  void backToLogin(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Login()),
-    );
-  }
+  @override
+  State<Menu> createState() => _MenuState();
+}
 
+List<String> items = [
+  "หมู",
+  "เนื้อ",
+  "ทะเล",
+  "ผัก",
+  "เส้น",
+  "ไอศรีม",
+  "ลูกชิ้น",
+  "อื่นๆ",
+];
+int current = 0;
+
+class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff3C696F),
+      backgroundColor: const Color.fromARGB(255, 217, 216, 216),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
@@ -26,41 +35,82 @@ class Menu extends StatelessWidget {
               size: 30,
               color: Colors.white,
             ),
-            onPressed: () => {
-              backToLogin(context),
-            },
+            onPressed: () {},
           ),
         ),
         backgroundColor: const Color(0xff3C696F),
         title: const Text(
-          "My user",
+          "K plus",
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Center(
-        child: Stack(
+      body: Container(
+        margin: const EdgeInsets.all(4),
+        width: double.infinity,
+        height: double.infinity,
+        child: Column(
           children: [
-            Positioned(
-              top: 5,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              child: Container(
-                width: 412,
-                height: 1000,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 231, 227, 227),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [Container()],
-                ),
+            SizedBox(
+              height: 70,
+              width: double.infinity,
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: items.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            current = index;
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          margin: const EdgeInsets.all(4),
+                          width: 80,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              color: current == index
+                                  ? Color.fromARGB(255, 236, 246, 241)
+                                  : Colors.white,
+                              borderRadius: current == index
+                                  ? BorderRadius.circular(15)
+                                  : BorderRadius.circular(15),
+                              border: current == index
+                                  ? Border.all(
+                                      color: Color.fromARGB(255, 106, 164, 141),
+                                      width: 2)
+                                  : null),
+                          child: Center(
+                            child: Text(
+                              items[index],
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: current == index
+                                      ? Color.fromARGB(255, 45, 116, 83)
+                                      : Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: current==index,
+                          child: Container(
+                        width: 5,
+                        height: 5,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color.fromARGB(255, 106, 164, 141)),
+                      ))
+                    ],
+                    //เดี๋ยวเขียนใส่ข้อมูลในlistviewเพิ่ม
+                  );
+                },
               ),
-            ),
+            )
           ],
         ),
       ),
