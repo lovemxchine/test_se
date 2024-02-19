@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:test_se/screens/login_screen.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
-class Menu extends StatelessWidget {
-  const Menu({super.key});
-
-  void backToLogin(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Login()),
-    );
-  }
+class OrderList extends StatelessWidget {
+  const OrderList({Key? key}) : super(key: key); // Corrected constructor syntax
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +12,15 @@ class Menu extends StatelessWidget {
         toolbarHeight: 90,
         leading: IconButton(
           onPressed: () {},
-          icon: IconButton(
-            icon: const Icon(
-              Icons.menu,
-              size: 30,
-              color: Colors.white,
-            ),
-            onPressed: () => {
-              backToLogin(context),
-            },
+          icon: const Icon(
+            Icons.menu,
+            size: 30,
+            color: Colors.white,
           ),
         ),
         backgroundColor: const Color(0xff3C696F),
         title: const Text(
-          "My user",
+          "My Order List",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -57,7 +44,9 @@ class Menu extends StatelessWidget {
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  children: [Container()],
+                  children: [
+                    // Add your widgets here
+                  ],
                 ),
               ),
             ),

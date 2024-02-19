@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'screens/login_screen.dart';
+import 'package:test_se/screens/testAll_screen.dart';
+// import 'screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,11 +20,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: GoogleFonts.mitrTextTheme(),
+        fontFamily: GoogleFonts.mitr().fontFamily,
         brightness: Brightness.light,
         primaryColor: Colors.blue,
       ),
-      home: Login(),
+      home: TestPage(),
     );
   }
 }

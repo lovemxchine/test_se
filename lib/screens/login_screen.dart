@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:test_se/screens/menu_screen.dart';
+import 'package:test_se/screens/Menu_screen.dart';
+
 import '../components/button_field.dart';
 import '../components/text_field.dart';
 import '../widgets/logo_image.dart';
@@ -11,6 +12,7 @@ class Login extends StatelessWidget {
   Login({super.key});
   final userController = TextEditingController();
   final passwordController = TextEditingController();
+
   void loginWithPassword(BuildContext context) {
     Navigator.push(
       context,
@@ -114,7 +116,9 @@ class Login extends StatelessWidget {
                           const SizedBox(
                             height: 24,
                           ),
-                          MyButton(onTap: () => loginWithPassword(context), hinText: 'LogIn'),
+                          MyButton(
+                              onTap: () => loginWithPassword(context),
+                              hinText: 'LogIn'),
                         ],
                       ),
                     )
@@ -138,7 +142,7 @@ class Login extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Register',
+                  'สมัครรหัสสมาชิก',
                   style: GoogleFonts.mitr(
                     textStyle: const TextStyle(
                       color: Color.fromARGB(255, 49, 93, 101),
