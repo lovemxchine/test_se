@@ -9,21 +9,21 @@ class Menu extends StatefulWidget {
 }
 
 List<String> items = [
-  "ควย1",
-  "kuy2",
-  "kuy4",
-  "kuy5",
-  "kuy6",
-  "kuy7",
-  "kuy8",
-  "kuy9",
-  "kuy10",
-  "kuy11",
-  "kuy12",
-  "kuy13",
-  "kuy14",
-  "kuy15",
-  "kuy16",
+  "เนื้อสัตว์1",
+  "เนื้อสัตว์1",
+  "เนื้อสัตว์1",
+  "เนื้อสัตว์1",
+  "เนื้อสัตว์1",
+  "ผัก1",
+  "ผัก1",
+  "ผัก1",
+  "ผัก1",
+  "ผัก1",
+  "อื่นๆ1",
+  "อื่นๆ1",
+  "อื่นๆ1",
+  "อื่นๆ1",
+  "อื่นๆ1",
 ];
 int current = 0;
 
@@ -31,7 +31,7 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         appBar: AppBar(
           toolbarHeight: 90,
           leading: IconButton(
@@ -47,12 +47,12 @@ class _MenuState extends State<Menu> {
           ),
           backgroundColor: const Color(0xff3C696F),
           title: const Text(
-            "K plus",
+            "Menu",
             style: TextStyle(color: Colors.white),
           ),
         ),
         body: DefaultTabController(
-            length: 3,
+          length: 3,
             child: Column(
               children: [
                 Material(
@@ -138,7 +138,7 @@ class _MenuState extends State<Menu> {
                   child: TabBarView(
                     children: [
                       ListView.separated(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         itemCount: items.length,
                         separatorBuilder: (BuildContext context, index) =>
                             const Divider(),
@@ -170,7 +170,7 @@ class _MenuState extends State<Menu> {
                         },
                       ),
                       ListView.separated(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         itemCount: items.length,
                         separatorBuilder: (BuildContext context, index) =>
                             const Divider(),
@@ -202,7 +202,7 @@ class _MenuState extends State<Menu> {
                         },
                       ),
                       ListView.separated(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         itemCount: items.length,
                         separatorBuilder: (BuildContext context, index) =>
                             const Divider(),
@@ -235,8 +235,10 @@ class _MenuState extends State<Menu> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
-            )));
+            ),
+        ), 
+    );
   }
 }
