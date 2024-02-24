@@ -8,3 +8,4 @@ const Color textColorSuccess = Color(0xFF436850);
 const Color textColorInfo = Color(0xFF0B60B0);
 const Color textColorDanger = Color(0xFFCD1818);
 const Color textColorWhite = Color(0xFFFFFFFF);
+const Color backgroundMain = Color(0xff3C696F);

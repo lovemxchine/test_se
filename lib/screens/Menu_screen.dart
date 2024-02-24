@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_se/screens/testAll_screen.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -35,17 +36,33 @@ class _MenuState extends State<Menu> {
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
-          onPressed: () {},
-          icon: IconButton(
-            icon: const Icon(
-              Icons.menu,
-              size: 30,
-              color: Colors.white,
-            ),
-            onPressed: () {},
+          padding: EdgeInsets.only(left: 10),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TestPage()),
+            );
+          },
+          icon: const Icon(
+            Icons.menu,
+            size: 30,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: const Color(0xff3C696F),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xff396870),
+                Color(0xff17333C)
+              ], // Adjust colors as needed
+              stops: [0, 1],
+              begin: AlignmentDirectional(0, -0.8),
+              end: AlignmentDirectional(0, 1.5),
+              tileMode: TileMode.clamp,
+            ),
+          ),
+        ),
         title: const Text(
           "Menu",
           style: TextStyle(color: Colors.white),
