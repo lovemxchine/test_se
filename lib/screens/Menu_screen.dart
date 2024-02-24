@@ -61,22 +61,25 @@ class _MenuState extends State<Menu> {
                 color: Colors.white,
                 child: TabBar(
                   physics: const ClampingScrollPhysics(),
-                  padding: const EdgeInsets.all(10),
-                  unselectedLabelColor: const Color.fromARGB(255, 69, 141, 94),
+                  padding: const EdgeInsets.only(top: 0),
+                  unselectedLabelColor: const Color(0xff3C696F),
                   indicatorSize: TabBarIndicatorSize.label,
-                  // indicator: BoxDecoration(
-                  //     borderRadius: BorderRadius.circular(30),
-                  //     color: const Color.fromARGB(255, 69, 141, 94)),
+                  indicator: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Color(0xff3C696F),
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
                   tabs: [
                     Tab(
                       child: Container(
-                        // padding: EdgeInsets.all(20),
                         height: 35,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(
-                                color: const Color.fromARGB(255, 69, 141, 94),
-                                width: 1)),
+                                color: const Color(0xff3C696F), width: 1)),
                         child: Align(
                             alignment: Alignment.center,
                             child: Text(
@@ -94,8 +97,7 @@ class _MenuState extends State<Menu> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(
-                                color: const Color.fromARGB(255, 69, 141, 94),
-                                width: 1)),
+                                color: const Color(0xff3C696F), width: 1)),
                         child: Align(
                             alignment: Alignment.center,
                             child: Text(
@@ -113,8 +115,7 @@ class _MenuState extends State<Menu> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(
-                                color: const Color.fromARGB(255, 69, 141, 94),
-                                width: 1)),
+                                color: const Color(0xff3C696F), width: 1)),
                         child: Align(
                             alignment: Alignment.center,
                             child: Text(

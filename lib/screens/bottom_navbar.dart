@@ -24,7 +24,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     return Scaffold(
       body: Center(child: body[_currentIndex]),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: backgroundColor.withOpacity(0.5),
+        backgroundColor: const Color(0xff3C696F),
         fixedColor: textColorPrimary,
         currentIndex: _currentIndex,
         onTap: (int newIndex) {
