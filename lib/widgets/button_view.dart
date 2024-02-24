@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyButton extends StatelessWidget {
-  const MyButton({
+class MyBut extends StatelessWidget {
+  const MyBut({
     super.key,
     required this.onTap,
     required this.hinText,
@@ -16,19 +16,21 @@ class MyButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-        margin: const EdgeInsets.symmetric(horizontal: 25.0),
+        padding: const EdgeInsets.all(10.0),
+        margin: const EdgeInsets.symmetric(
+          horizontal: 15.0,
+        ),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 79, 248, 214),
-          borderRadius: BorderRadius.circular(8.0),
+          color: Color(0xff396870),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         child: Center(
           child: Text(
             hinText,
             style: GoogleFonts.poppins(
               textStyle: Theme.of(context).textTheme.titleLarge,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
+              fontSize: 15,
+              fontWeight: FontWeight.w300,
               color: Colors.white,
             ),
           ),
