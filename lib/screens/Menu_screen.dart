@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/screens/testAll_screen.dart';
 
+import '../widgets/drawer_list.dart';
+
 class Menu extends StatefulWidget {
-  const Menu({super.key});
+  const Menu({Key? key}) : super(key: key);
 
   @override
   State<Menu> createState() => _MenuState();
@@ -26,25 +28,26 @@ List<String> items = [
   "อื่นๆ1",
   "อื่นๆ1",
 ];
-int current = 0;
 
 class _MenuState extends State<Menu> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      key: scaffoldKey,
+      drawer: DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
           padding: EdgeInsets.only(left: 10),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TestPage()),
-            );
+            scaffoldKey.currentState?.openDrawer();
           },
           icon: const Icon(
-            Icons.menu,
+            Icons.arrow_back,
             size: 30,
             color: Colors.white,
           ),
@@ -52,10 +55,7 @@ class _MenuState extends State<Menu> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xff396870),
-                Color(0xff17333C)
-              ], // Adjust colors as needed
+              colors: [Color(0xff396870), Color(0xff17333C)],
               stops: [0, 1],
               begin: AlignmentDirectional(0, -0.8),
               end: AlignmentDirectional(0, 1.5),
