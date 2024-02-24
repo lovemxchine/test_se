@@ -64,11 +64,11 @@ class _MenuState extends State<Menu> {
                       padding: const EdgeInsets.only(
                           top: 10, bottom: 10, right: 10, left: 10),
                       unselectedLabelColor:
-                          const Color.fromARGB(255, 69, 141, 94),
+                          const  Color(0xff3C696F),
                       indicatorSize: TabBarIndicatorSize.label,
                       indicator: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: const Color.fromARGB(255, 69, 141, 94)),
+                          color: const Color(0xff3C696F)),
                       tabs: [
                         Tab(
                           child: Container(
@@ -77,7 +77,7 @@ class _MenuState extends State<Menu> {
                                 borderRadius: BorderRadius.circular(30),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 69, 141, 94),
+                                        const Color(0xff3C696F),
                                     width: 1)),
                             child: Align(
                                 alignment: Alignment.center,
@@ -97,7 +97,7 @@ class _MenuState extends State<Menu> {
                                 borderRadius: BorderRadius.circular(30),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 69, 141, 94),
+                                        const Color(0xff3C696F),
                                     width: 1)),
                             child: Align(
                                 alignment: Alignment.center,
@@ -117,7 +117,7 @@ class _MenuState extends State<Menu> {
                                 borderRadius: BorderRadius.circular(30),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 69, 141, 94),
+                                        const Color(0xff3C696F),
                                     width: 1)),
                             child: Align(
                                 alignment: Alignment.center,
