@@ -47,7 +47,7 @@ class _StockScreenState extends State<StockScreen> {
         ),
         title: const Text(
           "Order",
-          // style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: ItemCount(
