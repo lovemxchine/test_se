@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         primaryColor: Colors.blue,
       ),
-      home: const BottomNavBarScreen(),
+      home: const TestPage(),
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:test_se/screens/menu_screen.dart';
 
 import '../components/button_field.dart';
 import '../components/text_field.dart';
 import '../widgets/logo_image.dart';
 import '../widgets/logo_zone.dart';
+import 'bottom_navbar.dart';
 import 'register_screen.dart';
 
 class Login extends StatelessWidget {
@@ -16,7 +16,7 @@ class Login extends StatelessWidget {
   void loginWithPassword(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Menu()),
+      MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
     );
   }
 

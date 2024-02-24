@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:test_se/screens/login_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
 import 'package:test_se/screens/register_screen.dart';
-import 'package:test_se/screens/menu_screen.dart';
 
 import '../components/button_field.dart';
+import 'bottom_navbar.dart';
 
 class TestPage extends StatelessWidget {
   const TestPage({super.key});
@@ -52,27 +52,11 @@ class TestPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Menu()),
+                MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
               );
             },
             child: const Text(
               'Menu',
-              style: TextStyle(
-                  fontSize: 20,
-                  decoration: TextDecoration.none,
-                  color: Colors.black),
-            ),
-          ),
-          const SizedBox(height: 20),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OrderList()),
-              );
-            },
-            child: const Text(
-              'OrderList',
               style: TextStyle(
                   fontSize: 20,
                   decoration: TextDecoration.none,
