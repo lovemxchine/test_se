@@ -28,7 +28,7 @@ class DrawerList extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.edit_document),
-            title: Text('Edit Menu'),
+            title: Text('เรียกพนักงาน'),
             onTap: () => {
               Navigator.push(
                 context,

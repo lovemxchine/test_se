@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test_se/screens/login_screen.dart';
-import 'package:test_se/screens/order_list_screen.dart';
 import 'package:test_se/screens/register_screen.dart';
 import 'package:test_se/screens/stock_screen.dart';
 
-import '../components/button_field.dart';
 import 'bottom_navbar.dart';
 
 class TestPage extends StatelessWidget {

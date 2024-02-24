@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'button_view.dart';
 
-class ItemsCard extends StatelessWidget {
-  const ItemsCard({super.key});
+class MenuCard extends StatelessWidget {
+  const MenuCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +36,12 @@ class ItemsCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 5,),
+                const SizedBox(height: 10,),
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: const Text(
-                    "โปรโมชั่นเมนูต่างๆ",
+                    "รายการอาหาร",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -50,11 +50,11 @@ class ItemsCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: const Text(
-                    "อธิบายรายละเอียดโปรโมชั่นเกี่ยวกับสินค้า",
+                    "500฿",
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 15,
                       color: Colors.black,
                       fontWeight: FontWeight.normal,
                     ),
@@ -66,7 +66,7 @@ class ItemsCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MyBut(onTap: () {}, hinText: "ดูรายละเอียด"),
+                    MyBut(onTap: () {}, hinText: "เพิ่มรายการ",),
                   ],
                 )
               ],

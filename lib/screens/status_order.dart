@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import '../widgets/drawer_list.dart';
-import '../widgets/menu_card.dart';
 
-class Menu extends StatefulWidget {
-  const Menu({Key? key}) : super(key: key);
+import '../widgets/drawer_list.dart';
+
+class Status extends StatefulWidget {
+  const Status({super.key});
 
   @override
-  State<Menu> createState() => _MenuState();
+  State<Status> createState() => _StatusState();
 }
 
-class _MenuState extends State<Menu> {
+class _StatusState extends State<Status> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +43,7 @@ class _MenuState extends State<Menu> {
           ),
         ),
         title: const Text(
-          "Menu",
+          "Status Order",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -54,7 +53,7 @@ class _MenuState extends State<Menu> {
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               color: Color.fromARGB(255, 240, 240, 240)),
           child: const Column(
-            children: [MenuCard()],
+            children: [],
           ),
         ),
       ]),

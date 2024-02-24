@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test_se/constant/constant.dart';
 import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
 import 'promotion_screen.dart';
+import 'status_order.dart';
 import 'stock_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
@@ -20,7 +20,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     const Menu(),
     const OrderList(),
     const Promotion(),
-    const StockScreen(),
+    const Status(),
     const StockScreen(),
   ];
   @override
@@ -29,13 +29,14 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       backgroundColor: Colors.white,
       body: Center(child: body[_currentIndex]),
       bottomNavigationBar: CurvedNavigationBar(
+        buttonBackgroundColor: Colors.amber,
         backgroundColor: Colors.white,
         color: Color.fromARGB(255, 201, 225, 221),
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),
         onTap: (int newIndex) {
           setState(() {
-           _currentIndex = newIndex;
+            _currentIndex = newIndex;
           });
         },
         items: const [
@@ -46,7 +47,6 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           Icon(
             Icons.shopping_basket,
             color: Colors.black,
-
           ),
           Icon(
             Icons.celebration,
@@ -60,11 +60,6 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             Icons.settings,
             color: Colors.black,
           ),
-          //  Icon(Icons.fastfood), label: 'Menu'),
-          // Icon(Icons.shopping_basket), label: 'Order'),
-          // 
-          // BottomNavigationBarItem(
-          //     icon: Icon(Icons.celebration), label: 'Stock'),
         ],
       ),
     );

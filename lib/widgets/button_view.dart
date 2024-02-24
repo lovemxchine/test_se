@@ -21,7 +21,7 @@ class MyBut extends StatelessWidget {
           horizontal: 15.0,
         ),
         decoration: BoxDecoration(
-          color: Color(0xff396870),
+          color: Color.fromARGB(255, 90, 140, 149),
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Center(

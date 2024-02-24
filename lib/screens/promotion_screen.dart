@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/drawer_list.dart';
 import '../widgets/items_card.dart';
-import 'testAll_screen.dart';
 
 class Promotion extends StatefulWidget {
   const Promotion({super.key});
@@ -10,19 +10,20 @@ class Promotion extends StatefulWidget {
 }
 
 class _PromotionState extends State<Promotion> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
+      key: scaffoldKey,
+      drawer: const DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 10),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const TestPage()),
-            );
+            scaffoldKey.currentState?.openDrawer();
           },
           icon: const Icon(
             Icons.menu,
@@ -33,10 +34,7 @@ class _PromotionState extends State<Promotion> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xff396870),
-                Color(0xff17333C)
-              ], // Adjust colors as needed
+              colors: [Color(0xff396870), Color(0xff17333C)],
               stops: [0, 1],
               begin: AlignmentDirectional(0, -0.8),
               end: AlignmentDirectional(0, 1.5),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/components/my_button.dart';
 
-import 'testAll_screen.dart';
+import '../widgets/drawer_list.dart';
+
 
 class OrderList extends StatefulWidget {
   const OrderList({super.key});
@@ -10,13 +10,6 @@ class OrderList extends StatefulWidget {
   @override
   State<OrderList> createState() => _OrderListState();
 }
-
-List<String> items = [
-  "เนื้อสัตว์1",
-  "ผัก1",
-  "อื่นๆ1",
-];
-int current = 0;
 
 // ignore: non_constant_identifier_names
 ConfirmOrder() {
@@ -31,19 +24,20 @@ ClearOrder() {
 }
 
 class _OrderListState extends State<OrderList> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      key: scaffoldKey,
+      drawer: DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
           padding: EdgeInsets.only(left: 10),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TestPage()),
-            );
+            scaffoldKey.currentState?.openDrawer();
           },
           icon: const Icon(
             Icons.menu,
@@ -54,10 +48,7 @@ class _OrderListState extends State<OrderList> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xff396870),
-                Color(0xff17333C)
-              ], // Adjust colors as needed
+              colors: [Color(0xff396870), Color(0xff17333C)],
               stops: [0, 1],
               begin: AlignmentDirectional(0, -0.8),
               end: AlignmentDirectional(0, 1.5),
