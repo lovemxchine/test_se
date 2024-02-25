@@ -29,6 +29,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       backgroundColor: Colors.white,
       body: Center(child: body[_currentIndex]),
       bottomNavigationBar: CurvedNavigationBar(
+        height: 60,
         buttonBackgroundColor: Colors.amber,
         backgroundColor: Colors.white,
         color: Color.fromARGB(255, 201, 225, 221),
