@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_se/widgets/wait_card.dart';
 
 import '../widgets/drawer_list.dart';
 
@@ -26,7 +27,7 @@ class _StatusState extends State<Status> {
             scaffoldKey.currentState?.openDrawer();
           },
           icon: const Icon(
-            Icons.menu,
+            Icons.notifications_active,
             size: 30,
             color: Colors.white,
           ),
@@ -53,7 +54,7 @@ class _StatusState extends State<Status> {
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               color: Color.fromARGB(255, 240, 240, 240)),
           child: const Column(
-            children: [],
+            children: [WaitCard()],
           ),
         ),
       ]),

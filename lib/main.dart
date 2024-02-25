@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:test_se/screens/bottom_navbar.dart';
-import 'package:test_se/screens/menu_screen.dart';
-import 'package:test_se/screens/stock_screen.dart';
-import 'package:test_se/screens/testAll_screen.dart';
+import 'package:test_se/screens/login_screen.dart';
 // import 'screens/login_screen.dart';
 
 void main() {
@@ -27,7 +24,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         primaryColor: Colors.blue,
       ),
-      home: const BottomNavBarScreen(),
+      home: Login(),
     );
   }
 }

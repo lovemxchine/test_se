@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyButOrder extends StatelessWidget {
-  const MyButOrder({
+class MyButtonMenu extends StatelessWidget {
+  const MyButtonMenu({
     super.key,
     required this.onTap,
     required this.hinText,
@@ -16,21 +16,19 @@ class MyButOrder extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 70,
-        width: 120,
-        padding: const EdgeInsets.all(10.0),
-        margin: const EdgeInsets.symmetric(horizontal: 25.0),
+        padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
-          color: Colors.blue,
+          color: const Color.fromARGB(255, 90, 140, 149),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Center(
           child: Text(
             hinText,
             style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.titleLarge,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
+              textStyle: Theme.of(context).textTheme.titleMedium,
+              fontSize: 18,
+              fontWeight: FontWeight.w300,
               color: Colors.white,
             ),
           ),

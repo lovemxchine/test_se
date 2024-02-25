@@ -31,16 +31,16 @@ class _OrderListState extends State<OrderList> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       key: scaffoldKey,
-      drawer: DrawerList(),
+      drawer: const DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
-          padding: EdgeInsets.only(left: 10),
+          padding: const EdgeInsets.only(left: 10),
           onPressed: () {
             scaffoldKey.currentState?.openDrawer();
           },
           icon: const Icon(
-            Icons.menu,
+            Icons.notifications_active,
             size: 30,
             color: Colors.white,
           ),
@@ -69,11 +69,11 @@ class _OrderListState extends State<OrderList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MyButton(onTap: ClearOrder, hinText: 'Clear'),
+                MyButOrder(onTap: ClearOrder, hinText: 'Clear'),
                 SizedBox(
                   width: 0,
                 ),
-                MyButton(onTap: ConfirmOrder, hinText: 'Confirm'),
+                MyButOrder(onTap: ConfirmOrder, hinText: 'Confirm'),
               ],
             ),
           ],

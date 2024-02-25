@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test_se/widgets/button_menu.dart';
 
+import 'button_promotion.dart';
 
-class MenuCard extends StatelessWidget {
-  const MenuCard({super.key});
+class PromotionCard extends StatelessWidget {
+  const PromotionCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +36,12 @@ class MenuCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(height: 5,),
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
-                  alignment: Alignment.center,
+                  alignment: Alignment.centerLeft,
                   child: const Text(
-                    "รายการอาหาร",
+                    "โปรโมชั่นเมนูต่างๆ",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -50,11 +50,11 @@ class MenuCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  alignment: Alignment.center,
+                  alignment: Alignment.centerLeft,
                   child: const Text(
-                    "500฿",
+                    "อธิบายรายละเอียดโปรโมชั่นเกี่ยวกับสินค้า",
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 11,
                       color: Colors.black,
                       fontWeight: FontWeight.normal,
                     ),
@@ -66,7 +66,7 @@ class MenuCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MyButtonMenu(onTap: () {}, hinText: "เพิ่มรายการ",),
+                    MyButtonPromotion(onTap: () {}, hinText: "ดูรายละเอียด"),
                   ],
                 )
               ],

@@ -27,7 +27,7 @@ class _MenuState extends State<Menu> {
             scaffoldKey.currentState?.openDrawer();
           },
           icon: const Icon(
-            Icons.menu,
+            Icons.notifications_active,
             size: 30,
             color: Colors.white,
           ),

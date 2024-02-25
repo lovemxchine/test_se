@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyBut extends StatelessWidget {
-  const MyBut({
+class MyButtonPromotion extends StatelessWidget {
+  const MyButtonPromotion({
     super.key,
     required this.onTap,
     required this.hinText,

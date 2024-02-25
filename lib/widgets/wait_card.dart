@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'button_wait.dart';
 
-import 'button_view.dart';
-
-class ItemsCard extends StatelessWidget {
-  const ItemsCard({super.key});
+class WaitCard extends StatelessWidget {
+  const WaitCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +38,9 @@ class ItemsCard extends StatelessWidget {
                 const SizedBox(height: 5,),
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: const Text(
-                    "โปรโมชั่นเมนูต่างๆ",
+                    "Order",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -50,23 +49,23 @@ class ItemsCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: const Text(
-                    "อธิบายรายละเอียดโปรโมชั่นเกี่ยวกับสินค้า",
+                    "สถานนะ : กำลังงอม",
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 13,
                       color: Colors.black,
                       fontWeight: FontWeight.normal,
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 7,
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MyBut(onTap: () {}, hinText: "ดูรายละเอียด"),
+                    MyButtonWait(onTap: () {}, hinText: "จำนวน"),
                   ],
                 )
               ],

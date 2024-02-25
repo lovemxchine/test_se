@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/drawer_list.dart';
-import '../widgets/items_card.dart';
+import '../widgets/promotion_card.dart';
 
 class Promotion extends StatefulWidget {
   const Promotion({super.key});
@@ -26,7 +26,7 @@ class _PromotionState extends State<Promotion> {
             scaffoldKey.currentState?.openDrawer();
           },
           icon: const Icon(
-            Icons.menu,
+            Icons.notifications_active,
             size: 30,
             color: Colors.white,
           ),
@@ -53,7 +53,7 @@ class _PromotionState extends State<Promotion> {
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               color: Color.fromARGB(255, 240, 240, 240)),
           child: const Column(
-            children: [ItemsCard()],
+            children: [PromotionCard()],
           ),
         ),
       ]),
