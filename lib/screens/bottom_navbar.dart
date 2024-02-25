@@ -32,7 +32,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         height: 60,
         buttonBackgroundColor: Colors.amber,
         backgroundColor: Colors.white,
-        color: Color.fromARGB(255, 201, 225, 221),
+        color: const Color.fromARGB(255, 201, 225, 221),
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),
         onTap: (int newIndex) {
