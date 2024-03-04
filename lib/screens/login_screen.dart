@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_se/auth/firebase_auth_service.dart';
 
 import '../components/button_field.dart';
 import '../components/text_field.dart';
@@ -8,17 +10,32 @@ import '../widgets/logo_zone.dart';
 import 'bottom_navbar.dart';
 import 'register_screen.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   Login({super.key});
-  final userController = TextEditingController();
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void loginWithPassword(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
-    );
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
+
+  // void loginWithPassword(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +116,10 @@ class Login extends StatelessWidget {
                       child: Column(
                         children: [
                           MyTextField(
-                            hintText: "Enter your Username",
-                            controller: userController,
+                            hintText: "Enter your Email",
+                            controller: emailController,
                             obscureText: false,
-                            labelText: "Username",
+                            labelText: "Email",
                           ),
                           const SizedBox(
                             height: 20,
@@ -110,15 +127,13 @@ class Login extends StatelessWidget {
                           MyTextField(
                             hintText: "Enter your Password",
                             controller: passwordController,
-                            obscureText: false,
+                            obscureText: true,
                             labelText: "Password",
                           ),
                           const SizedBox(
                             height: 24,
                           ),
-                          MyButton(
-                              onTap: () => loginWithPassword(context),
-                              hinText: 'LogIn'),
+                          MyButton(onTap: _signIn, hinText: 'LogIn'),
                         ],
                       ),
                     )
@@ -159,5 +174,19 @@ class Login extends StatelessWidget {
     );
     // ),
     // );
+  }
+
+  void _signIn() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      print("Login is successfully signed");
+      Navigator.pushNamed(context, "/home");
+    } else {
+      print('Some error happen');
+    }
   }
 }

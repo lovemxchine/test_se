@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_se/auth/firebase_auth_service.dart';
 import 'package:test_se/screens/login_screen.dart';
 
 import '../components/button_field.dart';
@@ -7,15 +9,29 @@ import '../components/text_field.dart';
 import '../widgets/logo_image.dart';
 import '../widgets/logo_zone.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   Register({super.key});
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
   final userController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  registerWithPassword() {}
-
   @override
+  // void dispose() {
+  //   userController.dispose();
+  //   emailController.dispose();
+  //   passwordController.dispose();
+  //   confirmPasswordController.dispose();
+  //   super.dispose();
+  // }
+
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
@@ -35,7 +51,7 @@ class Register extends StatelessWidget {
             // alignment: AlignmentDirectional(0, -0.10),
             child: Container(
               width: 300,
-              height: 340,
+              height: 400,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -94,6 +110,15 @@ class Register extends StatelessWidget {
                       child: Column(
                         children: [
                           MyTextField(
+                            hintText: "Enter your Email",
+                            controller: emailController,
+                            obscureText: false,
+                            labelText: "Email",
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          MyTextField(
                             hintText: "Enter your Username",
                             controller: userController,
                             obscureText: false,
@@ -105,7 +130,7 @@ class Register extends StatelessWidget {
                           MyTextField(
                             hintText: "Enter your Password",
                             controller: passwordController,
-                            obscureText: false,
+                            obscureText: true,
                             labelText: "Password",
                           ),
                           const SizedBox(
@@ -114,14 +139,16 @@ class Register extends StatelessWidget {
                           MyTextField(
                             hintText: "Confirm your Password",
                             controller: confirmPasswordController,
-                            obscureText: false,
+                            obscureText: true,
                             labelText: "Confirm Password",
                           ),
                           const SizedBox(
                             height: 20,
                           ),
                           MyButton(
-                              onTap: registerWithPassword, hinText: 'Register')
+                            onTap: _signUp,
+                            hinText: 'Register',
+                          )
                         ],
                       ),
                     )
@@ -132,7 +159,7 @@ class Register extends StatelessWidget {
           ),
           //text สมัครรหัส
           Positioned(
-            top: 600,
+            top: 660,
             left: 0,
             right: 0,
             child: Container(
@@ -145,7 +172,7 @@ class Register extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Login',
+                  'Register',
                   style: GoogleFonts.mitr(
                     textStyle: const TextStyle(
                       color: Color.fromARGB(255, 49, 93, 101),
@@ -162,5 +189,20 @@ class Register extends StatelessWidget {
     );
     // ),
     // );
+  }
+
+  void _signUp() async {
+    String username = userController.text;
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await _auth.signUpWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      print("User is successfully created");
+      Navigator.pushNamed(context, "/home");
+    } else {
+      print('Some error happen');
+    }
   }
 }

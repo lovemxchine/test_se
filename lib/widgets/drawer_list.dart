@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
@@ -28,31 +29,44 @@ class DrawerList extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.edit_document),
             title: const Text('เรียกพนักงาน'),
-            onTap: () => {AwesomeDialog(
-              context: context,
-              dialogType: DialogType.warning,
-              animType: AnimType.topSlide,
-              showCloseIcon: true,
-              title: "เรียกพนักงานเสร็จสิ้น",
-              desc: "พนักงานกำลังมาหาคุณกรุณารอสักครู่",
-              // btnCancelOnPress: (){},
-              btnOkOnPress: (){}
-              ).show()
-              },
+            onTap: () => {
+              AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.warning,
+                      animType: AnimType.topSlide,
+                      showCloseIcon: true,
+                      title: "เรียกพนักงานเสร็จสิ้น",
+                      desc: "พนักงานกำลังมาหาคุณกรุณารอสักครู่",
+                      // btnCancelOnPress: (){},
+                      btnOkOnPress: () {})
+                  .show()
+            },
           ),
-          ListTile(leading: const Icon(Icons.check_box),
+          ListTile(
+            leading: const Icon(Icons.check_box),
             title: const Text('เช็คบิล'),
-            onTap: () => {AwesomeDialog(
-              context: context,
-              dialogType: DialogType.warning,
-              animType: AnimType.topSlide,
-              showCloseIcon: true,
-              title: "ยืนยันการเช็คบิล",
-              desc: "โปรดตรวจสอบรายการอาหารของคุณ",
-              btnCancelOnPress: (){},
-              btnOkOnPress: (){},
+            onTap: () => {
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.warning,
+                animType: AnimType.topSlide,
+                showCloseIcon: true,
+                title: "ยืนยันการเช็คบิล",
+                desc: "โปรดตรวจสอบรายการอาหารของคุณ",
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {},
               ).show()
-              },)
+            },
+          ),
+          const Spacer(),
+          ListTile(
+            leading: const Icon(Icons.check_box),
+            title: const Text('ออกจากระบบ'),
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.pushNamed(context, "/login");
+            },
+          )
         ],
       ),
     );
