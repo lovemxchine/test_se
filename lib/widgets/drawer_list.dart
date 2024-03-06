@@ -58,7 +58,6 @@ class DrawerList extends StatelessWidget {
               ).show()
             },
           ),
-          const Spacer(),
           ListTile(
             leading: const Icon(Icons.check_box),
             title: const Text('ออกจากระบบ'),
@@ -66,7 +65,8 @@ class DrawerList extends StatelessWidget {
               FirebaseAuth.instance.signOut();
               Navigator.pushNamed(context, "/login");
             },
-          )
+          ),
+          const Spacer(),
         ],
       ),
     );
