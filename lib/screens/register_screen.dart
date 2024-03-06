@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +23,10 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final telController = TextEditingController();
+  final ageController = TextEditingController();
+  final signUp_time = DateTime.now();
+  final bool _obscureText = true;
 
   @override
   // void dispose() {
@@ -45,13 +50,13 @@ class _RegisterState extends State<Register> {
           const LogoImage(),
           //โซน login
           Positioned(
-            top: 250,
+            top: 200,
             left: 50,
             right: 50,
             // alignment: AlignmentDirectional(0, -0.10),
             child: Container(
               width: 300,
-              height: 400,
+              height: 470,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -70,47 +75,44 @@ class _RegisterState extends State<Register> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Align(
-                      alignment: const AlignmentDirectional(0, 0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Register",
-                                    style: GoogleFonts.mitr(
-                                      textStyle: const TextStyle(
-                                          color: Color(0xff3C696F),
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w400),
-                                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Sign_In",
+                                  style: GoogleFonts.mitr(
+                                    textStyle: const TextStyle(
+                                        color: Color(0xff3C696F),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400),
                                   ),
-                                  const TextSpan(text: "  "),
-                                  TextSpan(
-                                    text: "สมัครใช้งาน",
-                                    style: GoogleFonts.mitr(
-                                      textStyle: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                ),
+                                const TextSpan(text: "  "),
+                                TextSpan(
+                                  text: "สมัครใช้งาน",
+                                  style: GoogleFonts.mitr(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                )
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     Form(
                       child: Column(
                         children: [
                           MyTextField(
-                            hintText: "Enter your Email",
+                            hintText: "กรอกอีเมล์",
                             controller: emailController,
                             obscureText: false,
                             labelText: "Email",
@@ -119,7 +121,7 @@ class _RegisterState extends State<Register> {
                             height: 20,
                           ),
                           MyTextField(
-                            hintText: "Enter your Username",
+                            hintText: "กรอกชื่อจริงนามสกุล",
                             controller: userController,
                             obscureText: false,
                             labelText: "Username",
@@ -128,27 +130,36 @@ class _RegisterState extends State<Register> {
                             height: 20,
                           ),
                           MyTextField(
-                            hintText: "Enter your Password",
-                            controller: passwordController,
-                            obscureText: true,
-                            labelText: "Password",
+                            hintText: "กรอกอายุ",
+                            controller: ageController,
+                            obscureText: false,
+                            labelText: "Age",
                           ),
                           const SizedBox(
                             height: 20,
                           ),
                           MyTextField(
-                            hintText: "Confirm your Password",
-                            controller: confirmPasswordController,
-                            obscureText: true,
-                            labelText: "Confirm Password",
+                            hintText: "กรอกเบอร์โทรศัพท์",
+                            controller: telController,
+                            obscureText: false,
+                            labelText: "Telephone Number",
                           ),
                           const SizedBox(
                             height: 20,
                           ),
+                          MyTextField(
+                            hintText: "กรอกรหัสผ่าน",
+                            controller: passwordController,
+                            obscureText: true,
+                            labelText: "Password",
+                          ),
+                          const SizedBox(
+                            height: 17,
+                          ),
                           MyButton(
                             onTap: _signUp,
                             hinText: 'Register',
-                          )
+                          ),
                         ],
                       ),
                     )
@@ -159,7 +170,7 @@ class _RegisterState extends State<Register> {
           ),
           //text สมัครรหัส
           Positioned(
-            top: 660,
+            top: 675,
             left: 0,
             right: 0,
             child: Container(
@@ -172,7 +183,7 @@ class _RegisterState extends State<Register> {
                   );
                 },
                 child: Text(
-                  'Register',
+                  'Sign-In',
                   style: GoogleFonts.mitr(
                     textStyle: const TextStyle(
                       color: Color.fromARGB(255, 49, 93, 101),
@@ -192,17 +203,35 @@ class _RegisterState extends State<Register> {
   }
 
   void _signUp() async {
-    String username = userController.text;
-    String email = emailController.text;
-    String password = passwordController.text;
-
-    User? user = await _auth.signUpWithEmailAndPassword(email, password);
+    User? user = await _auth.signUpWithEmailAndPassword(
+        emailController.text, passwordController.text);
 
     if (user != null) {
+      String uid = user.uid;
+      await addUserCollection(
+          userController.text.trim(),
+          emailController.text.trim(),
+          'customer',
+          int.parse(ageController.text.trim()),
+          Timestamp.now(),
+          uid);
       print("User is successfully created");
       Navigator.pushNamed(context, "/home");
     } else {
       print('Some error happen');
     }
+  }
+
+  Future addUserCollection(String name, String email, String role, int age,
+      Timestamp init_time, String uid // Add uid as an argument here
+      ) async {
+    await FirebaseFirestore.instance.collection('user').add({
+      'name': name,
+      'email': email,
+      'role': role,
+      'age': age,
+      'init_time': init_time,
+      'uid': uid, // Use uid here
+    });
   }
 }
