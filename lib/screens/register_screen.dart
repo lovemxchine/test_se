@@ -214,7 +214,8 @@ class _RegisterState extends State<Register> {
           'customer',
           int.parse(ageController.text.trim()),
           Timestamp.now(),
-          uid);
+          uid,
+          telController.text);
       print("User is successfully created");
       Navigator.pushNamed(context, "/home");
     } else {
@@ -223,7 +224,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future addUserCollection(String name, String email, String role, int age,
-      Timestamp init_time, String uid // Add uid as an argument here
+      Timestamp init_time, String uid, String tel // Add uid as an argument here
       ) async {
     await FirebaseFirestore.instance.collection('user').add({
       'name': name,
@@ -232,6 +233,7 @@ class _RegisterState extends State<Register> {
       'age': age,
       'init_time': init_time,
       'uid': uid, // Use uid here
+      'tel': tel
     });
   }
 }
