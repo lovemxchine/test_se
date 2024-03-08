@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 class DrawerList extends StatelessWidget {
-  const DrawerList({
-    super.key,
-  });
+  const DrawerList({super.key});
 
   @override
   Widget build(BuildContext context) {

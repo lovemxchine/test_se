@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/auth/firebase_auth_service.dart';
+import 'package:test_se/screens/Menu_screen.dart';
+import 'package:test_se/screens/admin_register_screen.dart';
+import 'package:test_se/screens/testAll_screen.dart';
 
 import '../components/button_field.dart';
 import '../components/text_field.dart';
@@ -12,6 +16,7 @@ import 'register_screen.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
+  // String _role = "";
 
   @override
   State<Login> createState() => _LoginState();
@@ -184,9 +189,38 @@ class _LoginState extends State<Login> {
 
     if (user != null) {
       print("Login is successfully signed");
-      Navigator.pushNamed(context, "/home");
+      route();
     } else {
       print('Some error happen');
+    }
+  }
+
+  route() async {
+    String _role = "";
+    final user = FirebaseAuth.instance.currentUser;
+    final snapshot = await FirebaseFirestore.instance
+        .collection('user')
+        .where('uid', isEqualTo: user?.uid)
+        .get();
+    final userData = snapshot.docs[0].data();
+    if (userData.containsKey('role')) {
+      setState(() {
+        _role = userData['role'];
+      });
+    } else {
+      print('Error: User document does not contain "role" field');
+    }
+    switch (_role) {
+      case "manager":
+        Navigator.pushNamed(context, "/manager");
+      case "customer":
+        Navigator.pushNamed(context, "/customer");
+      case "employee":
+        Navigator.pushNamed(context, "/employee");
+      case "chef":
+        Navigator.pushNamed(context, "/chef");
+      default:
+        Navigator.pushNamed(context, "/");
     }
   }
 }

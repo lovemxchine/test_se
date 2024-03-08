@@ -3,7 +3,6 @@ import 'package:test_se/components/my_button.dart';
 
 import '../widgets/drawer_list.dart';
 
-
 class OrderList extends StatefulWidget {
   const OrderList({super.key});
 
@@ -31,7 +30,7 @@ class _OrderListState extends State<OrderList> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       key: scaffoldKey,
-      drawer: const DrawerList(),
+      drawer: DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(

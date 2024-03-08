@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_se/screens/admin_register_screen.dart';
 import 'package:test_se/screens/login_screen.dart';
 import 'package:test_se/screens/register_screen.dart';
 import 'package:test_se/screens/stock_screen.dart';
@@ -72,6 +73,22 @@ class TestPage extends StatelessWidget {
             },
             child: const Text(
               'Stock',
+              style: TextStyle(
+                  fontSize: 20,
+                  decoration: TextDecoration.none,
+                  color: Colors.black),
+            ),
+          ),
+          const SizedBox(height: 20),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdminRegister()),
+              );
+            },
+            child: const Text(
+              'AdminSignUp',
               style: TextStyle(
                   fontSize: 20,
                   decoration: TextDecoration.none,
