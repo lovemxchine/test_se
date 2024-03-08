@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_se/screens/edit_menu.dart';
 import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
 
@@ -22,7 +23,7 @@ class _ManagerScreenState extends State<ManagerScreen> {
     const OrderList(),
     const Promotion(),
     const Status(),
-    const StockScreen(),
+    EditMenu(),
   ];
   @override
   Widget build(BuildContext context) {

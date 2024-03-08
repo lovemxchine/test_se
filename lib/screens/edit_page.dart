@@ -1,0 +1,200 @@
+import 'dart:io';
+// import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+
+import 'package:test_se/components/text_field.dart';
+import 'package:test_se/widgets/drawer_list.dart';
+// import 'package:test_se/widgets/realtime_widget.dart';
+
+class EditPage extends StatefulWidget {
+  EditPage({super.key});
+
+  @override
+  State<EditPage> createState() => _EditPageState();
+}
+
+class _EditPageState extends State<EditPage> {
+  final menuController = TextEditingController();
+  final priceController = TextEditingController();
+  final descriptionController = TextEditingController();
+  PlatformFile? pickedFile;
+
+  Future _selectImage() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+
+    setState(() {
+      pickedFile = result.files.first;
+    });
+  }
+
+  Future<void> _accept() async {
+    if (pickedFile == null) {
+      return;
+    }
+
+    FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+    String menu_id = DateTime.now().toString();
+    final file = File(pickedFile!.path!);
+    final ref = FirebaseStorage.instance.ref().child('Menu/$menu_id');
+
+    // Upload file to Firebase Storage
+    await ref.putFile(file);
+
+    // Get download URL of the uploaded file
+    String url = await ref.getDownloadURL();
+    print(url);
+
+    // Add menu to Firestore collection
+    addMenuCollection(
+      menuController.text,
+      descriptionController.text,
+      priceController.text,
+      url,
+      // Pass menu_id as uid
+    );
+  }
+
+  Future<void> addMenuCollection(
+    String name,
+    String descript,
+    String price,
+    String url,
+    // Accept uid as an argument
+  ) async {
+    await FirebaseFirestore.instance
+        .collection('stock')
+        .doc('$name.') // Use uid as document ID
+        .set({
+      'name': name,
+      'description': descript,
+      'price': price + 'Bath',
+      'url': url,
+      'quantity': 0,
+    });
+  }
+
+  @override
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      key: scaffoldKey,
+      drawer: DrawerList(),
+      appBar: AppBar(
+        toolbarHeight: 90,
+        leading: IconButton(
+          padding: const EdgeInsets.only(left: 10),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            size: 30,
+            color: Colors.white,
+          ),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xff396870), Color(0xff17333C)],
+              stops: [0, 1],
+              begin: AlignmentDirectional(0, -0.8),
+              end: AlignmentDirectional(0, 1.5),
+              tileMode: TileMode.clamp,
+            ),
+          ),
+        ),
+        title: const Text(
+          "Add Menu",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          color: Color.fromARGB(255, 240, 240, 240),
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.025,
+            ),
+            if (pickedFile != null)
+              Container(
+                width: 200,
+                height: 200,
+                color: Colors.amber,
+                child: Center(
+                  child: ClipRect(
+                    child: Image.file(
+                      File(pickedFile!.path!),
+                      width: 200, // กำหนดความกว้างของรูปภาพ
+                      height: 200, // กำหนดความสูงของรูปภาพ
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              )
+            else
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.blue[100],
+                ),
+                child: Center(
+                  child: Text('รูปเมนู'),
+                ),
+              ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.025,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.025,
+            ),
+            MyTextField(
+              hintText: "ชื่อเมนู",
+              controller: menuController,
+              obscureText: false,
+              labelText: "",
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.025,
+            ),
+            MyTextField(
+              hintText: "ราคาอาหาร",
+              controller: priceController,
+              obscureText: false,
+              labelText: "",
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.025,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: _selectImage, child: const Text('เลือกรูปเมนู')),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                    onPressed: _accept, child: const Text('ยืนยันเพิ่มเมนู'))
+              ],
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.025,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

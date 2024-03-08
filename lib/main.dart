@@ -12,6 +12,8 @@ import 'package:test_se/screens/register_screen.dart';
 import 'package:test_se/screens/testAll_screen.dart';
 import 'package:test_se/screens/user_screen/chef_screen.dart';
 import 'package:test_se/screens/user_screen/customer_screen.dart';
+import 'package:test_se/screens/user_screen/employee_screen.dart';
+import 'package:test_se/screens/user_screen/manager_screen.dart';
 import 'package:test_se/splash/splash.dart';
 
 // import 'screens/login_screen.dart';
@@ -48,8 +50,8 @@ class MyApp extends StatelessWidget {
         '/test': (context) => TestPage(),
         '/customer': (context) => CustomerScreen(),
         '/chef': (context) => ChefScreen(),
-        '/manager': (context) => ChefScreen(),
-        '/employee': (context) => ChefScreen(),
+        '/manager': (context) => ManagerScreen(),
+        '/employee': (context) => EmployeeScreen(),
       },
     );
   }

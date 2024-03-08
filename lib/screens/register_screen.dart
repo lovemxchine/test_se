@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/auth/firebase_auth_service.dart';
 import 'package:test_se/screens/login_screen.dart';
+import 'package:test_se/widgets/realtime_widget.dart';
 
 import '../components/button_field.dart';
 import '../components/text_field.dart';
@@ -46,6 +47,12 @@ class _RegisterState extends State<Register> {
         children: [
           //โซน logo , logo zone
           const LogoZone(),
+          Positioned(
+            top: 40,
+            left: 10,
+            right: 10,
+            child: Realtime(),
+          ),
           // รูป logo
           const LogoImage(),
           //โซน login
@@ -195,6 +202,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
           ),
+          // StreamBuilder(stream: _si, builder: builder)
         ],
       ),
     );
@@ -217,7 +225,7 @@ class _RegisterState extends State<Register> {
           uid,
           telController.text);
       print("User is successfully created");
-      Navigator.pushNamed(context, "/home");
+      Navigator.pushNamed(context, "/login");
     } else {
       print('Some error happen');
     }
@@ -226,7 +234,7 @@ class _RegisterState extends State<Register> {
   Future addUserCollection(String name, String email, String role, int age,
       Timestamp init_time, String uid, String tel // Add uid as an argument here
       ) async {
-    await FirebaseFirestore.instance.collection('user').add({
+    await FirebaseFirestore.instance.collection('user').doc(uid).set({
       'name': name,
       'email': email,
       'role': role,

@@ -48,6 +48,11 @@ dependencies:
   package_info: ^2.0.2
   device_info: ^2.0.3
   cloud_functions: ^4.6.7
+  file_picker: ^6.2.0
+  firebase_storage: ^11.6.9
+  image_cropper: ^5.0.1
+  path_provider: ^2.1.2
+  # flutter_image_compress: ^2.1.0
 
 dev_dependencies:
   flutter_test:

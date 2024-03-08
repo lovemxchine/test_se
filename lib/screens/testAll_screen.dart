@@ -3,6 +3,7 @@ import 'package:test_se/screens/admin_register_screen.dart';
 import 'package:test_se/screens/login_screen.dart';
 import 'package:test_se/screens/register_screen.dart';
 import 'package:test_se/screens/stock_screen.dart';
+import 'package:test_se/widgets/realtime_widget.dart';
 
 import 'bottom_navbar.dart';
 
@@ -15,6 +16,8 @@ class TestPage extends StatelessWidget {
       color: Colors.grey,
       child: Column(
         children: [
+          const SizedBox(height: 40),
+          Realtime(),
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () {

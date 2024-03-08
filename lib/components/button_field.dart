@@ -18,7 +18,7 @@ class MyButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10.0),
         margin: const EdgeInsets.symmetric(
-          horizontal: 70.0,
+          horizontal: 30.0,
         ),
         decoration: BoxDecoration(
           color: Color(0xff396870),

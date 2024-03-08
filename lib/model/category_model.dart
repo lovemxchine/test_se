@@ -1,6 +1,33 @@
-//สร้าง เตรียมใช้กับ DB
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// class CategoryModel{
-//   String key='',name='',image='',
-//   late List<FoodModel> foods = new List<FoodModel>.empty(growable: true);
-// }
+class Product {
+  String name;
+  int quantity;
+  double price;
+  String imageUrl;
+
+  Product({
+    required this.name,
+    required this.quantity,
+    required this.price,
+    required this.imageUrl,
+  });
+
+  factory Product.fromFirestore(DocumentSnapshot doc) {
+    return Product(
+      name: doc['name'],
+      quantity: doc['quantity'],
+      price: doc['price'],
+      imageUrl: doc['imageUrl'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'name': name,
+      'quantity': quantity,
+      'price': price,
+      'imageUrl': imageUrl,
+    };
+  }
+}

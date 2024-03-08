@@ -21,7 +21,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     const OrderList(),
     const Promotion(),
     const Status(),
-    const StockScreen(),
+    // const TimeCheckIn_Out(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -57,10 +57,10 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
             Icons.access_time_filled,
             color: Colors.black,
           ),
-          Icon(
-            Icons.settings,
-            color: Colors.black,
-          ),
+          // Icon(
+          //   Icons.settings,
+          //   color: Colors.black,
+          // ),
         ],
       ),
     );
