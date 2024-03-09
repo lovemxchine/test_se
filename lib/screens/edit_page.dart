@@ -42,37 +42,29 @@ class _EditPageState extends State<EditPage> {
     final file = File(pickedFile!.path!);
     final ref = FirebaseStorage.instance.ref().child('Menu/$menu_id');
 
-    // Upload file to Firebase Storage
     await ref.putFile(file);
 
-    // Get download URL of the uploaded file
     String url = await ref.getDownloadURL();
     print(url);
 
-    // Add menu to Firestore collection
     addMenuCollection(
       menuController.text,
-      descriptionController.text,
       priceController.text,
       url,
-      // Pass menu_id as uid
     );
+    Navigator.pop(context);
   }
 
   Future<void> addMenuCollection(
     String name,
-    String descript,
+    // String descript,
     String price,
     String url,
-    // Accept uid as an argument
   ) async {
-    await FirebaseFirestore.instance
-        .collection('stock')
-        .doc('$name.') // Use uid as document ID
-        .set({
+    await FirebaseFirestore.instance.collection('stock').doc('$name.').set({
       'name': name,
-      'description': descript,
-      'price': price + 'Bath',
+      // 'description': descript,
+      'price': price + ' บาท',
       'url': url,
       'quantity': 0,
     });
@@ -159,20 +151,27 @@ class _EditPageState extends State<EditPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.025,
             ),
-            MyTextField(
-              hintText: "ชื่อเมนู",
-              controller: menuController,
-              obscureText: false,
-              labelText: "",
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.025,
-            ),
-            MyTextField(
-              hintText: "ราคาอาหาร",
-              controller: priceController,
-              obscureText: false,
-              labelText: "",
+            Container(
+              width: 320,
+              child: Column(
+                children: [
+                  MyTextField(
+                    hintText: "ชื่อเมนู",
+                    controller: menuController,
+                    obscureText: false,
+                    labelText: "",
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  MyTextField(
+                    hintText: "ราคาอาหาร",
+                    controller: priceController,
+                    obscureText: false,
+                    labelText: "",
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.025,

@@ -36,7 +36,9 @@ class FirebaseAuthService {
 
   // Future for sign-in with email and password (with error handling)
   Future<User?> signInWithEmailAndPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
         email: email,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:test_se/widgets/wait_card.dart';
 
 import '../widgets/drawer_list.dart';
 
 class Status extends StatefulWidget {
-  const Status({super.key});
+  const Status({Key? key}) : super(key: key);
 
   @override
   State<Status> createState() => _StatusState();
@@ -12,6 +13,7 @@ class Status extends StatefulWidget {
 
 class _StatusState extends State<Status> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,16 +50,35 @@ class _StatusState extends State<Status> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: ListView(children: [
-        Container(
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              color: Color.fromARGB(255, 240, 240, 240)),
-          child: const Column(
-            children: [WaitCard()],
-          ),
-        ),
-      ]),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('stock').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+            return ListView(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20)),
+                    color: Color.fromARGB(255, 240, 240, 240),
+                  ),
+                  child: Column(
+                    children: [
+                      WaitCard(
+                        availableStocks: documents,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }

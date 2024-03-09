@@ -35,24 +35,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: GoogleFonts.mitr().fontFamily,
-        brightness: Brightness.light,
-        primaryColor: Colors.blue,
-      ),
-      routes: {
-        '/': (context) => SplashScreen(child: Login()),
-        '/login': (context) => Login(),
-        '/signUp': (context) => Register(),
-        '/home': (context) => BottomNavBarScreen(),
-        '/admin_reg': (context) => AdminRegister(),
-        '/test': (context) => TestPage(),
-        '/customer': (context) => CustomerScreen(),
-        '/chef': (context) => ChefScreen(),
-        '/manager': (context) => ManagerScreen(),
-        '/employee': (context) => EmployeeScreen(),
-      },
-    );
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: GoogleFonts.mitr().fontFamily,
+          brightness: Brightness.light,
+          primaryColor: Colors.blue,
+        ),
+        routes: {
+          '/': (context) => SplashScreen(child: Login()),
+          '/login': (context) => Login(),
+          '/signUp': (context) => Register(),
+          '/home': (context) => BottomNavBarScreen(),
+          '/admin_reg': (context) => AdminRegister(),
+          '/test': (context) => TestPage(),
+          '/customer': (context) => CustomerScreen(),
+          '/chef': (context) => ChefScreen(),
+          '/manager': (context) => ManagerScreen(),
+          '/employee': (context) => EmployeeScreen(),
+        });
   }
 }
