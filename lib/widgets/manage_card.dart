@@ -60,8 +60,8 @@ class _EditCardState extends State<EditCard> {
                     InkWell(
                       child: Container(
                         margin: const EdgeInsets.all(7),
-                        height: 150,
-                        width: 150,
+                        height: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.4,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             // Get the image URL from Firestore
@@ -126,8 +126,8 @@ class _EditCardState extends State<EditCard> {
                             _navigateToDetailPage(docRef);
                           },
                           child: Container(
-                            height: 40,
-                            width: 80,
+                            height: MediaQuery.of(context).size.width * 0.1,
+                            width: MediaQuery.of(context).size.width * 0.2,
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 33, 128, 223),
                               borderRadius: BorderRadius.circular(16.0),
@@ -165,8 +165,8 @@ class _EditCardState extends State<EditCard> {
                             docRef.delete();
                           },
                           child: Container(
-                            height: 40,
-                            width: 80,
+                            height: MediaQuery.of(context).size.width * 0.1,
+                            width: MediaQuery.of(context).size.width * 0.2,
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(170, 35, 35, 1),
                               borderRadius: BorderRadius.circular(16.0),
