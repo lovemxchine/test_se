@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/drawer_list.dart';
-import '../widgets/menu_card.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -131,7 +130,7 @@ class _MenuState extends State<Menu> {
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
                                               doc['quantity'] > 0
-                                                  ? Colors.green
+                                                  ? Color.fromARGB(255, 90, 140, 149)
                                                   : Colors.grey),
                                     ),
                                     onPressed: doc['quantity'] > 0
@@ -146,8 +145,7 @@ class _MenuState extends State<Menu> {
                                             'เพิ่มลงตะกร้า',
                                             style: GoogleFonts.mitr(
                                               textStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 0, 0, 0),
+                                                  color: Colors.white,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400),
                                             ),
@@ -156,8 +154,7 @@ class _MenuState extends State<Menu> {
                                             'สินค้าไม่พร้อม',
                                             style: GoogleFonts.mitr(
                                               textStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 0, 0, 0),
+                                                  color: Colors.red,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400),
                                             ),

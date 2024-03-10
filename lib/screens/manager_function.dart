@@ -56,85 +56,85 @@ class _ManagerFuncState extends State<ManagerFunc> {
           child: ListView(
             children: [
               ListTile(
-                leading: const Icon(
-                  Icons.add,
-                  size: 25,
-                ),
-                title: const Text(
-                  'Edit Menu',
-                  style: TextStyle(fontSize: 25, color: Colors.black),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ManageMenu()),
-                  );
-                },
-              ),
+                  title: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => const ManageMenu()),
+                   );
+                    },
+                    child: const Text(
+                      'Edit Menu',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )),
               ListTile(
-                leading: const Icon(
-                  Icons.add,
-                  size: 25,
-                ),
-                title: const Text(
-                  'Add Promotion',
-                  style: TextStyle(fontSize: 25, color: Colors.black),
-                ),
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const ManageMenu()),
-                  // );
-                },
-              ),
+                  title: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => const ManageMenu()),
+                   );
+                    },
+                    child: const Text(
+                      'Add Promotion',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )),
               ListTile(
-                leading: const Icon(
-                  Icons.add,
-                  size: 25,
-                ),
-                title: const Text(
-                  'Add Stock',
-                  style: TextStyle(fontSize: 25, color: Colors.black),
-                ),
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const ManageMenu()),
-                  // );
-                },
-              ),
+                  title: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => const ManageMenu()),
+                   );
+                    },
+                    child: const Text(
+                      'Add Stock',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )),
               ListTile(
-                leading: const Icon(
-                  Icons.add,
-                  size: 25,
-                ),
-                title: const Text(
-                  'Add Role',
-                  style: TextStyle(fontSize: 25, color: Colors.black),
-                ),
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const ManageMenu()),
-                  // );
-                },
-              ),
+                  title: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => const ManageMenu()),
+                   );
+                    },
+                    child: const Text(
+                      'Manage Employee',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )),
               ListTile(
-                leading: const Icon(
-                  Icons.menu,
-                  size: 25,
-                ),
-                title: const Text(
-                  'Summary of income',
-                  style: TextStyle(fontSize: 25, color: Colors.black),
-                ),
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const ManageMenu()),
-                  // );
-                },
-              ),
+                  title: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => const ManageMenu()),
+                   );
+                    },
+                    child: const Text(
+                      'Summary of Income',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )),
             ],
           )),
     );

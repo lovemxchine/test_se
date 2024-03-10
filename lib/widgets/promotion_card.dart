@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'button_promotion.dart';
 
 class PromotionCard extends StatelessWidget {

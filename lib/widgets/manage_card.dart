@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/screens/edit_menu_screen.dart';
-import 'package:test_se/widgets/button_wait.dart';
 
 class EditCard extends StatefulWidget {
   final List<DocumentSnapshot> availableStocks;
@@ -26,7 +25,6 @@ class _EditCardState extends State<EditCard> {
   @override
   void initState() {
     super.initState();
-    print('123');
     print(widget.availableStocks);
   }
 
