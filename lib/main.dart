@@ -2,11 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/firebase_options.dart';
-import 'package:test_se/screens/Menu_screen.dart';
 import 'package:test_se/screens/admin_register_screen.dart';
 import 'package:test_se/screens/login_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_se/screens/promotion_screen.dart';
 import 'package:test_se/screens/register_screen.dart';
 import 'package:test_se/screens/user_screen/chef_screen.dart';
 import 'package:test_se/screens/user_screen/customer_screen.dart';
@@ -44,10 +41,10 @@ class MyApp extends StatelessWidget {
           '/login': (context) => Login(),
           '/signUp': (context) => Register(),
           '/admin_reg': (context) => AdminRegister(),
-          '/customer': (context) => CustomerScreen(),
-          '/chef': (context) => ChefScreen(),
-          '/manager': (context) => ManagerScreen(),
-          '/employee': (context) => EmployeeScreen(),
+          '/customer': (context) => const CustomerScreen(),
+          '/chef': (context) => const ChefScreen(),
+          '/manager': (context) => const ManagerScreen(),
+          '/employee': (context) => const EmployeeScreen(),
         });
   }
 }

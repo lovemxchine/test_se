@@ -81,10 +81,10 @@ class _ManagerFuncState extends State<ManagerFunc> {
                   style: TextStyle(fontSize: 25, color: Colors.black),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ManageMenu()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => const ManageMenu()),
+                  // );
                 },
               ),
               ListTile(

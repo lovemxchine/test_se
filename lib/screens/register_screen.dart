@@ -26,8 +26,6 @@ class _RegisterState extends State<Register> {
   final confirmPasswordController = TextEditingController();
   final telController = TextEditingController();
   final ageController = TextEditingController();
-  final signUp_time = DateTime.now();
-  final bool _obscureText = true;
 
   @override
   // void dispose() {
@@ -223,7 +221,10 @@ class _RegisterState extends State<Register> {
           int.parse(ageController.text.trim()),
           Timestamp.now(),
           uid,
-          telController.text);
+          telController.text.trim(),
+          true
+          )
+          ;
       print("User is successfully created");
       Navigator.pushNamed(context, "/login");
     } else {
@@ -232,7 +233,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future addUserCollection(String name, String email, String role, int age,
-      Timestamp init_time, String uid, String tel // Add uid as an argument here
+      Timestamp init_time, String uid, String tel , bool notic// Add uid as an argument here
       ) async {
     await FirebaseFirestore.instance.collection('user').doc(uid).set({
       'name': name,
@@ -241,7 +242,8 @@ class _RegisterState extends State<Register> {
       'age': age,
       'init_time': init_time,
       'uid': uid, // Use uid here
-      'tel': tel
+      'tel': tel,
+      'notic':notic,
     });
   }
 }
