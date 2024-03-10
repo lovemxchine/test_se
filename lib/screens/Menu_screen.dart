@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../widgets/drawer_list.dart';
 import '../widgets/menu_card.dart';
 
@@ -61,8 +62,87 @@ class _MenuState extends State<Menu> {
               child: ListView(children: [
                 Column(
                   children: [
-                    MenuCard(
-                      availableStocks: documents,
+                    GridView.count(
+                      childAspectRatio: 0.68,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      children: [
+                        for (var doc in documents)
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 15, right: 15, top: 10),
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  width: 1, color: Colors.grey.shade500),
+                            ),
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  child: Container(
+                                    height: 150,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        // Get the image URL from Firestore
+                                        image: NetworkImage(doc['url']),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      border: Border.all(
+                                          width: 1,
+                                          color: Colors.grey.shade200),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Container(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    // Get the name from Firestore
+                                    doc['name'],
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'ราคา : ${doc['price']}',
+                                    style: GoogleFonts.mitr(
+                                        textStyle: const TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 0, 0, 0))),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.green)),
+                                    onPressed: () {},
+                                    child: Text(
+                                      'เพิ่มลงตะกร้า',
+                                      style: GoogleFonts.mitr(
+                                        textStyle: const TextStyle(
+                                            color: Color.fromARGB(255, 0, 0, 0),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    )),
+                              ],
+                            ),
+                          )
+                      ],
                     ),
                   ],
                 ),
