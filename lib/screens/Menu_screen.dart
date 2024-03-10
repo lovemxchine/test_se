@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../widgets/drawer_list.dart';
 import '../widgets/menu_card.dart';
@@ -18,7 +19,7 @@ class _MenuState extends State<Menu> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
-      drawer: DrawerList(),
+      drawer: const DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
@@ -48,16 +49,30 @@ class _MenuState extends State<Menu> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: ListView(children: [
-        Container(
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              color: Color.fromARGB(255, 240, 240, 240)),
-          child: const Column(
-            children: [MenuCard()],
-          ),
-        ),
-      ]),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('stock').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<DocumentSnapshot> documents = snapshot.data!.docs;
+            return Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  color: Color.fromARGB(255, 240, 240, 240)),
+              child: ListView(children: [
+                Column(
+                  children: [
+                    MenuCard(
+                      availableStocks: documents,
+                    ),
+                  ],
+                ),
+              ]),
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }

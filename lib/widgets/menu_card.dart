@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:test_se/widgets/button_menu.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+class MenuCard extends StatefulWidget {
+  const MenuCard({super.key, required this.availableStocks});
+  final List<DocumentSnapshot> availableStocks;
 
-class MenuCard extends StatelessWidget {
-  const MenuCard({super.key});
+  @override
+  State<MenuCard> createState() => _MenuCardState();
+}
 
+class _MenuCardState extends State<MenuCard> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -13,7 +19,7 @@ class MenuCard extends StatelessWidget {
       crossAxisCount: 2,
       shrinkWrap: true,
       children: [
-        for (int i = 1; i <= 8; i++)
+        for (var doc in widget.availableStocks)
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
@@ -28,7 +34,7 @@ class MenuCard extends StatelessWidget {
                     height: 150,
                     width: 150,
                     decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage("assets/images/$i.png"),
+                      image: DecorationImage(image: AssetImage(""),
                       fit: BoxFit.cover
                       ),
                       border: Border.all(width: 1,color: Colors.grey.shade200),

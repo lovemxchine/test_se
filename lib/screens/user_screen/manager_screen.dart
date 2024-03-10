@@ -1,14 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_se/screens/manage_menu.dart';
+import 'package:test_se/screens/manager_function.dart';
 import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:test_se/screens/promotion_screen.dart';
 import 'package:test_se/screens/status_order.dart';
-import 'package:test_se/screens/stock_screen.dart';
 
 class ManagerScreen extends StatefulWidget {
   const ManagerScreen({super.key});
@@ -25,7 +24,7 @@ class _ManagerScreenState extends State<ManagerScreen> {
     const OrderList(),
     const Promotion(),
     const Status(),
-    ManageMenu(),
+    const ManagerFunc(),
   ];
 
   void _checkUserRole() async {

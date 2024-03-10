@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_se/components/my_button.dart';
 
 import '../widgets/drawer_list.dart';
+import '../widgets/menu_card.dart';
 
 class OrderList extends StatefulWidget {
   const OrderList({super.key});
@@ -28,7 +29,7 @@ class _OrderListState extends State<OrderList> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
       drawer: DrawerList(),
       appBar: AppBar(
@@ -60,23 +61,14 @@ class _OrderListState extends State<OrderList> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-        child: Column(
-          children: [
-            Row(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MyButOrder(onTap: ClearOrder, hinText: 'Clear'),
-                SizedBox(
-                  width: 0,
-                ),
-                MyButOrder(onTap: ConfirmOrder, hinText: 'Confirm'),
-              ],
-            ),
-          ],
-        ),
+      body: Container(
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            color: Color.fromARGB(255, 240, 240, 240)),
+        child: ListView(
+          children: const [
+          
+        ]),
       ),
     );
   }

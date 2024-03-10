@@ -71,14 +71,11 @@ class _EditPageState extends State<EditPage> {
   }
 
   @override
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      key: scaffoldKey,
-      drawer: DrawerList(),
+      backgroundColor: const Color(0xff17333C),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
@@ -141,7 +138,7 @@ class _EditPageState extends State<EditPage> {
                 decoration: BoxDecoration(
                   color: Colors.blue[100],
                 ),
-                child: Center(
+                child: const Center(
                   child: Text('รูปเมนู'),
                 ),
               ),

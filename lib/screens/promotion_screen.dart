@@ -17,7 +17,7 @@ class _PromotionState extends State<Promotion> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
-      drawer: DrawerList(),
+      drawer: const DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
@@ -47,16 +47,15 @@ class _PromotionState extends State<Promotion> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: ListView(children: [
-        Container(
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              color: Color.fromARGB(255, 240, 240, 240)),
-          child: const Column(
-            children: [PromotionCard()],
-          ),
-        ),
-      ]),
+      body: Container(
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            color: Color.fromARGB(255, 240, 240, 240)),
+        child: ListView(
+          children: const [
+          PromotionCard(),
+        ]),
+      ),
     );
   }
 }

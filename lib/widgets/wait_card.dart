@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:test_se/widgets/button_wait.dart';
 
 class WaitCard extends StatefulWidget {
   final List<DocumentSnapshot> availableStocks;
@@ -14,11 +13,6 @@ class WaitCard extends StatefulWidget {
 
 class _WaitCardState extends State<WaitCard> {
   @override
-  void initState() {
-    super.initState();
-    print('123');
-    print(widget.availableStocks);
-  }
 
   Widget build(BuildContext context) {
     return GridView.count(
@@ -112,7 +106,7 @@ class _WaitCardState extends State<WaitCard> {
                       'จำนวน : ${doc['quantity']}',
                       style: GoogleFonts.mitr(
                         textStyle: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.w400),
                       ),

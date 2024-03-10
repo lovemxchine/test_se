@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:test_se/widgets/wait_card.dart';
-
 import '../widgets/drawer_list.dart';
 
 class Status extends StatefulWidget {
@@ -20,7 +19,7 @@ class _StatusState extends State<Status> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
-      drawer: DrawerList(),
+      drawer: const DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
@@ -56,23 +55,19 @@ class _StatusState extends State<Status> {
           if (snapshot.hasData) {
             List<DocumentSnapshot> documents = snapshot.data!.docs;
 
-            return ListView(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(20)),
-                    color: Color.fromARGB(255, 240, 240, 240),
-                  ),
-                  child: Column(
-                    children: [
-                      WaitCard(
-                        availableStocks: documents,
-                      ),
-                    ],
-                  ),
+            return Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  color: Color.fromARGB(255, 240, 240, 240)),
+              child: ListView(children: [
+                Column(
+                  children: [
+                    WaitCard(
+                      availableStocks: documents,
+                    ),
+                  ],
                 ),
-              ],
+              ]),
             );
           } else {
             return const CircularProgressIndicator();

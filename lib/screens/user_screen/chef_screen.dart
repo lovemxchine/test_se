@@ -25,7 +25,6 @@ class _ChefScreenState extends State<ChefScreen> {
     const OrderList(),
     const Promotion(),
     const Status(),
-    const StockScreen(),
   ];
   @override
   void initState() {
