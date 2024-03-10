@@ -22,6 +22,18 @@ class _StockDetailPageState extends State<StockDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Stock Detail'),
+        toolbarHeight: 80,
+              leading: IconButton(
+                padding: const EdgeInsets.only(left: 10),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  size: 30,
+                  color: Colors.black,
+                ),
+              ),
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: widget.docRef.get(),
@@ -51,36 +63,6 @@ class _StockDetailPageState extends State<StockDetailPage> {
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
             key: scaffoldKey,
-            drawer: DrawerList(),
-            appBar: AppBar(
-              toolbarHeight: 90,
-              leading: IconButton(
-                padding: const EdgeInsets.only(left: 10),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 30,
-                  color: Colors.white,
-                ),
-              ),
-              flexibleSpace: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xff396870), Color(0xff17333C)],
-                    stops: [0, 1],
-                    begin: AlignmentDirectional(0, -0.8),
-                    end: AlignmentDirectional(0, 1.5),
-                    tileMode: TileMode.clamp,
-                  ),
-                ),
-              ),
-              title: const Text(
-                "Add Menu",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
             body: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -159,7 +141,7 @@ class _StockDetailPageState extends State<StockDetailPage> {
   ) async {
     await FirebaseFirestore.instance
         .collection('stock')
-        .doc('$data.')
+        .doc('$data')
         .update({'name': name, 'price': price});
   }
 }

@@ -4,12 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/firebase_options.dart';
 import 'package:test_se/screens/Menu_screen.dart';
 import 'package:test_se/screens/admin_register_screen.dart';
-import 'package:test_se/screens/bottom_navbar.dart';
 import 'package:test_se/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_se/screens/promotion_screen.dart';
 import 'package:test_se/screens/register_screen.dart';
-import 'package:test_se/screens/testAll_screen.dart';
 import 'package:test_se/screens/user_screen/chef_screen.dart';
 import 'package:test_se/screens/user_screen/customer_screen.dart';
 import 'package:test_se/screens/user_screen/employee_screen.dart';
@@ -45,9 +43,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashScreen(child: Login()),
           '/login': (context) => Login(),
           '/signUp': (context) => Register(),
-          '/home': (context) => BottomNavBarScreen(),
           '/admin_reg': (context) => AdminRegister(),
-          '/test': (context) => TestPage(),
           '/customer': (context) => CustomerScreen(),
           '/chef': (context) => ChefScreen(),
           '/manager': (context) => ManagerScreen(),

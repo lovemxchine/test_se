@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
-import 'testAll_screen.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({super.key});
@@ -20,10 +19,10 @@ class _StockScreenState extends State<StockScreen> {
         leading: IconButton(
           padding: EdgeInsets.only(left: 10),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TestPage()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => TestPage()),
+            // );
           },
           icon: const Icon(
             Icons.menu,

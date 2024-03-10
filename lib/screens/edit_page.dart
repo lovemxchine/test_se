@@ -61,7 +61,7 @@ class _EditPageState extends State<EditPage> {
     String price,
     String url,
   ) async {
-    await FirebaseFirestore.instance.collection('stock').doc('$name.').set({
+    await FirebaseFirestore.instance.collection('stock').doc('$name').set({
       'name': name,
       // 'description': descript,
       'price': price + ' บาท',

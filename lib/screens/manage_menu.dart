@@ -27,22 +27,36 @@ class _ManageMenuState extends State<ManageMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
-      drawer: DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 10),
           onPressed: () {
-            scaffoldKey.currentState?.openDrawer();
+            Navigator.pop(context);
           },
           icon: const Icon(
-            Icons.notifications_active,
+            Icons.arrow_back,
             size: 30,
             color: Colors.white,
           ),
         ),
+        actions:<Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: IconButton(
+              onPressed: () {
+                _edit();
+              },
+              icon: const Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 30,
+              ),
+            ),
+          ),
+        ],
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -70,31 +84,15 @@ class _ManageMenuState extends State<ManageMenu> {
               width: MediaQuery.of(context).size.width * 1,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3), // changes position of shadow
                   ),
                 ],
-              ),
-              child: Container(
-                margin: const EdgeInsets.all(25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyButton(
-                      onTap: _edit,
-                      hinText: 'เพิ่มเมนู',
-                    ),
-                    MyButton(
-                      onTap: _edit,
-                      hinText: 'เพิ่มเมนู',
-                    )
-                  ],
-                ),
               ),
             ),
             Expanded(

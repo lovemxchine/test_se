@@ -6,13 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_se/auth/firebase_auth_service.dart';
 import 'package:test_se/screens/Menu_screen.dart';
 import 'package:test_se/screens/admin_register_screen.dart';
-import 'package:test_se/screens/testAll_screen.dart';
 
 import '../components/button_field.dart';
 import '../components/text_field.dart';
 import '../widgets/logo_image.dart';
 import '../widgets/logo_zone.dart';
-import 'bottom_navbar.dart';
 import 'register_screen.dart';
 
 class Login extends StatefulWidget {
