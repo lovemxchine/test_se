@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
+  bool _isPressed = false;
   @override
   void dispose() {
     emailController.dispose();
@@ -142,7 +142,51 @@ class _LoginState extends State<Login> {
                             const SizedBox(
                               height: 24,
                             ),
-                            MyButton(onTap: _signIn, hinText: 'LogIn'),
+                            GestureDetector(
+                              onTapUp: (details) {
+                                setState(() {
+                                  _isPressed = false;
+                                });
+                              },
+                              onTapDown: (details) {
+                                setState(() {
+                                  _isPressed = true;
+                                });
+                              },
+                              onTap: _signIn,
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 30.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: _isPressed
+                                      ? Color.fromARGB(255, 63, 97, 102)
+                                      : Color(0xff396870),
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 10,
+                                      color: Color.fromARGB(152, 0, 0, 0),
+                                      offset: Offset(1, 2),
+                                    )
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'เข้าสู่ระบบ',
+                                    style: GoogleFonts.poppins(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       )

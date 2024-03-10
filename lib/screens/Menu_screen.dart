@@ -84,11 +84,12 @@ class _MenuState extends State<Menu> {
                               children: [
                                 InkWell(
                                   child: Container(
-                                    height: 150,
-                                    width: 150,
+                                    height: MediaQuery.of(context).size.width *
+                                        0.35,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
-                                        // Get the image URL from Firestore
                                         image: NetworkImage(doc['url']),
                                         fit: BoxFit.cover,
                                       ),
@@ -107,7 +108,7 @@ class _MenuState extends State<Menu> {
                                     // Get the name from Firestore
                                     doc['name'],
                                     style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 12,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w300,
                                     ),
@@ -119,6 +120,7 @@ class _MenuState extends State<Menu> {
                                     'ราคา : ${doc['price']}',
                                     style: GoogleFonts.mitr(
                                         textStyle: const TextStyle(
+                                            fontSize: 12,
                                             color:
                                                 Color.fromARGB(255, 0, 0, 0))),
                                   ),
@@ -126,19 +128,40 @@ class _MenuState extends State<Menu> {
                                 const SizedBox(height: 10),
                                 ElevatedButton(
                                     style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Colors.green)),
-                                    onPressed: () {},
-                                    child: Text(
-                                      'เพิ่มลงตะกร้า',
-                                      style: GoogleFonts.mitr(
-                                        textStyle: const TextStyle(
-                                            color: Color.fromARGB(255, 0, 0, 0),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    )),
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              doc['quantity'] > 0
+                                                  ? Colors.green
+                                                  : Colors.grey),
+                                    ),
+                                    onPressed: doc['quantity'] > 0
+                                        ? () {
+                                            print('enough quantity');
+                                          }
+                                        : () {
+                                            print('not enough quantity');
+                                          },
+                                    child: doc['quantity'] > 0
+                                        ? Text(
+                                            'เพิ่มลงตะกร้า',
+                                            style: GoogleFonts.mitr(
+                                              textStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 0, 0, 0),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          )
+                                        : Text(
+                                            'สินค้าไม่พร้อม',
+                                            style: GoogleFonts.mitr(
+                                              textStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 0, 0, 0),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          )),
                               ],
                             ),
                           )

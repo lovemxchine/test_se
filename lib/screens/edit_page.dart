@@ -61,17 +61,33 @@ class _EditPageState extends State<EditPage> {
     String price,
     String url,
   ) async {
-    await FirebaseFirestore.instance.collection('stock').doc('$name').set({
+    await FirebaseFirestore.instance.collection('stock').add({
       'name': name,
-      // 'description': descript,
       'price': price + ' บาท',
       'url': url,
       'quantity': 0,
+    }).then((DocumentReference docRef) {
+      // เมื่อเอกสารถูกสร้างเรียบร้อยแล้ว คุณสามารถเข้าถึง Document ID ที่ Firebase สร้างได้ที่นี่
+      String docId = docRef.id;
+      print('เอกสารถูกสร้างเรียบร้อยแล้ว: $docId');
+
+      // สร้างเอกสารใหม่เพื่อเซ็ตฟิลด์ 'docId' ด้วย Document ID ที่ได้
+      FirebaseFirestore.instance.collection('stock').doc(docId).set({
+        'name': name,
+        'price': price + ' บาท',
+        'url': url,
+        'quantity': 0,
+        'docId':
+            docId, // เพิ่มฟิลด์ 'docId' โดยให้ค่าเป็น Document ID ที่ Firebase สร้าง
+      });
+    }).catchError((error) {
+      // แสดงข้อความเมื่อเกิดข้อผิดพลาดในการสร้างเอกสาร
+      print('เกิดข้อผิดพลาดในการสร้างเอกสาร: $error');
     });
+    ;
   }
 
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,

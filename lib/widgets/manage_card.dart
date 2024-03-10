@@ -56,15 +56,15 @@ class _EditCardState extends State<EditCard> {
                   ],
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     InkWell(
                       child: Container(
                         margin: const EdgeInsets.all(7),
                         height: MediaQuery.of(context).size.width * 0.4,
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.3,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            // Get the image URL from Firestore
                             image: NetworkImage(doc['url']),
                             fit: BoxFit.cover,
                           ),
@@ -74,45 +74,47 @@ class _EditCardState extends State<EditCard> {
                         ),
                       ),
                     ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.width * 0.05,
-                        ),
-                        Container(
-                          child: Text(
-                            // Get the name from Firestore
-                            doc['name'],
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
-                            ),
+                    Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.05,
                           ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.width * 0.001,
-                        ),
-                        Container(
-                          height: 30,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            // color: Color.fromARGB(255, 66, 104, 109),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Center(
+                          Container(
                             child: Text(
-                              'ราคา : ${doc['price']}',
-                              style: GoogleFonts.mitr(
-                                textStyle: const TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400),
+                              // Get the name from Firestore
+                              doc['name'],
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300,
                               ),
                             ),
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.001,
+                          ),
+                          Container(
+                            height: 30,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              // color: Color.fromARGB(255, 66, 104, 109),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'ราคา : ${doc['price']}',
+                                style: GoogleFonts.mitr(
+                                  textStyle: const TextStyle(
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     Column(
                       children: [
@@ -122,12 +124,12 @@ class _EditCardState extends State<EditCard> {
                             DocumentReference docRef = FirebaseFirestore
                                 .instance
                                 .collection('stock')
-                                .doc(doc['name'] + '.');
+                                .doc(doc['docId']);
                             _navigateToDetailPage(docRef);
                           },
                           child: Container(
-                            height: MediaQuery.of(context).size.width * 0.1,
-                            width: MediaQuery.of(context).size.width * 0.2,
+                            height: MediaQuery.of(context).size.width * 0.09,
+                            width: MediaQuery.of(context).size.width * 0.18,
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 33, 128, 223),
                               borderRadius: BorderRadius.circular(16.0),
@@ -161,12 +163,12 @@ class _EditCardState extends State<EditCard> {
                             DocumentReference docRef = FirebaseFirestore
                                 .instance
                                 .collection('stock')
-                                .doc(doc['name'] + '.');
+                                .doc(doc['docId']);
                             docRef.delete();
                           },
                           child: Container(
-                            height: MediaQuery.of(context).size.width * 0.1,
-                            width: MediaQuery.of(context).size.width * 0.2,
+                            height: MediaQuery.of(context).size.width * 0.09,
+                            width: MediaQuery.of(context).size.width * 0.18,
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(170, 35, 35, 1),
                               borderRadius: BorderRadius.circular(16.0),

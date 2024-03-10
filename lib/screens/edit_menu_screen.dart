@@ -23,17 +23,17 @@ class _StockDetailPageState extends State<StockDetailPage> {
       appBar: AppBar(
         title: Text('Stock Detail'),
         toolbarHeight: 80,
-              leading: IconButton(
-                padding: const EdgeInsets.only(left: 10),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 30,
-                  color: Colors.black,
-                ),
-              ),
+        leading: IconButton(
+          padding: const EdgeInsets.only(left: 10),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            size: 30,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: widget.docRef.get(),
@@ -89,9 +89,7 @@ class _StockDetailPageState extends State<StockDetailPage> {
                           decoration: InputDecoration(
                             labelText: 'ชื่อเมนู',
                           ),
-                          onChanged: (value) {
-                            // สามารถทำอะไรก็ได้เมื่อผู้ใช้แก้ไขข้อมูล
-                          },
+                          onChanged: (value) {},
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.025,
@@ -99,7 +97,7 @@ class _StockDetailPageState extends State<StockDetailPage> {
                         TextFormField(
                           controller: priceController,
                           decoration: InputDecoration(
-                            labelText: 'ชื่อเมนู',
+                            labelText: 'ราคา',
                           ),
                           onChanged: (value) {},
                         ),
@@ -115,7 +113,8 @@ class _StockDetailPageState extends State<StockDetailPage> {
                       ElevatedButton(
                           onPressed: () async {
                             await setMenuCollection(menuController.text,
-                                priceController.text, data['name']);
+                                priceController.text, data['docId']);
+                            Navigator.pop(context);
                           },
                           child: const Text('ยืนยันแก้ไขเมนู'))
                     ],
