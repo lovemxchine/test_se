@@ -55,7 +55,7 @@ class _EditPageState extends State<EditPage> {
       menuController.text,
       priceController.text,
       url,
-    );
+    ).then((value) => Navigator.pop(context));
   }
 
   Future<void> addMenuCollection(
@@ -79,7 +79,7 @@ class _EditPageState extends State<EditPage> {
         'quantity': 0,
         'docId': docId,
       });
-      Navigator.pop(context);
+      ;
     }).catchError((error) {
       print('$error');
     });
