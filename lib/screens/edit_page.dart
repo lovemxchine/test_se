@@ -53,19 +53,19 @@ class _EditPageState extends State<EditPage> {
 
     addMenuCollection(
       menuController.text,
-      priceController.text,
+      int.parse(priceController.text),
       url,
     ).then((value) => Navigator.pop(context));
   }
 
   Future<void> addMenuCollection(
     String name,
-    String price,
+    int price,
     String url,
   ) async {
     await FirebaseFirestore.instance.collection('stock').add({
       'name': name,
-      'price': price + ' บาท',
+      'price': price,
       'url': url,
       'quantity': 0,
     }).then((DocumentReference docRef) {
@@ -74,7 +74,7 @@ class _EditPageState extends State<EditPage> {
 
       FirebaseFirestore.instance.collection('stock').doc(docId).set({
         'name': name,
-        'price': price + ' บาท',
+        'price': price,
         'url': url,
         'quantity': 0,
         'docId': docId,

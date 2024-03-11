@@ -8,12 +8,38 @@ class CartProvider extends ChangeNotifier {
   List<Product> get items => _items;
 
   void addToCart(Product product) {
-    _items.add(product);
+    if (_items.isNotEmpty) {
+      bool isProductExist = false;
+      for (var item in _items) {
+        if (item.id == product.id) {
+          item.quantity++;
+          isProductExist = true;
+          break;
+        }
+      }
+
+      if (!isProductExist) {
+        product.quantity = 1;
+        _items.add(product);
+      }
+    } else {
+      product.quantity = 1;
+      _items.add(product);
+    }
     notifyListeners();
   }
 
   void removeFromCart(Product product) {
-    _items.remove(product);
+    for (var item in _items) {
+      if (item.id == product.id) {
+        if (item.quantity > 1) {
+          item.quantity--;
+        } else {
+          _items.remove(item);
+        }
+        break;
+      }
+    }
     notifyListeners();
   }
 

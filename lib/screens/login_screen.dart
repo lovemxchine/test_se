@@ -239,7 +239,6 @@ class _LoginState extends State<Login> {
     if (user != null) {
       print("Login is successfully signed");
 
-      // ดึงข้อมูลบทบาทของผู้ใช้จาก Firestore
       final snapshot = await FirebaseFirestore.instance
           .collection('user')
           .where('uid', isEqualTo: user.uid)
@@ -248,7 +247,6 @@ class _LoginState extends State<Login> {
       if (userData.containsKey('role')) {
         String role = userData['role'];
 
-        // บันทึกบทบาทของผู้ใช้ใน SharedPreferences
         saveUserRole(role);
         route(role);
       } else {
@@ -260,26 +258,27 @@ class _LoginState extends State<Login> {
   }
 
   void saveUserRole(String role) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userRole', role);
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString('userRole', role);
+    });
   }
 
   void route(String role) {
     switch (role) {
       case "manager":
-        Navigator.pushNamed(context, "/manager");
+        Navigator.pushReplacementNamed(context, "/manager");
         break;
       case "customer":
-        Navigator.pushNamed(context, "/customer");
+        Navigator.pushReplacementNamed(context, "/customer");
         break;
       case "employee":
-        Navigator.pushNamed(context, "/employee");
+        Navigator.pushReplacementNamed(context, "/employee");
         break;
       case "chef":
-        Navigator.pushNamed(context, "/chef");
+        Navigator.pushReplacementNamed(context, "/chef");
         break;
       default:
-        Navigator.pushNamed(context, "/");
+        Navigator.pushReplacementNamed(context, "/");
     }
   }
 }

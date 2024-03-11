@@ -64,16 +64,6 @@ class _MenuState extends State<Menu> {
               child: ListView(children: [
                 Column(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Product product = Product(
-                            id: 2, name: 'Product 2', price: 20.0, quantity: 1);
-
-                        Provider.of<CartProvider>(context, listen: false)
-                            .addToCart(product);
-                      },
-                      child: Text('Add Product 2 to Cart'),
-                    ),
                     GridView.count(
                       childAspectRatio: 0.68,
                       physics: const NeverScrollableScrollPhysics(),
@@ -149,7 +139,15 @@ class _MenuState extends State<Menu> {
                                     ),
                                     onPressed: doc['quantity'] > 0
                                         ? () {
-                                            print('enough quantity');
+                                            Product product = Product(
+                                                id: doc['docId'],
+                                                name: doc['name'],
+                                                price: doc['price'],
+                                                quantity: 1);
+
+                                            Provider.of<CartProvider>(context,
+                                                    listen: false)
+                                                .addToCart(product);
                                           }
                                         : () {
                                             print('not enough quantity');
