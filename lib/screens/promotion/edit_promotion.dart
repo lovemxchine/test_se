@@ -55,11 +55,11 @@ class _EditListPromotionState extends State<EditPromotion> {
 
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          final nameProController = TextEditingController(text: data['namep']);
+          final nameProController = TextEditingController(text: data['name']);
           final descriptionController =
               TextEditingController(text: data['detail']);
           final priceProController =
-              TextEditingController(text: data['pricep'].toString());
+              TextEditingController(text: data['price'].toString());
 
           return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -125,7 +125,7 @@ class _EditListPromotionState extends State<EditPromotion> {
                                     nameProController.text,
                                     descriptionController.text,
                                     int.parse(priceProController.text),
-                                    data['docIdp'])
+                                    data['docId'])
                                 ?.then((value) => Navigator.pop(context));
                           },
                           child: const Text('ยืนยันแก้ไขเมนู'))
@@ -146,14 +146,14 @@ class _EditListPromotionState extends State<EditPromotion> {
   Future _acceptEdit() async {}
 
   Future<dynamic>? setMenuCollection(
-    String namep,
+    String name,
     String detail,
-    int pricep,
+    int price,
     String data,
   ) async {
     await FirebaseFirestore.instance
         .collection('promotion')
         .doc('$data')
-        .update({'name': namep,'detail': detail, 'price': pricep});
+        .update({'name': name,'detail': detail, 'price': price});
   }
 }

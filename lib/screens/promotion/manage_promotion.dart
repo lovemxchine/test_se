@@ -104,11 +104,6 @@ class _ManagePromotionState extends State<ManagePromotion> {
                     return ListView(
                       children: [
                         Container(
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(20)),
-                              color: Color.fromARGB(255, 240, 240, 240),
-                            ),
                             child:
                                 PromotionDetail(availablePromotion: documents)),
                       ],

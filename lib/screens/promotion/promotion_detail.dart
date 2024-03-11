@@ -59,7 +59,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                         width: MediaQuery.of(context).size.width * 0.3,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(doc['urlp']),
+                            image: NetworkImage(doc['url']),
                             fit: BoxFit.cover,
                           ),
                           border:
@@ -77,7 +77,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                           Container(
                             child: Text(
                               // Get the name from Firestore
-                              doc['namep'],
+                              doc['name'],
                               style: const TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
@@ -111,7 +111,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                             ),
                             child: Center(
                               child: Text(
-                                'ราคา : ${doc['pricep']}',
+                                'ราคา : ${doc['price']}',
                                 style: GoogleFonts.mitr(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 0, 0, 0),
@@ -132,7 +132,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                             DocumentReference docRef = FirebaseFirestore
                                 .instance
                                 .collection('promotion')
-                                .doc(doc['docIdp']);
+                                .doc(doc['docId']);
                             _navigateToDetailPage(docRef);
                           },
                           child: Container(
@@ -171,7 +171,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                             DocumentReference docRef = FirebaseFirestore
                                 .instance
                                 .collection('promotion')
-                                .doc(doc['docIdp']);
+                                .doc(doc['docId']);
                             docRef.delete();
                           },
                           child: Container(

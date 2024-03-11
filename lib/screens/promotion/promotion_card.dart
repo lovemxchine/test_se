@@ -36,7 +36,7 @@ class _PromotionCardState extends State<PromotionCard> {
                     width: MediaQuery.of(context).size.width * 0.4,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(doc['urlp']),
+                        image: NetworkImage(doc['url']),
                         fit: BoxFit.cover,
                       ),
                       border: Border.all(width: 1, color: Colors.grey.shade200),
@@ -50,7 +50,7 @@ class _PromotionCardState extends State<PromotionCard> {
                   alignment: Alignment.center,
                   child: Text(
                     // Get the name from Firestore
-                    doc['namep'],
+                    doc['name'],
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
@@ -70,7 +70,7 @@ class _PromotionCardState extends State<PromotionCard> {
                 Container(
                   alignment: Alignment.center,
                   child: Text(
-                    'ราคา : ${doc['pricep']}',
+                    'ราคา : ${doc['price']}',
                     style: GoogleFonts.mitr(
                         textStyle: const TextStyle(
                             fontSize: 12, color: Color.fromARGB(255, 0, 0, 0))),

@@ -43,40 +43,40 @@ class _AddPromotionState extends State<AddPromotion> {
 
     await ref.putFile(file);
 
-    String urlp = await ref.getDownloadURL();
-    print(urlp);
+    String url = await ref.getDownloadURL();
+    print(url);
 
     addPromotionCollection(
       nameProController.text,
       descriptionController.text,
       int.parse(priceProController.text),
-      urlp,
+      url,
     ).then((value) => Navigator.pop(context));
   }
 
   Future<void> addPromotionCollection(
-    String namep,
+    String name,
     String detail,
-    int pricep,
-    String urlp,
+    int price,
+    String url,
   ) async {
     await FirebaseFirestore.instance.collection('promotion').add({
-      'name': namep,
-      'price': pricep,
+      'name': name,
+      'price': price,
       'detail': detail,
-      'url': urlp,
+      'url': url,
       'quantity': 0,
     }).then((DocumentReference docRef) {
-      String docIdp = docRef.id;
-      print('เอกสารถูกสร้างเรียบร้อยแล้ว: $docIdp');
+      String docId = docRef.id;
+      print('เอกสารถูกสร้างเรียบร้อยแล้ว: $docId');
 
-      FirebaseFirestore.instance.collection('promotion').doc(docIdp).set({
-        'name': namep,
-        'price': pricep,
+      FirebaseFirestore.instance.collection('promotion').doc(docId).set({
+        'name': name,
+        'price': price,
         'detail': detail,
-        'url': urlp,
+        'url': url,
         'quantity': 0,
-        'docId': docIdp,
+        'docId': docId,
       });
       ;
     }).catchError((error) {
