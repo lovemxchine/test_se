@@ -1,15 +1,15 @@
 class Product {
-  final String id;
+  final int id;
   final String name;
   final double price;
-  final String imageUrl;
+  // final String imageUrl;
   int quantity;
 
   Product({
     required this.id,
     required this.name,
     required this.price,
-    required this.imageUrl,
+    // required this.imageUrl,
     this.quantity = 1,
   });
 }

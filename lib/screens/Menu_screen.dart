@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:test_se/model/product.dart';
+import 'package:test_se/provider/provider.dart';
 import '../widgets/drawer_list.dart';
 
 class Menu extends StatefulWidget {
@@ -61,6 +64,16 @@ class _MenuState extends State<Menu> {
               child: ListView(children: [
                 Column(
                   children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Product product = Product(
+                            id: 2, name: 'Product 2', price: 20.0, quantity: 1);
+
+                        Provider.of<CartProvider>(context, listen: false)
+                            .addToCart(product);
+                      },
+                      child: Text('Add Product 2 to Cart'),
+                    ),
                     GridView.count(
                       childAspectRatio: 0.68,
                       physics: const NeverScrollableScrollPhysics(),
@@ -130,7 +143,8 @@ class _MenuState extends State<Menu> {
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
                                               doc['quantity'] > 0
-                                                  ? Color.fromARGB(255, 90, 140, 149)
+                                                  ? Color.fromARGB(
+                                                      255, 90, 140, 149)
                                                   : Colors.grey),
                                     ),
                                     onPressed: doc['quantity'] > 0

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:test_se/components/my_button.dart';
+import 'package:test_se/model/product.dart';
+import 'package:test_se/provider/provider.dart';
 
 import '../widgets/drawer_list.dart';
 
@@ -64,10 +67,48 @@ class _OrderListState extends State<OrderList> {
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             color: Color.fromARGB(255, 240, 240, 240)),
-        child: ListView(
-          children: const [
-          
-        ]),
+        child: Consumer<CartProvider>(
+          builder: (context, cartProvider, _) {
+            // ดึงรายการสินค้าในตะกร้า
+            List<Product> cartItems = cartProvider.items;
+
+            if (cartItems.isEmpty) {
+              return Center(
+                child: Text('No items in the cart.'),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: cartItems.length,
+                itemBuilder: (context, index) {
+                  Product product = cartItems[index];
+                  return ListTile(
+                    title: Text(product.name),
+                    subtitle: Text('Price: ${product.price}'),
+                    trailing: Text('Quantity: ${product.quantity}'),
+                    onTap: () {
+                      cartProvider.removeFromCart(product);
+                    },
+                  );
+                },
+              );
+            }
+          },
+        ),
+      ),
+      bottomNavigationBar: Consumer<CartProvider>(
+        builder: (context, cartProvider, _) {
+          // แสดงราคารวมของสินค้าในตะกร้า
+          double totalPrice = cartProvider.getTotalPrice();
+          return BottomAppBar(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Total Price: $totalPrice',
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

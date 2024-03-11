@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:test_se/firebase_options.dart';
+import 'package:test_se/provider/provider.dart';
 import 'package:test_se/screens/admin_register_screen.dart';
 import 'package:test_se/screens/login_screen.dart';
 import 'package:test_se/screens/register_screen.dart';
@@ -29,22 +31,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: GoogleFonts.mitr().fontFamily,
-          brightness: Brightness.light,
-          primaryColor: Colors.blue,
-        ),
-        routes: {
-          '/': (context) => SplashScreen(child: Login()),
-          '/login': (context) => Login(),
-          '/signUp': (context) => Register(),
-          '/admin_reg': (context) => AdminRegister(),
-          '/customer': (context) => const CustomerScreen(),
-          '/chef': (context) => const ChefScreen(),
-          '/manager': (context) => const ManagerScreen(),
-          '/employee': (context) => const EmployeeScreen(),
-        });
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => CartProvider()),
+        ],
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              fontFamily: GoogleFonts.mitr().fontFamily,
+              brightness: Brightness.light,
+              primaryColor: Colors.blue,
+            ),
+            routes: {
+              '/': (context) => SplashScreen(child: Login()),
+              '/login': (context) => Login(),
+              '/signUp': (context) => Register(),
+              '/admin_reg': (context) => AdminRegister(),
+              '/customer': (context) => const CustomerScreen(),
+              '/chef': (context) => const ChefScreen(),
+              '/manager': (context) => const ManagerScreen(),
+              '/employee': (context) => const EmployeeScreen(),
+            }));
   }
 }
