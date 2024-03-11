@@ -22,6 +22,7 @@ class _EditPageState extends State<EditPage> {
   final priceController = TextEditingController();
   final descriptionController = TextEditingController();
   PlatformFile? pickedFile;
+  bool _isProcessing = false;
 
   Future _selectImage() async {
     final result = await FilePicker.platform.pickFiles();
@@ -37,6 +38,9 @@ class _EditPageState extends State<EditPage> {
       return;
     }
 
+    setState(() {
+      _isProcessing = true;
+    });
     FirebaseStorage firebaseStorage = FirebaseStorage.instance;
     String menu_id = DateTime.now().toString();
     final file = File(pickedFile!.path!);
@@ -52,12 +56,10 @@ class _EditPageState extends State<EditPage> {
       priceController.text,
       url,
     );
-    Navigator.pop(context);
   }
 
   Future<void> addMenuCollection(
     String name,
-    // String descript,
     String price,
     String url,
   ) async {
@@ -67,22 +69,19 @@ class _EditPageState extends State<EditPage> {
       'url': url,
       'quantity': 0,
     }).then((DocumentReference docRef) {
-      // เมื่อเอกสารถูกสร้างเรียบร้อยแล้ว คุณสามารถเข้าถึง Document ID ที่ Firebase สร้างได้ที่นี่
       String docId = docRef.id;
       print('เอกสารถูกสร้างเรียบร้อยแล้ว: $docId');
 
-      // สร้างเอกสารใหม่เพื่อเซ็ตฟิลด์ 'docId' ด้วย Document ID ที่ได้
       FirebaseFirestore.instance.collection('stock').doc(docId).set({
         'name': name,
         'price': price + ' บาท',
         'url': url,
         'quantity': 0,
-        'docId':
-            docId, // เพิ่มฟิลด์ 'docId' โดยให้ค่าเป็น Document ID ที่ Firebase สร้าง
+        'docId': docId,
       });
+      Navigator.pop(context);
     }).catchError((error) {
-      // แสดงข้อความเมื่อเกิดข้อผิดพลาดในการสร้างเอกสาร
-      print('เกิดข้อผิดพลาดในการสร้างเอกสาร: $error');
+      print('$error');
     });
     ;
   }
@@ -140,8 +139,8 @@ class _EditPageState extends State<EditPage> {
                   child: ClipRect(
                     child: Image.file(
                       File(pickedFile!.path!),
-                      width: 200, // กำหนดความกว้างของรูปภาพ
-                      height: 200, // กำหนดความสูงของรูปภาพ
+                      width: 200,
+                      height: 200,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -198,7 +197,10 @@ class _EditPageState extends State<EditPage> {
                   width: 20,
                 ),
                 ElevatedButton(
-                    onPressed: _accept, child: const Text('ยืนยันเพิ่มเมนู'))
+                    onPressed: _isProcessing ? null : _accept,
+                    child: _isProcessing
+                        ? CircularProgressIndicator()
+                        : const Text('ยืนยันเพิ่มเมนู'))
               ],
             ),
             SizedBox(

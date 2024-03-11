@@ -113,8 +113,8 @@ class _StockDetailPageState extends State<StockDetailPage> {
                       ElevatedButton(
                           onPressed: () async {
                             await setMenuCollection(menuController.text,
-                                priceController.text, data['docId']);
-                            Navigator.pop(context);
+                                    priceController.text, data['docId'])
+                                ?.then((value) => Navigator.pop(context));
                           },
                           child: const Text('ยืนยันแก้ไขเมนู'))
                     ],
