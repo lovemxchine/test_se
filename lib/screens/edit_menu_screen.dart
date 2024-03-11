@@ -57,7 +57,8 @@ class _StockDetailPageState extends State<StockDetailPage> {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
           final menuController = TextEditingController(text: data['name']);
-          final priceController = TextEditingController(text: data['price']);
+          final priceController =
+              TextEditingController(text: data['price'].toString());
 
           return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -112,8 +113,10 @@ class _StockDetailPageState extends State<StockDetailPage> {
                     children: [
                       ElevatedButton(
                           onPressed: () async {
-                            await setMenuCollection(menuController.text,
-                                    priceController.text, data['docId'])
+                            await setMenuCollection(
+                                    menuController.text,
+                                    int.parse(priceController.text),
+                                    data['docId'])
                                 ?.then((value) => Navigator.pop(context));
                           },
                           child: const Text('ยืนยันแก้ไขเมนู'))
@@ -135,7 +138,7 @@ class _StockDetailPageState extends State<StockDetailPage> {
 
   Future<dynamic>? setMenuCollection(
     String name,
-    String price,
+    int price,
     String data,
   ) async {
     await FirebaseFirestore.instance
