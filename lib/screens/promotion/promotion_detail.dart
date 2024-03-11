@@ -1,43 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:test_se/screens/edit_menu_screen.dart';
 
-class EditCard extends StatefulWidget {
-  final List<DocumentSnapshot> availableStocks;
+import 'edit_promotion.dart';
 
-  const EditCard({Key? key, required this.availableStocks}) : super(key: key);
+class PromotionDetail extends StatefulWidget {
+  final List<DocumentSnapshot> availablePromotion;
+
+  const PromotionDetail({super.key, required this.availablePromotion});
 
   @override
-  State<EditCard> createState() => _EditCardState();
+  State<PromotionDetail> createState() => _PromotionDetailState();
 }
 
-
-
-class _EditCardState extends State<EditCard> {
+class _PromotionDetailState extends State<PromotionDetail> {
   void _navigateToDetailPage(DocumentReference docRef) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => StockDetailPage(docRef: docRef),
+        builder: (context) => EditPromotion(docRef: docRef),
       ),
     );
   }
-  
 
   @override
-  void initState() {
-    super.initState();
-    print(widget.availableStocks);
-  }
-
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
           height: MediaQuery.of(context).size.width * 0.03,
         ),
-        for (var doc in widget.availableStocks)
+        for (var doc in widget.availablePromotion)
           Column(
             children: [
               Container(
@@ -45,13 +38,13 @@ class _EditCardState extends State<EditCard> {
                 width: MediaQuery.of(context).size.width * 0.95,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                       // changes position of shadow
                     ),
                   ],
@@ -66,7 +59,7 @@ class _EditCardState extends State<EditCard> {
                         width: MediaQuery.of(context).size.width * 0.3,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(doc['url']),
+                            image: NetworkImage(doc['urlp']),
                             fit: BoxFit.cover,
                           ),
                           border:
@@ -84,9 +77,23 @@ class _EditCardState extends State<EditCard> {
                           Container(
                             child: Text(
                               // Get the name from Firestore
-                              doc['name'],
+                              doc['namep'],
                               style: const TextStyle(
                                 fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.001,
+                          ),
+                          Container(
+                            child: Text(
+                              // Get the name from Firestore
+                              doc['detail'],
+                              style: const TextStyle(
+                                fontSize: 14,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w300,
                               ),
@@ -104,7 +111,7 @@ class _EditCardState extends State<EditCard> {
                             ),
                             child: Center(
                               child: Text(
-                                'ราคา : ${doc['price']}',
+                                'ราคา : ${doc['pricep']}',
                                 style: GoogleFonts.mitr(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 0, 0, 0),
@@ -119,20 +126,20 @@ class _EditCardState extends State<EditCard> {
                     ),
                     Column(
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         GestureDetector(
                           onTap: () async {
                             DocumentReference docRef = FirebaseFirestore
                                 .instance
-                                .collection('stock')
-                                .doc(doc['docId']);
+                                .collection('promotion')
+                                .doc(doc['docIdp']);
                             _navigateToDetailPage(docRef);
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.width * 0.09,
                             width: MediaQuery.of(context).size.width * 0.18,
                             decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 33, 128, 223),
+                              color: const Color.fromARGB(255, 33, 128, 223),
                               borderRadius: BorderRadius.circular(16.0),
                               boxShadow: const [
                                 BoxShadow(
@@ -163,15 +170,15 @@ class _EditCardState extends State<EditCard> {
                           onTap: () async {
                             DocumentReference docRef = FirebaseFirestore
                                 .instance
-                                .collection('stock')
-                                .doc(doc['docId']);
+                                .collection('promotion')
+                                .doc(doc['docIdp']);
                             docRef.delete();
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.width * 0.09,
                             width: MediaQuery.of(context).size.width * 0.18,
                             decoration: BoxDecoration(
-                              color: Color.fromRGBO(170, 35, 35, 1),
+                              color: const Color.fromRGBO(170, 35, 35, 1),
                               borderRadius: BorderRadius.circular(16.0),
                               boxShadow: const [
                                 BoxShadow(
@@ -195,7 +202,7 @@ class _EditCardState extends State<EditCard> {
                             ),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                       ],
                     )
                   ],

@@ -1,25 +1,20 @@
-import 'dart:io';
-// import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-
 import 'package:test_se/components/text_field.dart';
-import 'package:test_se/widgets/drawer_list.dart';
-// import 'package:test_se/widgets/realtime_widget.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
 
-class EditPage extends StatefulWidget {
-  EditPage({super.key});
+class AddPromotion extends StatefulWidget {
+  const AddPromotion({super.key});
 
   @override
-  State<EditPage> createState() => _EditPageState();
+  State<AddPromotion> createState() => _AddPromotionState();
 }
 
-class _EditPageState extends State<EditPage> {
-  final menuController = TextEditingController();
-  final priceController = TextEditingController();
+class _AddPromotionState extends State<AddPromotion> {
+  final nameProController = TextEditingController();
+  final priceProController = TextEditingController();
   final descriptionController = TextEditingController();
   PlatformFile? pickedFile;
   bool _isProcessing = false;
@@ -42,42 +37,46 @@ class _EditPageState extends State<EditPage> {
       _isProcessing = true;
     });
     FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-    String menu_id = DateTime.now().toString();
+    String promotion_id = DateTime.now().toString();
     final file = File(pickedFile!.path!);
-    final ref = FirebaseStorage.instance.ref().child('Menu/$menu_id');
+    final ref = FirebaseStorage.instance.ref().child('promotion/$promotion_id');
 
     await ref.putFile(file);
 
-    String url = await ref.getDownloadURL();
-    print(url);
+    String urlp = await ref.getDownloadURL();
+    print(urlp);
 
-    addMenuCollection(
-      menuController.text,
-      int.parse(priceController.text),
-      url,
+    addPromotionCollection(
+      nameProController.text,
+      descriptionController.text,
+      int.parse(priceProController.text),
+      urlp,
     ).then((value) => Navigator.pop(context));
   }
 
-  Future<void> addMenuCollection(
-    String name,
-    int price,
-    String url,
+  Future<void> addPromotionCollection(
+    String namep,
+    String detail,
+    int pricep,
+    String urlp,
   ) async {
-    await FirebaseFirestore.instance.collection('stock').add({
-      'name': name,
-      'price': price,
-      'url': url,
+    await FirebaseFirestore.instance.collection('promotion').add({
+      'name': namep,
+      'price': pricep,
+      'detail': detail,
+      'url': urlp,
       'quantity': 0,
     }).then((DocumentReference docRef) {
-      String docId = docRef.id;
-      print('เอกสารถูกสร้างเรียบร้อยแล้ว: $docId');
+      String docIdp = docRef.id;
+      print('เอกสารถูกสร้างเรียบร้อยแล้ว: $docIdp');
 
-      FirebaseFirestore.instance.collection('stock').doc(docId).set({
-        'name': name,
-        'price': price,
-        'url': url,
+      FirebaseFirestore.instance.collection('promotion').doc(docIdp).set({
+        'name': namep,
+        'price': pricep,
+        'detail': detail,
+        'url': urlp,
         'quantity': 0,
-        'docId': docId,
+        'docId': docIdp,
       });
       ;
     }).catchError((error) {
@@ -116,7 +115,7 @@ class _EditPageState extends State<EditPage> {
           ),
         ),
         title: const Text(
-          "Add Menu",
+          "Add Promotion",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -154,7 +153,7 @@ class _EditPageState extends State<EditPage> {
                   color: Colors.blue[100],
                 ),
                 child: const Center(
-                  child: Text('รูปเมนู'),
+                  child: Text('รูปโปรโมชั่น'),
                 ),
               ),
             SizedBox(
@@ -168,8 +167,8 @@ class _EditPageState extends State<EditPage> {
               child: Column(
                 children: [
                   MyTextField(
-                    hintText: "ชื่อเมนู",
-                    controller: menuController,
+                    hintText: "ชื่อโปรโมชั่น",
+                    controller: nameProController,
                     obscureText: false,
                     labelText: "",
                   ),
@@ -177,8 +176,17 @@ class _EditPageState extends State<EditPage> {
                     height: MediaQuery.of(context).size.height * 0.025,
                   ),
                   MyTextField(
-                    hintText: "ราคาอาหาร",
-                    controller: priceController,
+                    hintText: "รายละเอียดโปรโมชั่น",
+                    controller: descriptionController,
+                    obscureText: false,
+                    labelText: "",
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  MyTextField(
+                    hintText: "ราคาโปรโมชั่น",
+                    controller: priceProController,
                     obscureText: false,
                     labelText: "",
                   ),

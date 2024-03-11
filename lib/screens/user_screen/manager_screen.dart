@@ -6,7 +6,7 @@ import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:test_se/screens/promotion_screen.dart';
+import 'package:test_se/screens/promotion/promotion_screen.dart';
 import 'package:test_se/screens/status_order.dart';
 
 class ManagerScreen extends StatefulWidget {

@@ -2,25 +2,25 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class StockDetailPage extends StatefulWidget {
+class EditPromotion extends StatefulWidget {
   final DocumentReference docRef;
 
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-
-  StockDetailPage({Key? key, required this.docRef}) : super(key: key);
+  
+  EditPromotion({Key? key, required this.docRef}) : super(key: key);
 
   @override
-  _StockDetailPageState createState() => _StockDetailPageState();
+  State<EditPromotion> createState() => _EditListPromotionState();
 }
 
-class _StockDetailPageState extends State<StockDetailPage> {
+class _EditListPromotionState extends State<EditPromotion> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Stock Detail'),
+        title: const Text('Promotion Detail'),
         toolbarHeight: 80,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 10),
@@ -38,7 +38,7 @@ class _StockDetailPageState extends State<StockDetailPage> {
         future: widget.docRef.get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -48,16 +48,18 @@ class _StockDetailPageState extends State<StockDetailPage> {
             );
           }
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: Text('No Data'),
             );
           }
 
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          final menuController = TextEditingController(text: data['name']);
-          final priceController =
-              TextEditingController(text: data['price'].toString());
+          final nameProController = TextEditingController(text: data['namep']);
+          final descriptionController =
+              TextEditingController(text: data['detail']);
+          final priceProController =
+              TextEditingController(text: data['pricep'].toString());
 
           return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -84,10 +86,10 @@ class _StockDetailPageState extends State<StockDetailPage> {
                     child: Column(
                       children: [
                         TextFormField(
-                          controller: menuController,
+                          controller: nameProController,
                           // initialValue: menuController.text,
-                          decoration: InputDecoration(
-                            labelText: 'ชื่อเมนู',
+                          decoration: const InputDecoration(
+                            labelText: 'ชื่อโปรโมชั่น',
                           ),
                           onChanged: (value) {},
                         ),
@@ -95,8 +97,15 @@ class _StockDetailPageState extends State<StockDetailPage> {
                           height: MediaQuery.of(context).size.height * 0.025,
                         ),
                         TextFormField(
-                          controller: priceController,
-                          decoration: InputDecoration(
+                          controller: descriptionController,
+                          decoration: const InputDecoration(
+                            labelText: 'รายละเอียด',
+                          ),
+                          onChanged: (value) {},
+                        ),
+                        TextFormField(
+                          controller: priceProController,
+                          decoration: const InputDecoration(
                             labelText: 'ราคา',
                           ),
                           onChanged: (value) {},
@@ -113,9 +122,10 @@ class _StockDetailPageState extends State<StockDetailPage> {
                       ElevatedButton(
                           onPressed: () async {
                             await setMenuCollection(
-                                    menuController.text,
-                                    int.parse(priceController.text),
-                                    data['docId'])
+                                    nameProController.text,
+                                    descriptionController.text,
+                                    int.parse(priceProController.text),
+                                    data['docIdp'])
                                 ?.then((value) => Navigator.pop(context));
                           },
                           child: const Text('ยืนยันแก้ไขเมนู'))
@@ -136,14 +146,14 @@ class _StockDetailPageState extends State<StockDetailPage> {
   Future _acceptEdit() async {}
 
   Future<dynamic>? setMenuCollection(
-    String name,
-    int price,
+    String namep,
+    String detail,
+    int pricep,
     String data,
   ) async {
     await FirebaseFirestore.instance
-        .collection('stock')
+        .collection('promotion')
         .doc('$data')
-        .update({'name': name, 'price': price});
+        .update({'name': namep,'detail': detail, 'price': pricep});
   }
 }
-

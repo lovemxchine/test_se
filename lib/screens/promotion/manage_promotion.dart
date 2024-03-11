@@ -1,23 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:test_se/screens/edit_page.dart';
-import 'package:test_se/widgets/manage_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:test_se/screens/promotion/add_promotion.dart';
+import 'package:test_se/screens/promotion/promotion_detail.dart';
 
-
-class ManageMenu extends StatefulWidget {
-  const ManageMenu({Key? key}) : super(key: key);
+class ManagePromotion extends StatefulWidget {
+  const ManagePromotion({super.key});
 
   @override
-  State<ManageMenu> createState() => _ManageMenuState();
+  State<ManagePromotion> createState() => _ManagePromotionState();
 }
 
-class _ManageMenuState extends State<ManageMenu> {
+class _ManagePromotionState extends State<ManagePromotion> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _edit() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditPage()),
+      MaterialPageRoute(builder: (context) => const AddPromotion()),
     );
   }
 
@@ -40,7 +39,7 @@ class _ManageMenuState extends State<ManageMenu> {
             color: Colors.white,
           ),
         ),
-        actions:<Widget>[
+        actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(20),
             child: IconButton(
@@ -67,7 +66,7 @@ class _ManageMenuState extends State<ManageMenu> {
           ),
         ),
         title: const Text(
-          "Edit menu",
+          "Edit Promotion",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -93,11 +92,11 @@ class _ManageMenuState extends State<ManageMenu> {
                 ],
               ),
             ),
-            
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('stock').snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('promotion')
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<DocumentSnapshot> documents = snapshot.data!.docs;
@@ -105,15 +104,13 @@ class _ManageMenuState extends State<ManageMenu> {
                     return ListView(
                       children: [
                         Container(
-                          decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(20)),
-                            color: Color.fromARGB(255, 240, 240, 240),
-                          ),
-                          child: EditCard(
-                            availableStocks: documents,
-                          ),
-                        ),
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20)),
+                              color: Color.fromARGB(255, 240, 240, 240),
+                            ),
+                            child:
+                                PromotionDetail(availablePromotion: documents)),
                       ],
                     );
                   } else {

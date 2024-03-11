@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/drawer_list.dart';
-import '../widgets/promotion_card.dart';
+import 'package:test_se/screens/promotion/promotion_card.dart';
+import '../../widgets/drawer_list.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Promotion extends StatefulWidget {
   const Promotion({super.key});
@@ -47,14 +48,29 @@ class _PromotionState extends State<Promotion> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            color: Color.fromARGB(255, 240, 240, 240)),
-        child: ListView(
-          children: const [
-          PromotionCard(),
-        ]),
+      body:StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('promotion').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<DocumentSnapshot> documents = snapshot.data!.docs;
+            return Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  color: Color.fromARGB(255, 240, 240, 240)),
+              child: ListView(children: [
+                Column(
+                  children: [
+                    PromotionCard(
+                      availablePromotion: documents,
+                    ),
+                  ],
+                ),
+              ]),
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
       ),
     );
   }

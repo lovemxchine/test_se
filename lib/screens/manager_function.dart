@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_se/screens/manage_menu.dart';
 
 import '../widgets/drawer_list.dart';
+import 'promotion/manage_promotion.dart';
 
 class ManagerFunc extends StatefulWidget {
   const ManagerFunc({super.key});
@@ -76,7 +77,7 @@ class _ManagerFuncState extends State<ManagerFunc> {
                     onPressed: () {
                       Navigator.push(
                      context,
-                     MaterialPageRoute(builder: (context) => const ManageMenu()),
+                     MaterialPageRoute(builder: (context) => const ManagePromotion()),
                    );
                     },
                     child: const Text(
