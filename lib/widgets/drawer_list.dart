@@ -42,22 +42,6 @@ class DrawerList extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.check_box),
-            title: const Text('เช็คบิล'),
-            onTap: () => {
-              AwesomeDialog(
-                context: context,
-                dialogType: DialogType.warning,
-                animType: AnimType.topSlide,
-                showCloseIcon: true,
-                title: "ยืนยันการเช็คบิล",
-                desc: "โปรดตรวจสอบรายการอาหารของคุณ",
-                btnCancelOnPress: () {},
-                btnOkOnPress: () {},
-              ).show()
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.check_box),
             title: const Text('ออกจากระบบ'),
             onTap: () {
               FirebaseAuth.instance.signOut();

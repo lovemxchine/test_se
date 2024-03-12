@@ -4,14 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_se/auth/firebase_auth_service.dart';
-import 'package:test_se/screens/Menu_screen.dart';
-import 'package:test_se/screens/admin_register_screen.dart';
-
-import '../components/button_field.dart';
 import '../components/text_field.dart';
 import '../widgets/logo_image.dart';
 import '../widgets/logo_zone.dart';
-import 'register_screen.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -196,32 +191,6 @@ class _LoginState extends State<Login> {
               ),
             ),
             //text สมัครรหัส
-            Positioned(
-              top: 540,
-              left: 0,
-              right: 0,
-              child: Container(
-                alignment: Alignment.center,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Register()),
-                    );
-                  },
-                  child: Text(
-                    'สมัครรหัสสมาชิก',
-                    style: GoogleFonts.mitr(
-                      textStyle: const TextStyle(
-                        color: Color.fromARGB(255, 49, 93, 101),
-                        decoration: TextDecoration.underline,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
