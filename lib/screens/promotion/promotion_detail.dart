@@ -34,7 +34,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
           Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.width * 0.32,
                 width: MediaQuery.of(context).size.width * 0.95,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -91,7 +91,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                           Container(
                             child: Text(
                               // Get the name from Firestore
-                              doc['detail'],
+                              'รายละเอียด : ${doc['detail']}',
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -101,6 +101,17 @@ class _PromotionDetailState extends State<PromotionDetail> {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.width * 0.001,
+                          ),
+                          Container(
+                            child: Text(
+                              // Get the name from Firestore
+                              'จำนวน : ${doc['quantity']}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
                           ),
                           Container(
                             height: 30,

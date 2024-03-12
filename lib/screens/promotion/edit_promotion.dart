@@ -1,12 +1,13 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:test_se/screens/promotion/add_promotion.dart';
 
 class EditPromotion extends StatefulWidget {
   final DocumentReference docRef;
 
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  
+
   EditPromotion({Key? key, required this.docRef}) : super(key: key);
 
   @override
@@ -19,6 +20,7 @@ class _EditListPromotionState extends State<EditPromotion> {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Promotion Detail'),
         toolbarHeight: 80,
@@ -58,8 +60,18 @@ class _EditListPromotionState extends State<EditPromotion> {
           final nameProController = TextEditingController(text: data['name']);
           final descriptionController =
               TextEditingController(text: data['detail']);
+          final quantityProController =
+              TextEditingController(text: data['quantity'].toString());
           final priceProController =
               TextEditingController(text: data['price'].toString());
+          
+
+          String addquantity() {
+            int input = int.tryParse(quantityProController.text)?? 0;
+            int existingValue = data['quantity'];
+            int totalValue = input + existingValue;
+            return totalValue.toString();
+          }
 
           return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -103,6 +115,19 @@ class _EditListPromotionState extends State<EditPromotion> {
                           ),
                           onChanged: (value) {},
                         ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.025,
+                        ),
+                        TextFormField(
+                          controller: quantityProController,
+                          decoration: const InputDecoration(
+                            labelText: 'จำนวน',
+                          ),
+                          onChanged: (value) {},
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.025,
+                        ),
                         TextFormField(
                           controller: priceProController,
                           decoration: const InputDecoration(
@@ -124,6 +149,7 @@ class _EditListPromotionState extends State<EditPromotion> {
                             await setMenuCollection(
                                     nameProController.text,
                                     descriptionController.text,
+                                    int.parse(quantityProController.text),
                                     int.parse(priceProController.text),
                                     data['docId'])
                                 ?.then((value) => Navigator.pop(context));
@@ -148,12 +174,18 @@ class _EditListPromotionState extends State<EditPromotion> {
   Future<dynamic>? setMenuCollection(
     String name,
     String detail,
+    int quantity,
     int price,
     String data,
   ) async {
     await FirebaseFirestore.instance
         .collection('promotion')
         .doc('$data')
-        .update({'name': name,'detail': detail, 'price': price});
+        .update({
+      'name': name,
+      'detail': detail,
+      'quantity': quantity,
+      'price': price
+    });
   }
 }
