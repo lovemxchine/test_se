@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_se/screens/admin_register_screen.dart';
 import 'package:test_se/screens/manage_menu.dart';
 
 import '../widgets/drawer_list.dart';
@@ -109,7 +110,7 @@ class _ManagerFuncState extends State<ManagerFunc> {
                     onPressed: () {
                       Navigator.push(
                      context,
-                     MaterialPageRoute(builder: (context) => const ManageMenu()),
+                     MaterialPageRoute(builder: (context) => AdminRegister()),
                    );
                     },
                     child: const Text(

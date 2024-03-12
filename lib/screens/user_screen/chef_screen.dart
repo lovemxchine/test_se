@@ -2,12 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:test_se/screens/login_screen.dart';
 import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
 import '../promotion/promotion_screen.dart';
 import '../status_order.dart';
-import '../stock_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class ChefScreen extends StatefulWidget {
