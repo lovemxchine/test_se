@@ -32,6 +32,8 @@ class _OrderListState extends State<OrderList> {
 
   @override
   Widget build(BuildContext context) {
+    bool isPressed = false;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
@@ -102,7 +104,6 @@ class _OrderListState extends State<OrderList> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400))),
                         ),
-                        Spacer(),
                         Container(
                             width: MediaQuery.of(context).size.width * 0.3,
                             child: Row(
@@ -266,23 +267,6 @@ class _OrderListState extends State<OrderList> {
                                                                           .w400),
                                                         ),
                                                       ),
-                                                      // Container(
-                                                      //   child: Text(
-                                                      //     '${product.name} / ราคา: ${product.price} บาท /  จำนวณ: ${product.quantity}',
-                                                      //     style:
-                                                      //         GoogleFonts.mitr(
-                                                      //       textStyle:
-                                                      //           const TextStyle(
-                                                      //               color: Colors
-                                                      //                   .black,
-                                                      //               fontSize:
-                                                      //                   10,
-                                                      //               fontWeight:
-                                                      //                   FontWeight
-                                                      //                       .w400),
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
                                                     ],
                                                   ),
                                                 );
@@ -292,24 +276,64 @@ class _OrderListState extends State<OrderList> {
                                         },
                                       ),
                                     ),
-                                    Spacer(),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Consumer<ConfirmCart>(
-                                          builder: (context, cartProvider, _) {
-                                            final formatCurrency =
-                                                NumberFormat.currency(
-                                                    locale: 'en_US',
-                                                    symbol: '');
-                                            int totalPrice =
-                                                cartProvider.getTotalPrice();
-                                            return Text(
-                                                "ราคาทั้งหมด: ${formatCurrency.format(totalPrice)} บาท");
-                                          },
-                                        )
-                                      ],
+                                    Center(
+                                      child: Column(
+                                        children: [
+                                          Consumer<ConfirmCart>(
+                                            builder:
+                                                (context, cartProvider, _) {
+                                              final formatCurrency =
+                                                  NumberFormat.currency(
+                                                      locale: 'en_US',
+                                                      symbol: '');
+                                              int totalPrice =
+                                                  cartProvider.getTotalPrice();
+                                              return Text(
+                                                  "ราคาทั้งหมด: ${formatCurrency.format(totalPrice)} บาท");
+                                            },
+                                          ),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.025),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              // Add your onPressed logic here
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(
+                                                    25), // Adjust the border radius as needed
+                                              ),
+                                              padding: const EdgeInsets
+                                                  .symmetric(
+                                                  vertical: 10,
+                                                  horizontal:
+                                                      20), // Adjust padding as needed
+                                              primary: Color.fromARGB(
+                                                  255,
+                                                  83,
+                                                  178,
+                                                  255), // Change the button color according to your preference
+                                            ),
+                                            child: const Text(
+                                              'เช็คบิล',
+                                              style: TextStyle(
+                                                color: Colors
+                                                    .white, // Change the text color according to your preference
+                                                fontSize:
+                                                    16, // Adjust the font size as needed
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.025),
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),
