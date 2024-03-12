@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:test_se/components/my_button.dart';
 import 'package:test_se/model/product.dart';
@@ -27,6 +28,7 @@ ClearOrder() {
 
 class _OrderListState extends State<OrderList> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,14 +83,61 @@ class _OrderListState extends State<OrderList> {
                 itemCount: cartItems.length,
                 itemBuilder: (context, index) {
                   Product product = cartItems[index];
-                  return ListTile(
-                    title: Text(product.name),
-                    subtitle: Text('Price: ${product.price}'),
-                    trailing: Text('Quantity: ${product.quantity}'),
-                    onTap: () {
-                      cartProvider.removeFromCart(product);
-                    },
+
+                  return Container(
+                    margin: EdgeInsets.all(
+                        MediaQuery.of(context).size.width * 0.025),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(0)),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(
+                              MediaQuery.of(context).size.width * 0.04),
+                          child: Text(
+                              '${product.name} ราคา: ${product.price} บาท',
+                              style: GoogleFonts.mitr(
+                                  textStyle: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400))),
+                        ),
+                        Spacer(),
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      cartProvider.removeFromCart(product);
+                                    },
+                                    icon: const Icon(Icons.remove)),
+                                Text('${product.quantity}',
+                                    style: GoogleFonts.mitr(
+                                        textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400))),
+                                IconButton(
+                                    onPressed: () {
+                                      Provider.of<CartProvider>(context,
+                                              listen: false)
+                                          .addToCart(product);
+                                    },
+                                    icon: const Icon(Icons.add)),
+                              ],
+                            )),
+                      ],
+                    ),
                   );
+                  // ListTile(
+                  //   title: Text(product.name),
+                  //   subtitle: Text('Price: ${product.price}'),
+                  //   trailing: Text('Quantity: ${product.quantity}'),
+                  //   onTap: () {
+                  //     cartProvider.removeFromCart(product);
+                  //   },
+                  // );
                 },
               );
             }
@@ -97,14 +146,61 @@ class _OrderListState extends State<OrderList> {
       ),
       bottomNavigationBar: Consumer<CartProvider>(
         builder: (context, cartProvider, _) {
-          // แสดงราคารวมของสินค้าในตะกร้า
-          double totalPrice = cartProvider.getTotalPrice();
+          int totalPrice = cartProvider.getTotalPrice();
           return BottomAppBar(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'Total Price: $totalPrice',
-                style: TextStyle(fontSize: 20.0),
+            height: 80,
+            child: Container(
+              padding: EdgeInsets.all(12.0),
+              child: Row(
+                children: [
+                  Text(
+                    'ราคารวม: $totalPrice บาท',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  Spacer(),
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.09,
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 33, 128, 223),
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 10,
+                          color: Color.fromARGB(152, 0, 0, 0),
+                          offset: Offset(1, 2),
+                        )
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        'คอร์นเฟิร์ม',
+                        style: GoogleFonts.poppins(
+                          textStyle: Theme.of(context).textTheme.titleLarge,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Row(
+                    children: [
+                      IconButton(
+                        tooltip: 'ok',
+                        color: Colors.green,
+                        iconSize: 20,
+                        onPressed: () {
+                          cartProvider.clearCart();
+                        },
+                        icon: Icon(
+                          IconData(0xe59c, fontFamily: 'MaterialIcons'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           );

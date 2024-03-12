@@ -8,10 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Getter for current user
   User? get currentUser => _auth.currentUser;
 
-  // Stream for auth state changes
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
   // Future for sign-up with email and password (with error handling)
@@ -24,17 +22,14 @@ class FirebaseAuthService {
       );
       return credential.user; // Return the created user
     } on FirebaseAuthException catch (e) {
-      // Handle specific FirebaseAuth exceptions
       handleFirebaseAuthError(e);
       return null;
     } catch (e) {
-      // Handle other exceptions
       print("An unexpected error occurred: $e");
       return null;
     }
   }
 
-  // Future for sign-in with email and password (with error handling)
   Future<User?> signInWithEmailAndPassword(
     String email,
     String password,
@@ -44,9 +39,8 @@ class FirebaseAuthService {
         email: email,
         password: password,
       );
-      return credential.user; // Return the signed-in user
+      return credential.user;
     } on FirebaseAuthException catch (e) {
-      // Handle specific FirebaseAuth exceptions
       handleFirebaseAuthError(e);
       return null;
     } catch (e) {
@@ -56,7 +50,6 @@ class FirebaseAuthService {
     }
   }
 
-  // Function to handle FirebaseAuth exceptions
   void handleFirebaseAuthError(FirebaseAuthException e) {
     switch (e.code) {
       case "weak-password":
