@@ -7,7 +7,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:test_se/components/text_field.dart';
-import 'package:test_se/widgets/drawer_list.dart';
 // import 'package:test_se/widgets/realtime_widget.dart';
 
 class EditPage extends StatefulWidget {

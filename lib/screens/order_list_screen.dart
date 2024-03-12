@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:test_se/components/my_button.dart';
 import 'package:test_se/model/product.dart';
 import 'package:test_se/provider/provider.dart';
 

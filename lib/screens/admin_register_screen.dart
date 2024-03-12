@@ -4,8 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/auth/firebase_auth_service.dart';
-import 'package:test_se/screens/login_screen.dart';
-
 import '../components/button_field.dart';
 import '../components/text_field.dart';
 import '../widgets/logo_image.dart';

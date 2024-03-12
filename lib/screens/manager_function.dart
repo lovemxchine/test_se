@@ -66,7 +66,7 @@ class _ManagerFuncState extends State<ManagerFunc> {
                    );
                     },
                     child: const Text(
-                      'Edit Menu',
+                      'Manage Menu',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 25,
@@ -82,23 +82,7 @@ class _ManagerFuncState extends State<ManagerFunc> {
                    );
                     },
                     child: const Text(
-                      'Add Promotion',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  )),
-              ListTile(
-                  title: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => const ManageMenu()),
-                   );
-                    },
-                    child: const Text(
-                      'Add Stock',
+                      'Manage Promotion',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 25,
