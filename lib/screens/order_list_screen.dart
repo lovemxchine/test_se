@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:test_se/components/my_button.dart';
 import 'package:test_se/model/product.dart';
@@ -71,7 +72,6 @@ class _OrderListState extends State<OrderList> {
             color: Color.fromARGB(255, 240, 240, 240)),
         child: Consumer<CartProvider>(
           builder: (context, cartProvider, _) {
-            // ดึงรายการสินค้าในตะกร้า
             List<Product> cartItems = cartProvider.items;
 
             if (cartItems.isEmpty) {
@@ -130,14 +130,6 @@ class _OrderListState extends State<OrderList> {
                       ],
                     ),
                   );
-                  // ListTile(
-                  //   title: Text(product.name),
-                  //   subtitle: Text('Price: ${product.price}'),
-                  //   trailing: Text('Quantity: ${product.quantity}'),
-                  //   onTap: () {
-                  //     cartProvider.removeFromCart(product);
-                  //   },
-                  // );
                 },
               );
             }
@@ -147,6 +139,7 @@ class _OrderListState extends State<OrderList> {
       bottomNavigationBar: Consumer<CartProvider>(
         builder: (context, cartProvider, _) {
           int totalPrice = cartProvider.getTotalPrice();
+
           return BottomAppBar(
             height: 80,
             child: Container(
@@ -155,51 +148,177 @@ class _OrderListState extends State<OrderList> {
                 children: [
                   Text(
                     'ราคารวม: $totalPrice บาท',
-                    style: TextStyle(fontSize: 20.0),
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.035),
                   ),
                   Spacer(),
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.09,
-                    width: MediaQuery.of(context).size.width * 0.25,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 33, 128, 223),
-                      borderRadius: BorderRadius.circular(16.0),
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 10,
-                          color: Color.fromARGB(152, 0, 0, 0),
-                          offset: Offset(1, 2),
-                        )
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        'คอร์นเฟิร์ม',
-                        style: GoogleFonts.poppins(
-                          textStyle: Theme.of(context).textTheme.titleLarge,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      IconButton(
-                        tooltip: 'ok',
-                        color: Colors.green,
-                        iconSize: 20,
-                        onPressed: () {
-                          cartProvider.clearCart();
-                        },
-                        icon: Icon(
-                          IconData(0xe59c, fontFamily: 'MaterialIcons'),
-                        ),
-                      ),
-                    ],
-                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Provider.of<ConfirmCart>(context, listen: false)
+                            .confirmOrder(context);
+                        cartProvider.clearCart();
+                      },
+                      child: const Text('คอร์นเฟิร์ม')),
+                  const Spacer(),
+                  ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.6,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Consumer<ConfirmCart>(
+                                        builder: (context, cartProvider, _) {
+                                          List<Product> cartItems =
+                                              cartProvider.items;
+
+                                          if (cartItems.isEmpty) {
+                                            return const Center(
+                                              child:
+                                                  Text('No items in the cart.'),
+                                            );
+                                          } else {
+                                            return ListView.builder(
+                                              itemCount: cartItems.length,
+                                              itemBuilder: (context, index) {
+                                                Product product =
+                                                    cartItems[index];
+
+                                                return Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.3,
+                                                  margin: EdgeInsets.all(
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.04),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              0)),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                        child: Text(
+                                                          '${product.name}',
+                                                          style:
+                                                              GoogleFonts.mitr(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                        child: Text(
+                                                          'ราคา: ${product.price} บาท',
+                                                          style:
+                                                              GoogleFonts.mitr(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        'จำนวณ: ${product.quantity}',
+                                                        style: GoogleFonts.mitr(
+                                                          textStyle:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 10,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),
+                                                        ),
+                                                      ),
+                                                      // Container(
+                                                      //   child: Text(
+                                                      //     '${product.name} / ราคา: ${product.price} บาท /  จำนวณ: ${product.quantity}',
+                                                      //     style:
+                                                      //         GoogleFonts.mitr(
+                                                      //       textStyle:
+                                                      //           const TextStyle(
+                                                      //               color: Colors
+                                                      //                   .black,
+                                                      //               fontSize:
+                                                      //                   10,
+                                                      //               fontWeight:
+                                                      //                   FontWeight
+                                                      //                       .w400),
+                                                      //     ),
+                                                      //   ),
+                                                      // ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Consumer<ConfirmCart>(
+                                          builder: (context, cartProvider, _) {
+                                            final formatCurrency =
+                                                NumberFormat.currency(
+                                                    locale: 'en_US',
+                                                    symbol: '');
+                                            int totalPrice =
+                                                cartProvider.getTotalPrice();
+                                            return Text(
+                                                "ราคาทั้งหมด: ${formatCurrency.format(totalPrice)} บาท");
+                                          },
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Text('เช็คบิล')),
                 ],
               ),
             ),

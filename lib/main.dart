@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => CartProvider()),
+          ChangeNotifierProvider(create: (_) => ConfirmCart()), //
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
