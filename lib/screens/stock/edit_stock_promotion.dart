@@ -1,25 +1,24 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-class EditPromotion extends StatefulWidget {
+class EditStockPromotion extends StatefulWidget {
   final DocumentReference docRef;
 
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-
-  EditPromotion({Key? key, required this.docRef}) : super(key: key);
+  EditStockPromotion({super.key, required this.docRef});
 
   @override
-  State<EditPromotion> createState() => _EditListPromotionState();
+  State<EditStockPromotion> createState() => _EditStockPromotionState();
 }
 
-class _EditListPromotionState extends State<EditPromotion> {
+class _EditStockPromotionState extends State<EditStockPromotion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Promotion Detail'),
+        title: const Text('Quantity Promotion'),
         toolbarHeight: 80,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 10),
@@ -54,12 +53,14 @@ class _EditListPromotionState extends State<EditPromotion> {
 
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          final nameProController = TextEditingController(text: data['name']);
-          final descriptionController =
-              TextEditingController(text: data['detail']);
-          final priceProController =
-              TextEditingController(text: data['price'].toString());
-
+          final quantityController =
+              TextEditingController();
+          final a = data['quantity'].toString();
+          int b = 0;
+          void addquantity(){
+            data['quantity'] += int.parse(quantityController.text);
+            b = data['quantity'];
+          }
           return Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
@@ -83,31 +84,22 @@ class _EditListPromotionState extends State<EditPromotion> {
                     width: 320,
                     child: Column(
                       children: [
-                        TextFormField(
-                          controller: nameProController,
-                          // initialValue: menuController.text,
-                          decoration: const InputDecoration(
-                            labelText: 'ชื่อโปรโมชั่น',
-                          ),
-                          onChanged: (value) {},
-                        ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.025,
                         ),
-                        TextFormField(
-                          controller: descriptionController,
-                          decoration: const InputDecoration(
-                            labelText: 'รายละเอียด',
+                        Container(
+                          child: Row(
+                            children: [
+                              Text(
+                                'จำนวน ' + a,
+                              ),
+                            ],
                           ),
-                          onChanged: (value) {},
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.025,
                         ),
                         TextFormField(
-                          controller: priceProController,
+                          controller: quantityController,
                           decoration: const InputDecoration(
-                            labelText: 'ราคา',
+                            labelText: 'จำนวนที่ต้องการเพิ่ม',
                           ),
                           onChanged: (value) {},
                         ),
@@ -121,11 +113,9 @@ class _EditListPromotionState extends State<EditPromotion> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          onPressed: () async {
+                          onPressed: () async {addquantity();
                             await setMenuCollection(
-                                    nameProController.text,
-                                    descriptionController.text,
-                                    int.parse(priceProController.text),
+                                    b,
                                     data['docId'])
                                 ?.then((value) => Navigator.pop(context));
                           },
@@ -147,14 +137,12 @@ class _EditListPromotionState extends State<EditPromotion> {
   Future _acceptEdit() async {}
 
   Future<dynamic>? setMenuCollection(
-    String name,
-    String detail,
-    int price,
+    int quantity,
     String data,
   ) async {
     await FirebaseFirestore.instance
         .collection('promotion')
         .doc('$data')
-        .update({'name': name, 'detail': detail, 'price': price});
+        .update({'quantity': quantity});
   }
 }

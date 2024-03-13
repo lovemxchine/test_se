@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'edit_promotion.dart';
+import 'edit_stock_promotion.dart';
 
-class PromotionDetail extends StatefulWidget {
+class StockPromotionDetail extends StatefulWidget {
   final List<DocumentSnapshot> availablePromotion;
-
-  const PromotionDetail({super.key, required this.availablePromotion});
+  const StockPromotionDetail({super.key, required this.availablePromotion});
 
   @override
-  State<PromotionDetail> createState() => _PromotionDetailState();
+  State<StockPromotionDetail> createState() => _StockPromotionDetailState();
 }
 
-class _PromotionDetailState extends State<PromotionDetail> {
+class _StockPromotionDetailState extends State<StockPromotionDetail> {
   void _navigateToDetailPage(DocumentReference docRef) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditPromotion(docRef: docRef),
+        builder: (context) => EditStockPromotion(docRef: docRef),
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -71,7 +69,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.03,
+                            height: MediaQuery.of(context).size.width * 0.05,
                           ),
                           Container(
                             child: Text(
@@ -90,7 +88,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                           Container(
                             child: Text(
                               // Get the name from Firestore
-                              'รายละเอียด : ${doc['detail']}',
+                              'จำนวน : ${doc['quantity']}',
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -98,29 +96,6 @@ class _PromotionDetailState extends State<PromotionDetail> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.001,
-                          ),
-                          Container(
-                            height: 30,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              // color: Color.fromARGB(255, 66, 104, 109),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'ราคา : ${doc['price']}',
-                                style: GoogleFonts.mitr(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                          )
-                          
                         ],
                       ),
                     ),
@@ -152,45 +127,6 @@ class _PromotionDetailState extends State<PromotionDetail> {
                             child: Center(
                               child: Text(
                                 'แก้ไข',
-                                style: GoogleFonts.poppins(
-                                  textStyle:
-                                      Theme.of(context).textTheme.titleLarge,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.width * 0.02,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            DocumentReference docRef = FirebaseFirestore
-                                .instance
-                                .collection('promotion')
-                                .doc(doc['docId']);
-                            docRef.delete();
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.width * 0.09,
-                            width: MediaQuery.of(context).size.width * 0.18,
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(170, 35, 35, 1),
-                              borderRadius: BorderRadius.circular(16.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  blurRadius: 10,
-                                  color: Color.fromARGB(152, 0, 0, 0),
-                                  offset: Offset(1, 2),
-                                )
-                              ],
-                            ),
-                            child: Center(
-                              child: Text(
-                                'ลบ',
                                 style: GoogleFonts.poppins(
                                   textStyle:
                                       Theme.of(context).textTheme.titleLarge,
