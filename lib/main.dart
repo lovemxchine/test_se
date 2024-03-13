@@ -7,7 +7,6 @@ import 'package:test_se/firebase_options.dart';
 import 'package:test_se/provider/provider.dart';
 import 'package:test_se/screens/admin_register_screen.dart';
 import 'package:test_se/screens/login_screen.dart';
-import 'package:test_se/screens/register_screen.dart';
 import 'package:test_se/screens/user_screen/chef_screen.dart';
 import 'package:test_se/screens/user_screen/customer_screen.dart';
 import 'package:test_se/screens/user_screen/employee_screen.dart';
@@ -45,7 +44,6 @@ class MyApp extends StatelessWidget {
             routes: {
               '/': (context) => SplashScreen(child: Login()),
               '/login': (context) => Login(),
-              '/signUp': (context) => Register(),
               '/admin_reg': (context) => AdminRegister(),
               '/customer': (context) => const CustomerScreen(),
               '/chef': (context) => const ChefScreen(),

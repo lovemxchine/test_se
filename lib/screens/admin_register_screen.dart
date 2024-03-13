@@ -1,10 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/auth/firebase_auth_service.dart';
-import 'package:test_se/screens/login_screen.dart';
-
 import '../components/button_field.dart';
 import '../components/text_field.dart';
 import '../widgets/logo_image.dart';
@@ -27,7 +26,7 @@ class _RegisterState extends State<AdminRegister> {
   final ageController = TextEditingController();
   final signUp_time = DateTime.now();
   final bool _obscureText = true;
-  List roleList = ['manager', 'chef', 'employee'];
+  List roleList = ['manager', 'chef', 'employee','customer'];
   var roleChoose;
   // late String newValue;
 
@@ -199,32 +198,7 @@ class _RegisterState extends State<AdminRegister> {
             ),
           ),
           //text สมัครรหัส
-          Positioned(
-            top: 750,
-            left: 0,
-            right: 0,
-            child: Container(
-              alignment: Alignment.center,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
-                },
-                child: Text(
-                  'Sign-In',
-                  style: GoogleFonts.mitr(
-                    textStyle: const TextStyle(
-                      color: Color.fromARGB(255, 49, 93, 101),
-                      decoration: TextDecoration.underline,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          
         ],
       ),
     );
@@ -233,6 +207,16 @@ class _RegisterState extends State<AdminRegister> {
   }
 
   void _signUp() async {
+    AwesomeDialog(
+                context: context,
+                dialogType: DialogType.warning,
+                animType: AnimType.topSlide,
+                showCloseIcon: true,
+                title: "สมัครสมาชิกเสร็จสิ้น",
+                btnOkOnPress: () {
+                  Navigator.pop(context);
+                },
+              ).show();
     User? user = await _auth.signUpWithEmailAndPassword(
         emailController.text, passwordController.text);
 

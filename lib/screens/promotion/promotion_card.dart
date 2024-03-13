@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'button_promotion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 

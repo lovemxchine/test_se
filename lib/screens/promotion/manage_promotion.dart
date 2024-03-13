@@ -66,7 +66,7 @@ class _ManagePromotionState extends State<ManagePromotion> {
           ),
         ),
         title: const Text(
-          "Edit Promotion",
+          "Manage Promotion",
           style: TextStyle(color: Colors.white),
         ),
       ),

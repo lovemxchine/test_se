@@ -20,7 +20,7 @@ class _StockDetailPageState extends State<StockDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Stock Detail'),
+        title: Text('Menu Detail'),
         toolbarHeight: 80,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 10),

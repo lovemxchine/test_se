@@ -67,7 +67,7 @@ class _ManageMenuState extends State<ManageMenu> {
           ),
         ),
         title: const Text(
-          "Edit menu",
+          "Manage menu",
           style: TextStyle(color: Colors.white),
         ),
       ),
