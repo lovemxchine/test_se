@@ -166,7 +166,7 @@ class _MenuState extends State<Menu> {
                                             'สินค้าไม่พร้อม',
                                             style: GoogleFonts.mitr(
                                               textStyle: const TextStyle(
-                                                  color: Colors.red,
+                                                  color: Colors.white,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400),
                                             ),

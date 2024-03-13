@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -97,12 +98,14 @@ class _OrderListState extends State<OrderList> {
                           padding: EdgeInsets.all(
                               MediaQuery.of(context).size.width * 0.04),
                           child: Text(
-                              '${product.name} ราคา: ${product.price} บาท',
-                              style: GoogleFonts.mitr(
-                                  textStyle: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400))),
+                            '${product.name} ราคา: ${product.price} บาท',
+                            style: GoogleFonts.mitr(
+                              textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
                         ),
                         Container(
                             width: MediaQuery.of(context).size.width * 0.3,
@@ -113,12 +116,15 @@ class _OrderListState extends State<OrderList> {
                                       cartProvider.removeFromCart(product);
                                     },
                                     icon: const Icon(Icons.remove)),
-                                Text('${product.quantity}',
-                                    style: GoogleFonts.mitr(
-                                        textStyle: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400))),
+                                Text(
+                                  '${product.quantity}',
+                                  style: GoogleFonts.mitr(
+                                    textStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
                                 IconButton(
                                     onPressed: () {
                                       Provider.of<CartProvider>(context,
@@ -154,12 +160,26 @@ class _OrderListState extends State<OrderList> {
                   ),
                   Spacer(),
                   ElevatedButton(
-                      onPressed: () {
-                        Provider.of<ConfirmCart>(context, listen: false)
-                            .confirmOrder(context);
-                        cartProvider.clearCart();
-                      },
-                      child: const Text('คอร์นเฟิร์ม')),
+                    onPressed: () {
+                      Provider.of<ConfirmCart>(context, listen: false)
+                          .confirmOrder(context);
+                      cartProvider.clearCart();
+                      for (var item
+                          in Provider.of<ConfirmCart>(context, listen: false)
+                              .items) {
+                        FirebaseFirestore.instance
+                            .collection('stock')
+                            .doc(item.id)
+                            .update(
+                          {
+                            'quantity': FieldValue.increment(-item.quantity),
+                          },
+                        );
+                      }
+                      ;
+                    },
+                    child: const Text('คอร์นเฟิร์ม'),
+                  ),
                   const Spacer(),
                   ElevatedButton(
                       onPressed: () {
@@ -175,9 +195,9 @@ class _OrderListState extends State<OrderList> {
                                   children: [
                                     Expanded(
                                       child: Consumer<ConfirmCart>(
-                                        builder: (context, cartProvider, _) {
+                                        builder: (context, cartConfirm, _) {
                                           List<Product> cartItems =
-                                              cartProvider.items;
+                                              cartConfirm.items;
 
                                           if (cartItems.isEmpty) {
                                             return const Center(
@@ -298,32 +318,24 @@ class _OrderListState extends State<OrderList> {
                                                       .width *
                                                   0.025),
                                           ElevatedButton(
-                                            onPressed: () {
-                                              // Add your onPressed logic here
-                                            },
+                                            onPressed: () {},
                                             style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(
-                                                    25), // Adjust the border radius as needed
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
                                               ),
-                                              padding: const EdgeInsets
-                                                  .symmetric(
-                                                  vertical: 10,
-                                                  horizontal:
-                                                      20), // Adjust padding as needed
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 20),
                                               primary: Color.fromARGB(
-                                                  255,
-                                                  83,
-                                                  178,
-                                                  255), // Change the button color according to your preference
+                                                  255, 83, 178, 255),
                                             ),
                                             child: const Text(
                                               'เช็คบิล',
                                               style: TextStyle(
-                                                color: Colors
-                                                    .white, // Change the text color according to your preference
-                                                fontSize:
-                                                    16, // Adjust the font size as needed
+                                                color: Colors.white,
+                                                fontSize: 16,
                                               ),
                                             ),
                                           ),
