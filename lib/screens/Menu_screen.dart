@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +17,8 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isSnackBarVisible = false;
+  bool stockAlready = false;
 
   @override
   Widget build(BuildContext context) {
@@ -128,49 +132,82 @@ class _MenuState extends State<Menu> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              doc['quantity'] > 0
-                                                  ? Color.fromARGB(
-                                                      255, 90, 140, 149)
-                                                  : Colors.grey),
-                                    ),
-                                    onPressed: doc['quantity'] > 0
-                                        ? () {
-                                            Product product = Product(
-                                                id: doc['docId'],
-                                                name: doc['name'],
-                                                price: doc['price'],
-                                                quantity: 1);
+                                Consumer<CartProvider>(
+                                    builder: (context, cartProvider, _) {
+                                  List<Product> cartItems = cartProvider.items;
 
-                                            Provider.of<CartProvider>(context,
-                                                    listen: false)
-                                                .addToCart(product);
+                                  bool isQuantityAvailable =
+                                      cartItems.fold<int>(
+                                              0,
+                                              (previousValue, element) =>
+                                                  previousValue +
+                                                  element.quantity) <
+                                          doc['quantity'];
+
+                                  return ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                isQuantityAvailable
+                                                    ? Color.fromARGB(
+                                                        255, 90, 140, 149)
+                                                    : Colors.grey),
+                                      ),
+                                      onPressed: () async {
+                                        if (isQuantityAvailable) {
+                                          Product product = Product(
+                                            id: doc['docId'],
+                                            name: doc['name'],
+                                            price: doc['price'],
+                                            quantity: 1,
+                                          );
+
+                                          Provider.of<CartProvider>(context,
+                                                  listen: false)
+                                              .addToCart(product);
+                                        } else {
+                                          if (!isSnackBarVisible) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    'จำนวนสินค้าที่มีในสต็อกไม่เพียงพอ'),
+                                                duration: Duration(seconds: 2),
+                                              ),
+                                            );
+                                            isSnackBarVisible = true;
+
+                                            Timer(Duration(seconds: 2), () {
+                                              isSnackBarVisible = false;
+                                            });
                                           }
-                                        : () {
-                                            print('not enough quantity');
-                                          },
-                                    child: doc['quantity'] > 0
-                                        ? Text(
-                                            'เพิ่มลงตะกร้า',
-                                            style: GoogleFonts.mitr(
-                                              textStyle: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                          )
-                                        : Text(
-                                            'สินค้าไม่พร้อม',
-                                            style: GoogleFonts.mitr(
-                                              textStyle: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                          )),
+                                        }
+                                      },
+                                      // : () {
+                                      //     print('not enough quantity');
+                                      //   },
+                                      child: isQuantityAvailable
+                                          ? Text(
+                                              'เพิ่มลงตะกร้า',
+                                              style: GoogleFonts.mitr(
+                                                textStyle: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                            )
+                                          : Text(
+                                              'สินค้าไม่พร้อม',
+                                              style: GoogleFonts.mitr(
+                                                textStyle: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                            ));
+                                }),
                               ],
                             ),
                           )
@@ -186,5 +223,16 @@ class _MenuState extends State<Menu> {
         },
       ),
     );
+  }
+
+  Future<bool> isQuantityAvailableInDB(String productId, int quantity) async {
+    DocumentSnapshot productSnapshot = await FirebaseFirestore.instance
+        .collection('stock')
+        .doc(productId)
+        .get();
+
+    int dbQuantity = productSnapshot['quantity'];
+
+    return quantity <= dbQuantity;
   }
 }

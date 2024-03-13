@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -15,25 +18,14 @@ class OrderList extends StatefulWidget {
   State<OrderList> createState() => _OrderListState();
 }
 
-// ignore: non_constant_identifier_names
-ConfirmOrder() {
-  // ignore: avoid_print
-  print('Confirm');
-}
-
-// ignore: non_constant_identifier_names
-ClearOrder() {
-  // ignore: avoid_print
-  print('Delete');
-}
-
 class _OrderListState extends State<OrderList> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     bool isPressed = false;
-
+    bool isSnackBarVisible = false;
+    String uid = getCurrentUID();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
@@ -125,10 +117,36 @@ class _OrderListState extends State<OrderList> {
                                   ),
                                 ),
                                 IconButton(
-                                    onPressed: () {
-                                      Provider.of<CartProvider>(context,
-                                              listen: false)
-                                          .addToCart(product);
+                                    onPressed: () async {
+                                      DocumentSnapshot snapshot =
+                                          await FirebaseFirestore.instance
+                                              .collection('stock')
+                                              .doc(product.id)
+                                              .get();
+                                      int currentQuantity =
+                                          snapshot['quantity'];
+                                      if (product.quantity < currentQuantity) {
+                                        // ignore: use_build_context_synchronously
+                                        Provider.of<CartProvider>(context,
+                                                listen: false)
+                                            .addToCart(product);
+                                      } else {
+                                        if (!isSnackBarVisible) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  'จำนวนสินค้าที่มีในสต็อกไม่เพียงพอ'),
+                                              duration: Duration(seconds: 2),
+                                            ),
+                                          );
+                                          isSnackBarVisible = true;
+
+                                          Timer(Duration(seconds: 2), () {
+                                            isSnackBarVisible = false;
+                                          });
+                                        }
+                                      }
                                     },
                                     icon: const Icon(Icons.add)),
                               ],
@@ -159,23 +177,30 @@ class _OrderListState extends State<OrderList> {
                   ),
                   Spacer(),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       Provider.of<ConfirmCart>(context, listen: false)
                           .confirmOrder(context);
-                      cartProvider.clearCart();
                       for (var item
-                          in Provider.of<ConfirmCart>(context, listen: false)
+                          in Provider.of<CartProvider>(context, listen: false)
                               .items) {
-                        FirebaseFirestore.instance
+                        DocumentSnapshot snapshot = await FirebaseFirestore
+                            .instance
                             .collection('stock')
                             .doc(item.id)
-                            .update(
-                          {
+                            .get();
+                        int currentQuantity = snapshot['quantity'];
+                        if (currentQuantity >= item.quantity) {
+                          FirebaseFirestore.instance
+                              .collection('stock')
+                              .doc(item.id)
+                              .update({
                             'quantity': FieldValue.increment(-item.quantity),
-                          },
-                        );
+                          });
+                        }
                       }
-                      ;
+
+                      Provider.of<CartProvider>(context, listen: false)
+                          .clearCart();
                     },
                     child: const Text('คอร์นเฟิร์ม'),
                   ),
@@ -187,7 +212,7 @@ class _OrderListState extends State<OrderList> {
                           builder: (context) {
                             return Dialog(
                               child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
+                                width: MediaQuery.of(context).size.width * 1.5,
                                 height:
                                     MediaQuery.of(context).size.height * 0.6,
                                 child: Column(
@@ -214,7 +239,7 @@ class _OrderListState extends State<OrderList> {
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.3,
+                                                      1,
                                                   margin: EdgeInsets.all(
                                                       MediaQuery.of(context)
                                                               .size
@@ -234,7 +259,7 @@ class _OrderListState extends State<OrderList> {
                                                                     context)
                                                                 .size
                                                                 .width *
-                                                            0.3,
+                                                            0.18,
                                                         child: Text(
                                                           '${product.name}',
                                                           style:
@@ -256,7 +281,7 @@ class _OrderListState extends State<OrderList> {
                                                                     context)
                                                                 .size
                                                                 .width *
-                                                            0.3,
+                                                            0.18,
                                                         child: Text(
                                                           'ราคา: ${product.price} บาท',
                                                           style:
@@ -273,17 +298,26 @@ class _OrderListState extends State<OrderList> {
                                                           ),
                                                         ),
                                                       ),
-                                                      Text(
-                                                        'จำนวณ: ${product.quantity}',
-                                                        style: GoogleFonts.mitr(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 10,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.18,
+                                                        child: Text(
+                                                          'จำนวณ: ${product.quantity}',
+                                                          style:
+                                                              GoogleFonts.mitr(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
@@ -317,7 +351,10 @@ class _OrderListState extends State<OrderList> {
                                                       .width *
                                                   0.025),
                                           ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () async {
+                                              addMenuCollection(
+                                                  uid, totalPrice);
+                                            },
                                             style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
@@ -353,7 +390,7 @@ class _OrderListState extends State<OrderList> {
                           },
                         );
                       },
-                      child: Text('เช็คบิล')),
+                      child: Text('สรุปรายการ')),
                 ],
               ),
             ),
@@ -361,5 +398,38 @@ class _OrderListState extends State<OrderList> {
         },
       ),
     );
+  }
+
+  Future<void> addMenuCollection(
+    String uid,
+    int price,
+  ) async {
+    await FirebaseFirestore.instance.collection('income').add({
+      'receipt': price,
+      'time': DateTime.now(),
+      'uid': getCurrentUID,
+    }).then((DocumentReference docRef) {
+      String docId = docRef.id;
+      print('เพิ่มรายรับไปแล้ว: $docId');
+
+      FirebaseFirestore.instance.collection('income').doc(docId).set({
+        'receipt': price,
+        'time': DateTime.now(),
+        'uid': getCurrentUID,
+        'id': docId,
+      });
+      ;
+    }).catchError((error) {
+      print('$error');
+    });
+  }
+
+  String getCurrentUID() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return '';
+    }
   }
 }
