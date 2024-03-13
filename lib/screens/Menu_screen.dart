@@ -107,6 +107,7 @@ class _MenuState extends State<Menu> {
                                   ),
                                 ),
                                 const SizedBox(height: 5),
+                                Spacer(),
                                 Container(
                                   padding: const EdgeInsets.only(bottom: 8),
                                   alignment: Alignment.center,
@@ -133,18 +134,22 @@ class _MenuState extends State<Menu> {
                                 ),
                                 const SizedBox(height: 10),
                                 Consumer<CartProvider>(
-                                    builder: (context, cartProvider, _) {
-                                  List<Product> cartItems = cartProvider.items;
+                                  builder: (context, cartProvider, _) {
+                                    List<Product> cartItems =
+                                        cartProvider.items;
 
-                                  bool isQuantityAvailable =
-                                      cartItems.fold<int>(
-                                              0,
-                                              (previousValue, element) =>
-                                                  previousValue +
-                                                  element.quantity) <
-                                          doc['quantity'];
+                                    int totalQuantity = cartProvider.items
+                                        .where(
+                                            (item) => item.id == doc['docId'])
+                                        .fold<int>(
+                                            0,
+                                            (previousValue, item) =>
+                                                previousValue + item.quantity);
 
-                                  return ElevatedButton(
+                                    bool isQuantityAvailable =
+                                        totalQuantity < doc['quantity'];
+
+                                    return ElevatedButton(
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
@@ -198,7 +203,7 @@ class _MenuState extends State<Menu> {
                                               ),
                                             )
                                           : Text(
-                                              'สินค้าไม่พร้อม',
+                                              'สินค้าหมด',
                                               style: GoogleFonts.mitr(
                                                 textStyle: const TextStyle(
                                                     color: Colors.white,
@@ -206,8 +211,11 @@ class _MenuState extends State<Menu> {
                                                     fontWeight:
                                                         FontWeight.w400),
                                               ),
-                                            ));
-                                }),
+                                            ),
+                                    );
+                                  },
+                                ),
+                                Spacer(),
                               ],
                             ),
                           )

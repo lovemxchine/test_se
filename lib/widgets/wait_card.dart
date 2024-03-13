@@ -13,7 +13,6 @@ class WaitCard extends StatefulWidget {
 
 class _WaitCardState extends State<WaitCard> {
   @override
-
   Widget build(BuildContext context) {
     return GridView.count(
       childAspectRatio: 0.68,
@@ -34,8 +33,8 @@ class _WaitCardState extends State<WaitCard> {
               children: [
                 InkWell(
                   child: Container(
-                    height: 150,
-                    width: 150,
+                    height: MediaQuery.of(context).size.width * 0.35,
+                    width: MediaQuery.of(context).size.width * 0.4,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         // Get the image URL from Firestore
@@ -47,7 +46,7 @@ class _WaitCardState extends State<WaitCard> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
+                Spacer(),
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   alignment: Alignment.center,
@@ -55,7 +54,7 @@ class _WaitCardState extends State<WaitCard> {
                     // Get the name from Firestore
                     doc['name'],
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       color: Colors.black,
                       fontWeight: FontWeight.w300,
                     ),
@@ -71,7 +70,7 @@ class _WaitCardState extends State<WaitCard> {
                           style: GoogleFonts.mitr(
                             textStyle: const TextStyle(
                                 color: Color(0xff3C696F),
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400),
                           ),
                         ),
@@ -81,7 +80,7 @@ class _WaitCardState extends State<WaitCard> {
                           text: doc['quantity'] > 0 ? 'พร้อม' : 'ไม่พร้อม',
                           style: GoogleFonts.mitr(
                               textStyle: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             color:
                                 doc['quantity'] > 0 ? Colors.green : Colors.red,
                             fontWeight: FontWeight.w400,
@@ -93,8 +92,8 @@ class _WaitCardState extends State<WaitCard> {
                 ),
                 const SizedBox(height: 10),
                 Container(
-                  height: 30,
-                  width: 120,
+                  height: MediaQuery.of(context).size.width * 0.07,
+                  width: MediaQuery.of(context).size.width * 0.20,
                   padding: const EdgeInsets.all(5.0),
                   margin: const EdgeInsets.symmetric(horizontal: 25.0),
                   decoration: BoxDecoration(
@@ -107,12 +106,13 @@ class _WaitCardState extends State<WaitCard> {
                       style: GoogleFonts.mitr(
                         textStyle: const TextStyle(
                             color: Colors.white,
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),
-                )
+                ),
+                Spacer(),
               ],
             ),
           )

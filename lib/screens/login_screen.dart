@@ -9,8 +9,7 @@ import '../widgets/logo_image.dart';
 import '../widgets/logo_zone.dart';
 
 class Login extends StatefulWidget {
-  Login({super.key});
-  // String _role = "";
+  Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -22,6 +21,8 @@ class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool _isPressed = false;
+  bool _isLoading = false;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -29,36 +30,21 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  // void loginWithPassword(BuildContext context) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (FirebaseAuth.instance.currentUser == null) {
-          return false;
-        } else {
-          return true;
-        }
+        return FirebaseAuth.instance.currentUser == null;
       },
       child: Scaffold(
         body: Stack(
           children: [
-            //โซน logo , logo zone
             const LogoZone(),
-            // รูป logo
             const LogoImage(),
-            //โซน login
             Positioned(
               top: 250,
               left: 50,
               right: 50,
-              // alignment: AlignmentDirectional(0, -0.10),
               child: Container(
                 width: 300,
                 height: 282,
@@ -190,20 +176,32 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            //text สมัครรหัส
+            if (_isLoading)
+              Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
           ],
         ),
       ),
     );
-    // ),
-    // );
   }
 
   void _signIn() async {
     String email = emailController.text;
     String password = passwordController.text;
 
+    setState(() {
+      _isLoading = true;
+    });
+
     User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+    setState(() {
+      _isLoading = false;
+    });
 
     if (user != null) {
       print("Login is successfully signed");
@@ -222,7 +220,7 @@ class _LoginState extends State<Login> {
         print('Error: User document does not contain "role" field');
       }
     } else {
-      print('Some error happen');
+      _showErrorDialog();
     }
   }
 
@@ -249,5 +247,25 @@ class _LoginState extends State<Login> {
       default:
         Navigator.pushReplacementNamed(context, "/");
     }
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text("Some error occurred while signing in."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

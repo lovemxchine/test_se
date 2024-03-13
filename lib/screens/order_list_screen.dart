@@ -25,7 +25,9 @@ class _OrderListState extends State<OrderList> {
   Widget build(BuildContext context) {
     bool isPressed = false;
     bool isSnackBarVisible = false;
-    String uid = getCurrentUID();
+    User? user = FirebaseAuth.instance.currentUser;
+    String user_id = user!.uid;
+    final formatCurrency = NumberFormat.currency(locale: 'en_US', symbol: '');
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
@@ -170,8 +172,9 @@ class _OrderListState extends State<OrderList> {
               padding: EdgeInsets.all(12.0),
               child: Row(
                 children: [
+                  Spacer(),
                   Text(
-                    'ราคารวม: $totalPrice บาท',
+                    'ราคารวม: ${formatCurrency.format(totalPrice)} บาท',
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.035),
                   ),
@@ -198,14 +201,38 @@ class _OrderListState extends State<OrderList> {
                           });
                         }
                       }
-
                       Provider.of<CartProvider>(context, listen: false)
                           .clearCart();
                     },
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      ),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 74, 172, 253)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                      ),
+                    ),
                     child: const Text('คอร์นเฟิร์ม'),
                   ),
                   const Spacer(),
                   ElevatedButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        ),
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 74, 172, 253)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                        ),
+                      ),
                       onPressed: () {
                         showDialog(
                           context: context,
@@ -335,14 +362,10 @@ class _OrderListState extends State<OrderList> {
                                           Consumer<ConfirmCart>(
                                             builder:
                                                 (context, cartProvider, _) {
-                                              final formatCurrency =
-                                                  NumberFormat.currency(
-                                                      locale: 'en_US',
-                                                      symbol: '');
-                                              int totalPrice =
+                                              int totalPriceConfirm =
                                                   cartProvider.getTotalPrice();
                                               return Text(
-                                                  "ราคาทั้งหมด: ${formatCurrency.format(totalPrice)} บาท");
+                                                  "ราคาทั้งหมด: ${formatCurrency.format(totalPriceConfirm)} บาท");
                                             },
                                           ),
                                           SizedBox(
@@ -352,8 +375,34 @@ class _OrderListState extends State<OrderList> {
                                                   0.025),
                                           ElevatedButton(
                                             onPressed: () async {
-                                              addMenuCollection(
-                                                  uid, totalPrice);
+                                              // print(user_id);
+                                              if (Provider.of<ConfirmCart>(
+                                                      context,
+                                                      listen: false)
+                                                  .items
+                                                  .isNotEmpty) {
+                                                print(Provider.of<ConfirmCart>(
+                                                        context,
+                                                        listen: false)
+                                                    .items);
+                                                addMenuCollection(
+                                                    user_id,
+                                                    Provider.of<ConfirmCart>(
+                                                            context,
+                                                            listen: false)
+                                                        .getTotalPrice(),
+                                                    Provider.of<ConfirmCart>(
+                                                        context,
+                                                        listen: false));
+                                                print(Provider.of<ConfirmCart>(
+                                                        context,
+                                                        listen: false)
+                                                    .getTotalPrice());
+                                                Provider.of<ConfirmCart>(
+                                                        context,
+                                                        listen: false)
+                                                    .clearCart();
+                                              }
                                             },
                                             style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
@@ -365,7 +414,7 @@ class _OrderListState extends State<OrderList> {
                                                       vertical: 10,
                                                       horizontal: 20),
                                               primary: Color.fromARGB(
-                                                  255, 83, 178, 255),
+                                                  255, 74, 172, 253),
                                             ),
                                             child: const Text(
                                               'เช็คบิล',
@@ -391,6 +440,7 @@ class _OrderListState extends State<OrderList> {
                         );
                       },
                       child: Text('สรุปรายการ')),
+                  Spacer(),
                 ],
               ),
             ),
@@ -403,33 +453,30 @@ class _OrderListState extends State<OrderList> {
   Future<void> addMenuCollection(
     String uid,
     int price,
+    ConfirmCart confirmCart,
   ) async {
+    List<Map<String, dynamic>> itemsData = [];
+
+    for (Product product in confirmCart.items) {
+      Map<String, dynamic> productData = {
+        'name': product.name,
+        'price': product.price,
+        'quantity': product.quantity,
+      };
+      itemsData.add(productData);
+    }
+
     await FirebaseFirestore.instance.collection('income').add({
+      'status': false,
       'receipt': price,
       'time': DateTime.now(),
-      'uid': getCurrentUID,
+      'uid': uid,
+      'List': itemsData,
     }).then((DocumentReference docRef) {
       String docId = docRef.id;
       print('เพิ่มรายรับไปแล้ว: $docId');
-
-      FirebaseFirestore.instance.collection('income').doc(docId).set({
-        'receipt': price,
-        'time': DateTime.now(),
-        'uid': getCurrentUID,
-        'id': docId,
-      });
-      ;
     }).catchError((error) {
       print('$error');
     });
-  }
-
-  String getCurrentUID() {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.uid;
-    } else {
-      return '';
-    }
   }
 }
