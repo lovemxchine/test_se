@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:test_se/screens/stock/stock_promotion_detail.dart';
+import 'package:test_se/screens/stock/stock_menu_detail.dart';
 
-class StockPromotion extends StatefulWidget {
-  const StockPromotion({super.key});
+class StockMenu extends StatefulWidget {
+  const StockMenu({super.key});
 
   @override
-  State<StockPromotion> createState() => _StockPromotionState();
+  State<StockMenu> createState() => _StockMenuState();
 }
 
-class _StockPromotionState extends State<StockPromotion> {
+class _StockMenuState extends State<StockMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +40,7 @@ class _StockPromotionState extends State<StockPromotion> {
           ),
         ),
         title: const Text(
-          "Stock Promotion",
+          "Stock Menu",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -68,18 +68,16 @@ class _StockPromotionState extends State<StockPromotion> {
             ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('promotion')
-                    .snapshots(),
+                stream:
+                    FirebaseFirestore.instance.collection('stock').snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<DocumentSnapshot> documents = snapshot.data!.docs;
-                    
+
                     return ListView(
                       children: [
                         Container(
-                            child: StockPromotionDetail(
-                                availablePromotion: documents)),
+                            child: StockMenuDetail(availableMenu: documents)),
                       ],
                     );
                   } else {

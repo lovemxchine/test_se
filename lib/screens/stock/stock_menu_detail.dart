@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'edit_stock_promotion.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:test_se/screens/stock/edit_stock_menu.dart';
 
-class StockPromotionDetail extends StatefulWidget {
-  final List<DocumentSnapshot> availablePromotion;
-  const StockPromotionDetail({super.key, required this.availablePromotion});
+class StockMenuDetail extends StatefulWidget {
+  final List<DocumentSnapshot> availableMenu;
+  const StockMenuDetail({super.key, required this.availableMenu});
 
   @override
-  State<StockPromotionDetail> createState() => _StockPromotionDetailState();
+  State<StockMenuDetail> createState() => _StockMenuDetailState();
 }
 
-class _StockPromotionDetailState extends State<StockPromotionDetail> {
+class _StockMenuDetailState extends State<StockMenuDetail> {
   void _navigateToDetailPage(DocumentReference docRef) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditStockPromotion(docRef: docRef),
+        builder: (context) => EditStockMenu(docRef: docRef),
       ),
     );
   }
@@ -28,7 +28,7 @@ class _StockPromotionDetailState extends State<StockPromotionDetail> {
         SizedBox(
           height: MediaQuery.of(context).size.width * 0.03,
         ),
-        for (var doc in widget.availablePromotion)
+        for (var doc in widget.availableMenu)
           Column(
             children: [
               Container(
@@ -107,7 +107,7 @@ class _StockPromotionDetailState extends State<StockPromotionDetail> {
                           onTap: () async {
                             DocumentReference docRef = FirebaseFirestore
                                 .instance
-                                .collection('promotion')
+                                .collection('stock')
                                 .doc(doc['docId']);
                             _navigateToDetailPage(docRef);
                           },

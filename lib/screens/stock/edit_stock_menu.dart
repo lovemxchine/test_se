@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class EditStockPromotion extends StatefulWidget {
+class EditStockMenu extends StatefulWidget {
   final DocumentReference docRef;
 
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  EditStockPromotion({super.key, required this.docRef});
+  EditStockMenu({super.key, required this.docRef});
 
   @override
-  State<EditStockPromotion> createState() => _EditStockPromotionState();
+  State<EditStockMenu> createState() => _EditStockMenuState();
 }
 
-class _EditStockPromotionState extends State<EditStockPromotion> {
+class _EditStockMenuState extends State<EditStockMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Quantity Promotion'),
+        title: const Text('Quantity Menu'),
         toolbarHeight: 80,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 10),
@@ -142,7 +142,7 @@ class _EditStockPromotionState extends State<EditStockPromotion> {
     String data,
   ) async {
     await FirebaseFirestore.instance
-        .collection('promotion')
+        .collection('stock')
         .doc('$data')
         .update({'quantity': quantity});
   }

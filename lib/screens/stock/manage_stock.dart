@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_se/screens/stock/stock_menu.dart';
 import 'package:test_se/screens/stock/stock_promotion.dart';
-import '../manage_menu.dart';
 
 class ManageStock extends StatefulWidget {
   const ManageStock({super.key});
@@ -58,7 +58,7 @@ class _ManageStockState extends State<ManageStock> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ManageMenu()),
+                    MaterialPageRoute(builder: (context) => const StockMenu()),
                   );
                 },
                 child: const Text(
