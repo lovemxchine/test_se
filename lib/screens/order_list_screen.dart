@@ -27,6 +27,7 @@ class _OrderListState extends State<OrderList> {
     bool isSnackBarVisible = false;
     User? user = FirebaseAuth.instance.currentUser;
     String user_id = user!.uid;
+
     final formatCurrency = NumberFormat.currency(locale: 'en_US', symbol: '');
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -191,6 +192,8 @@ class _OrderListState extends State<OrderList> {
                             .collection('stock')
                             .doc(item.id)
                             .get();
+                        addWaitCollection(Timestamp.now(), user.uid, item.name,
+                            item.quantity);
                         int currentQuantity = snapshot['quantity'];
                         if (currentQuantity >= item.quantity) {
                           FirebaseFirestore.instance
@@ -201,6 +204,7 @@ class _OrderListState extends State<OrderList> {
                           });
                         }
                       }
+
                       Provider.of<CartProvider>(context, listen: false)
                           .clearCart();
                     },
@@ -471,12 +475,58 @@ class _OrderListState extends State<OrderList> {
       'receipt': price,
       'time': DateTime.now(),
       'uid': uid,
-      'List': itemsData,
+      'list': itemsData,
     }).then((DocumentReference docRef) {
       String docId = docRef.id;
       print('เพิ่มรายรับไปแล้ว: $docId');
     }).catchError((error) {
-      print('$error');
+      print(error);
     });
+  }
+
+  // Future<void> addWaitingOrder(
+  //   String uid,
+  //   int price,
+  //   ConfirmCart confirmCart,
+  // ) async {
+  //   await FirebaseFirestore.instance.collection('income').add({
+  //     'status': false,
+  //     'receipt': price,
+  //     'time': DateTime.now(),
+  //     'uid': uid,
+  //   }).then((DocumentReference docRef) {
+  //     String docId = docRef.id;
+  //     print('เพิ่มรายรับไปแล้ว: $docId');
+  //   }).catchError((error) {
+  //     print(error);
+  //   });
+  // }
+
+  Future addWaitCollection(
+      Timestamp init_time, String uid, String order, int orderQuantity) async {
+    var docWaiting =
+        await FirebaseFirestore.instance.collection('waiting').doc(uid).get();
+
+    if (docWaiting.exists) {
+      int currentOrderQuantity = docWaiting.data()?[order] ?? 0;
+      int updatedOrderQuantity = currentOrderQuantity + orderQuantity;
+      await FirebaseFirestore.instance.collection('waiting').doc(uid).update(
+        {
+          'init_time': init_time,
+          'uid': uid,
+          order: updatedOrderQuantity,
+          'status': false,
+        },
+      );
+    } else {
+      await FirebaseFirestore.instance.collection('waiting').doc(uid).set(
+        {
+          'init_time': init_time,
+          'uid': uid,
+          order: orderQuantity,
+          'status': false,
+        },
+      );
+    }
   }
 }

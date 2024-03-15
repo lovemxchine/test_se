@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
+import 'package:test_se/screens/order_waiting.dart';
 import '../promotion/promotion_screen.dart';
 import '../status_order.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -20,7 +21,7 @@ class _ChefScreenState extends State<ChefScreen> {
 
   List<Widget> body = [
     const Menu(),
-    const OrderList(),
+    const OrderWaiting(),
     const Promotion(),
     const Status(),
   ];
@@ -71,7 +72,7 @@ class _ChefScreenState extends State<ChefScreen> {
               color: Colors.black,
             ),
             Icon(
-              Icons.shopping_basket,
+              Icons.notifications_active,
               color: Colors.black,
             ),
             Icon(

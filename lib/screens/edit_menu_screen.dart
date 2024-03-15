@@ -85,7 +85,6 @@ class _StockDetailPageState extends State<StockDetailPage> {
                       children: [
                         TextFormField(
                           controller: menuController,
-                          // initialValue: menuController.text,
                           decoration: InputDecoration(
                             labelText: 'ชื่อเมนู',
                           ),
@@ -146,4 +145,3 @@ class _StockDetailPageState extends State<StockDetailPage> {
         .update({'name': name, 'price': price});
   }
 }
-

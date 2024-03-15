@@ -26,7 +26,7 @@ class _RegisterState extends State<AdminRegister> {
   final ageController = TextEditingController();
   final signUp_time = DateTime.now();
   final bool _obscureText = true;
-  List roleList = ['manager', 'chef', 'employee','customer'];
+  List roleList = ['manager', 'chef', 'employee', 'customer'];
   var roleChoose;
   // late String newValue;
 
@@ -198,7 +198,6 @@ class _RegisterState extends State<AdminRegister> {
             ),
           ),
           //text สมัครรหัส
-          
         ],
       ),
     );
@@ -208,15 +207,15 @@ class _RegisterState extends State<AdminRegister> {
 
   void _signUp() async {
     AwesomeDialog(
-                context: context,
-                dialogType: DialogType.warning,
-                animType: AnimType.topSlide,
-                showCloseIcon: true,
-                title: "สมัครสมาชิกเสร็จสิ้น",
-                btnOkOnPress: () {
-                  Navigator.pop(context);
-                },
-              ).show();
+      context: context,
+      dialogType: DialogType.warning,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "สมัครสมาชิกเสร็จสิ้น",
+      btnOkOnPress: () {
+        Navigator.pop(context);
+      },
+    ).show();
     User? user = await _auth.signUpWithEmailAndPassword(
         emailController.text, passwordController.text);
 
@@ -240,7 +239,7 @@ class _RegisterState extends State<AdminRegister> {
   Future addUserCollection(String name, String email, String role, int age,
       Timestamp init_time, String uid, String tel // Add uid as an argument here
       ) async {
-    await FirebaseFirestore.instance.collection('user').add({
+    await FirebaseFirestore.instance.collection('user').doc(uid).set({
       'name': name,
       'email': email,
       'role': role,
