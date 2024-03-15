@@ -73,8 +73,10 @@ class _DrawerListState extends State<DrawerList> {
           ListTile(
             leading: const Icon(Icons.check_box),
             title: const Text('ออกจากระบบ'),
-            onTap: () {
+            onTap: () async {
               FirebaseAuth.instance.signOut();
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.remove('userRole');
               Navigator.pushNamed(context, "/login");
             },
           ),

@@ -35,8 +35,10 @@ class _ChefScreenState extends State<ChefScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userRole = prefs.getString('userRole');
     if (userRole != 'chef') {
-      Navigator.pushReplacementNamed(context, '/login');
       FirebaseAuth.instance.signOut();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('userRole');
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 

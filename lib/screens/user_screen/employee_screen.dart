@@ -34,8 +34,10 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userRole = prefs.getString('userRole');
     if (userRole != 'employee') {
-      Navigator.pushReplacementNamed(context, '/login');
       FirebaseAuth.instance.signOut();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('userRole');
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 

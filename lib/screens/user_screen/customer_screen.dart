@@ -25,8 +25,10 @@ class _CustomerScreenState extends State<CustomerScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userRole = prefs.getString('userRole');
     if (userRole != 'customer') {
-      Navigator.pushReplacementNamed(context, '/login');
       FirebaseAuth.instance.signOut();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('userRole');
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 

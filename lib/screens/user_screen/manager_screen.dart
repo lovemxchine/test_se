@@ -33,8 +33,10 @@ class _ManagerScreenState extends State<ManagerScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userRole = prefs.getString('userRole');
     if (userRole != 'manager') {
-      Navigator.pushReplacementNamed(context, '/login');
       FirebaseAuth.instance.signOut();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('userRole');
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
