@@ -32,6 +32,9 @@ class _WaitCardState extends State<WaitCard> {
             child: Column(
               children: [
                 InkWell(
+                  onTap: () {
+                    print('ab');
+                  },
                   child: Container(
                     height: MediaQuery.of(context).size.width * 0.35,
                     width: MediaQuery.of(context).size.width * 0.4,
