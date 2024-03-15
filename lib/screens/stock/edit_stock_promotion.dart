@@ -135,8 +135,6 @@ class _EditStockPromotionState extends State<EditStockPromotion> {
     );
   }
 
-  Future _acceptEdit() async {}
-
   Future<dynamic>? setMenuCollection(
     int quantity,
     String data,

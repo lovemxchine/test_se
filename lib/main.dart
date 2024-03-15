@@ -15,14 +15,22 @@ import 'package:test_se/screens/user_screen/manager_screen.dart';
 import 'package:test_se/splash/splash.dart';
 
 bool show = false;
-void main() async {
+
+
+Future main() async {
   AwesomeNotifications().initialize(
     null,
     [
       NotificationChannel(
-          channelKey: 'Hello',
-          channelName: 'hello user',
-          channelDescription: 'say hi')
+        channelKey: 'restaurant',
+        channelName: 'restaurant_notification',
+        channelDescription: 'notification for serve',
+        defaultColor: Colors.redAccent,
+        ledColor: Colors.white,
+        importance: NotificationImportance.Max,
+        channelShowBadge: true,
+        locked: true,
+      )
     ],
     debug: true,
   );

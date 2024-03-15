@@ -1,4 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -11,31 +12,26 @@ class DrawerList extends StatefulWidget {
   State<DrawerList> createState() => _DrawerListState();
 }
 
-void noti() {
-  AwesomeNotifications().initialize(
-    null,
-    [
-      NotificationChannel(
-          channelKey: 'Hello',
-          channelName: 'hello user',
-          channelDescription: 'say hi')
-    ],
-    debug: true,
-  );
-}
-
 class _DrawerListState extends State<DrawerList> {
-  triggerNotification() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userRole = prefs.getString('userRole');
-    if (userRole == 'employee') {
-      AwesomeNotifications().createNotification(
-          content: NotificationContent(
-              id: 10, channelKey: 'Hello', title: 'พ่อมาา', body: 'แจ้งเตือน'));
-    }
+  void pushNotification() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    String user_id = user!.uid;
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10,
+            channelKey: 'restaurant',
+            title: user_id,
+            body: 'Need Service',
+            wakeUpScreen: true,
+            fullScreenIntent: true,
+            autoDismissible: false,
+            backgroundColor: Colors.orange));
   }
 
+  @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    String user_id = user!.uid;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -65,8 +61,8 @@ class _DrawerListState extends State<DrawerList> {
                   title: "เรียกพนักงานเสร็จสิ้น",
                   desc: "พนักงานกำลังมาหาคุณกรุณารอสักครู่",
                   // btnCancelOnPress: (){},
-                  btnOkOnPress: () {
-                    triggerNotification();
+                  btnOkOnPress: () async {
+                      pushNotification();
                   }).show()
             },
           ),
