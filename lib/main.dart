@@ -52,7 +52,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
@@ -67,7 +66,7 @@ class _MyAppState extends State<MyApp> {
               primaryColor: Colors.blue,
             ),
             routes: {
-              '/': (context) => SplashScreen(child: Login()),
+              '/': (context) => Login(),
               '/login': (context) => Login(),
               '/admin_reg': (context) => AdminRegister(),
               '/customer': (context) => const CustomerScreen(),
