@@ -1,8 +1,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerList extends StatefulWidget {
   const DrawerList({super.key});
@@ -11,9 +11,30 @@ class DrawerList extends StatefulWidget {
   State<DrawerList> createState() => _DrawerListState();
 }
 
-class _DrawerListState extends State<DrawerList> {
+void noti() {
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+          channelKey: 'Hello',
+          channelName: 'hello user',
+          channelDescription: 'say hi')
+    ],
+    debug: true,
+  );
+}
 
-  @override
+class _DrawerListState extends State<DrawerList> {
+  triggerNotification() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userRole = prefs.getString('userRole');
+    if (userRole == 'employee') {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: 10, channelKey: 'Hello', title: 'พ่อมาา', body: 'แจ้งเตือน'));
+    }
+  }
+
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -37,15 +58,16 @@ class _DrawerListState extends State<DrawerList> {
             title: const Text('เรียกพนักงาน'),
             onTap: () => {
               AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.warning,
-                      animType: AnimType.topSlide,
-                      showCloseIcon: true,
-                      title: "เรียกพนักงานเสร็จสิ้น",
-                      desc: "พนักงานกำลังมาหาคุณกรุณารอสักครู่",
-                      // btnCancelOnPress: (){},
-                      btnOkOnPress: () {})
-                  .show()
+                  context: context,
+                  dialogType: DialogType.warning,
+                  animType: AnimType.topSlide,
+                  showCloseIcon: true,
+                  title: "เรียกพนักงานเสร็จสิ้น",
+                  desc: "พนักงานกำลังมาหาคุณกรุณารอสักครู่",
+                  // btnCancelOnPress: (){},
+                  btnOkOnPress: () {
+                    triggerNotification();
+                  }).show()
             },
           ),
           ListTile(
