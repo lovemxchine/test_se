@@ -56,7 +56,7 @@ class _OrderWaitingState extends State<OrderWaiting> {
           ),
         ),
         title: const Text(
-          "Menu",
+          "OrderList",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -81,7 +81,7 @@ class _OrderWaitingState extends State<OrderWaiting> {
                         itemCount: documents.length,
                         itemBuilder: (context, index) {
                           var doc = documents[index];
-                          var uid = doc['uid'];
+                          var uid = doc.id;
 
                           return FutureBuilder<Map<String, dynamic>>(
                             future: dataWaiting(uid),
@@ -93,9 +93,8 @@ class _OrderWaitingState extends State<OrderWaiting> {
                                 return Text('Error: ${snapshot.error}');
                               } else {
                                 Map<String, dynamic>? data = snapshot.data;
-                                if (data != null) {
+                                if (data != null && doc['status'] == false) {
                                   var selectedData = {...data};
-
                                   return ListTile(
                                     title: Container(
                                       padding: const EdgeInsets.all(15),
@@ -107,21 +106,62 @@ class _OrderWaitingState extends State<OrderWaiting> {
                                             color: Colors.grey.shade500),
                                       ),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children:
-                                            selectedData.entries.map((entry) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(6.0),
-                                            child: Text(
-                                                '${entry.key}: ${entry.value}'),
-                                          );
-                                        }).toList(),
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: selectedData.entries
+                                                .map((entry) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.all(6.0),
+                                                child: Text(
+                                                    '${entry.key}: ${entry.value}'),
+                                              );
+                                            }).toList(),
+                                          ),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.025),
+                                          Row(
+                                            children: [
+                                              Spacer(),
+                                              ElevatedButton(
+                                                onPressed: () async {
+                                                  updateWaiting(uid, true);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                  ),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 20),
+                                                  primary: Color.fromARGB(
+                                                      255, 74, 172, 253),
+                                                ),
+                                                child: const Text(
+                                                  'Confirm',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                              Spacer(),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   );
                                 } else {
-                                  return Text('Data not found');
+                                  return SizedBox();
                                 }
                               }
                             },
@@ -141,36 +181,12 @@ class _OrderWaitingState extends State<OrderWaiting> {
     );
   }
 
-  // StreamBuilder<QuerySnapshot>(
-  //         stream: FirebaseFirestore.instance.collection('waiting').snapshots(),
-  //         builder: (context, snapshot) {
-  //           if (snapshot.hasData) {
-  //             List<DocumentSnapshot> documents = snapshot.data!.docs;
-  //             return ListView.builder(
-  //               itemCount: documents.length,
-  //               itemBuilder: (context, index) {
-  //                 var doc = documents[index];
-  //                 var uid = doc['uid'];
-
-  //                 return ListTile(
-  //                   title: Text(uid),
-  //                 );
-  //               },
-  //             );
-  //           } else {
-  //             return CircularProgressIndicator();
-  //           }
-  //         },
-  //       ));
-  Future<bool> isQuantityAvailableInDB(String productId, int quantity) async {
-    DocumentSnapshot productSnapshot = await FirebaseFirestore.instance
-        .collection('stock')
-        .doc(productId)
-        .get();
-
-    int dbQuantity = productSnapshot['quantity'];
-
-    return quantity <= dbQuantity;
+  Future updateWaiting(String uid, bool status) async {
+    await FirebaseFirestore.instance.collection('waiting').doc(uid).delete();
+    await FirebaseFirestore.instance
+        .collection('waiting')
+        .doc(uid)
+        .set({'status': status, 'uid': uid});
   }
 
   Future<Map<String, dynamic>> dataWaiting(String uid) async {

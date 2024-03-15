@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test_se/screens/checkbill_screen.dart';
 import 'package:test_se/screens/manager_function.dart';
 import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
@@ -22,6 +23,7 @@ class _ManagerScreenState extends State<ManagerScreen> {
   List<Widget> body = [
     const Menu(),
     const OrderList(),
+    CheckBill(),
     const Promotion(),
     const Status(),
     const ManagerFunc(),
@@ -78,6 +80,10 @@ class _ManagerScreenState extends State<ManagerScreen> {
             ),
             Icon(
               Icons.celebration,
+              color: Colors.black,
+            ),
+            Icon(
+              Icons.alarm_add_sharp,
               color: Colors.black,
             ),
             Icon(

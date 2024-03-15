@@ -10,4 +10,6 @@ class Product {
     required this.price,
     this.quantity = 1,
   });
+
+  get details => null;
 }

@@ -44,10 +44,8 @@ class _ChefScreenState extends State<ChefScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (FirebaseAuth.instance.currentUser != null) {
-          // ถ้าผู้ใช้ล็อกอินอยู่ กำหนดให้ไม่สามารถย้อนกลับได้
           return false;
         } else {
-          // ถ้าไม่ได้ล็อกอิน อนุญาตให้ย้อนกลับได้
           return true;
         }
       },

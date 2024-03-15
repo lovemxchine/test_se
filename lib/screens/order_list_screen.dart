@@ -385,27 +385,153 @@ class _OrderListState extends State<OrderList> {
                                                       listen: false)
                                                   .items
                                                   .isNotEmpty) {
-                                                print(Provider.of<ConfirmCart>(
-                                                        context,
-                                                        listen: false)
-                                                    .items);
-                                                addMenuCollection(
-                                                    user_id,
-                                                    Provider.of<ConfirmCart>(
-                                                            context,
-                                                            listen: false)
-                                                        .getTotalPrice(),
-                                                    Provider.of<ConfirmCart>(
-                                                        context,
-                                                        listen: false));
-                                                print(Provider.of<ConfirmCart>(
-                                                        context,
-                                                        listen: false)
-                                                    .getTotalPrice());
-                                                Provider.of<ConfirmCart>(
-                                                        context,
-                                                        listen: false)
-                                                    .clearCart();
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Dialog(
+                                                      child: SizedBox(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            1.2,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height *
+                                                            0.2,
+                                                        child: Center(
+                                                            child: Column(
+                                                          children: [
+                                                            Spacer(),
+                                                            Text(
+                                                              'ยืมยันที่จะเช็คบิล ใช่ หรือ ไม่',
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                textStyle: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleLarge,
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                            ),
+                                                            Spacer(),
+                                                            Row(
+                                                              children: [
+                                                                Spacer(),
+                                                                ElevatedButton(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              25),
+                                                                    ),
+                                                                    padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                        vertical:
+                                                                            10,
+                                                                        horizontal:
+                                                                            20),
+                                                                    primary: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            253,
+                                                                            74,
+                                                                            74),
+                                                                  ),
+                                                                  child:
+                                                                      const Text(
+                                                                    'ยกเลิก',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          16,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Spacer(),
+                                                                ElevatedButton(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    addMenuCollection(
+                                                                        user_id,
+                                                                        Provider.of<ConfirmCart>(context, listen: false)
+                                                                            .getTotalPrice(),
+                                                                        Provider.of<ConfirmCart>(
+                                                                            context,
+                                                                            listen:
+                                                                                false));
+                                                                    print(Provider.of<ConfirmCart>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .getTotalPrice());
+                                                                    Provider.of<ConfirmCart>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .clearCart();
+
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              25),
+                                                                    ),
+                                                                    padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                        vertical:
+                                                                            10,
+                                                                        horizontal:
+                                                                            20),
+                                                                    primary: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            74,
+                                                                            172,
+                                                                            253),
+                                                                  ),
+                                                                  child:
+                                                                      const Text(
+                                                                    'ยืนยัน',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          16,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Spacer()
+                                                              ],
+                                                            ),
+                                                            Spacer()
+                                                          ],
+                                                        )),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
                                               }
                                             },
                                             style: ElevatedButton.styleFrom(
@@ -478,6 +604,9 @@ class _OrderListState extends State<OrderList> {
       'list': itemsData,
     }).then((DocumentReference docRef) {
       String docId = docRef.id;
+      FirebaseFirestore.instance.collection('income').doc(docId).update({
+        'id': docId,
+      });
       print('เพิ่มรายรับไปแล้ว: $docId');
     }).catchError((error) {
       print(error);
