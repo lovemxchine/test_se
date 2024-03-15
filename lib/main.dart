@@ -16,6 +16,16 @@ import 'package:test_se/splash/splash.dart';
 
 bool show = false;
 void main() async {
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+          channelKey: 'Hello',
+          channelName: 'hello user',
+          channelDescription: 'say hi')
+    ],
+    debug: true,
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -41,8 +51,8 @@ class _MyAppState extends State<MyApp> {
     });
     super.initState();
   }
-  
-  @override
+
+
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
