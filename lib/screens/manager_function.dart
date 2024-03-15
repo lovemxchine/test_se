@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:test_se/screens/admin_register_screen.dart';
 import 'package:test_se/screens/manage_menu.dart';
 import 'package:test_se/screens/stock/manage_stock.dart';
-
 import '../widgets/drawer_list.dart';
 import 'promotion/manage_promotion.dart';
 
@@ -60,84 +59,86 @@ class _ManagerFuncState extends State<ManagerFunc> {
             children: [
               ListTile(
                   title: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => const ManageMenu()),
-                   );
-                    },
-                    child: const Text(
-                      'Manage Menu',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  )),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ManageMenu()),
+                  );
+                },
+                child: const Text(
+                  'Manage Menu',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400),
+                ),
+              )),
               ListTile(
                   title: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => const ManagePromotion()),
-                   );
-                    },
-                    child: const Text(
-                      'Manage Promotion',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  )),
-                  ListTile(
-                  title: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => const ManageStock()),
-                   );
-                    },
-                    child: const Text(
-                      'Manage Stock',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  )),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ManagePromotion()),
+                  );
+                },
+                child: const Text(
+                  'Manage Promotion',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400),
+                ),
+              )),
               ListTile(
                   title: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => AdminRegister()),
-                   );
-                    },
-                    child: const Text(
-                      'Manage Employee',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  )),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ManageStock()),
+                  );
+                },
+                child: const Text(
+                  'Manage Stock',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400),
+                ),
+              )),
               ListTile(
                   title: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => const ManageMenu()),
-                   );
-                    },
-                    child: const Text(
-                      'Summary of Income',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  )),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AdminRegister()),
+                  );
+                },
+                child: const Text(
+                  'Manage Employee',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400),
+                ),
+              )),
+              ListTile(
+                  title: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ManageMenu()),
+                  );
+                },
+                child: const Text(
+                  'Summary of Income',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400),
+                ),
+              )),
             ],
           )),
     );
