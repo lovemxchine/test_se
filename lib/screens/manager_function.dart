@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_se/screens/admin_register_screen.dart';
+import 'package:test_se/screens/check_in_work_time.dart';
 import 'package:test_se/screens/manage_menu.dart';
 import 'package:test_se/screens/stock/manage_stock.dart';
 import '../widgets/drawer_list.dart';
@@ -133,6 +134,23 @@ class _ManagerFuncState extends State<ManagerFunc> {
                 },
                 child: const Text(
                   'Summary of Income',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400),
+                ),
+              )),
+              ListTile(
+                  title: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CheckInWorkTime()),
+                  );
+                },
+                child: const Text(
+                  'Time to work',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 25,

@@ -55,7 +55,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         body: Center(child: body[_currentIndex]),
         bottomNavigationBar: CurvedNavigationBar(
           height: 60,
-          buttonBackgroundColor: Colors.amber,
+          buttonBackgroundColor: Color.fromARGB(255, 240, 210, 120),
           backgroundColor: Colors.white,
           color: const Color.fromARGB(255, 201, 225, 221),
           animationCurve: Curves.easeInOut,

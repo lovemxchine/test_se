@@ -62,7 +62,7 @@ class _DrawerListState extends State<DrawerList> {
                   desc: "พนักงานกำลังมาหาคุณกรุณารอสักครู่",
                   // btnCancelOnPress: (){},
                   btnOkOnPress: () async {
-                      pushNotification();
+                    pushNotification();
                   }).show()
             },
           ),
@@ -70,8 +70,21 @@ class _DrawerListState extends State<DrawerList> {
             leading: const Icon(Icons.check_box),
             title: const Text('ออกจากระบบ'),
             onTap: () async {
-              FirebaseAuth.instance.signOut();
               SharedPreferences prefs = await SharedPreferences.getInstance();
+              String? userRole = prefs.getString('userRole');
+              if (userRole == 'customer' || userRole == 'chef') {
+                CollectionReference userCollection =
+                    FirebaseFirestore.instance.collection('user');
+                DocumentReference userDocRef = userCollection.doc(user.uid);
+
+                userDocRef.collection('check_out').add(
+                  {
+                    'time': Timestamp.now(),
+                  },
+                );
+              }
+
+              FirebaseAuth.instance.signOut();
               await prefs.remove('userRole');
               Navigator.pushNamed(context, "/login");
             },

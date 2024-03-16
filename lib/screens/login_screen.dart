@@ -32,6 +32,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         return FirebaseAuth.instance.currentUser == null;
@@ -204,6 +205,7 @@ class _LoginState extends State<Login> {
     });
 
     if (user != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       print("Login is successfully signed");
 
       final snapshot = await FirebaseFirestore.instance
@@ -215,6 +217,20 @@ class _LoginState extends State<Login> {
         String role = userData['role'];
 
         saveUserRole(role);
+
+        if (role == 'employee' || role == 'chef') {
+          CollectionReference userCollection =
+              FirebaseFirestore.instance.collection('user');
+          DocumentReference userDocRef = userCollection.doc(user.uid);
+
+          userDocRef.collection('check_in').add(
+            {
+              'uid': user.uid,
+              'time': Timestamp.now(),
+            },
+          );
+        }
+
         route(role);
       } else {
         print('Error: User document does not contain "role" field');
@@ -225,9 +241,11 @@ class _LoginState extends State<Login> {
   }
 
   void saveUserRole(String role) async {
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setString('userRole', role);
-    });
+    SharedPreferences.getInstance().then(
+      (prefs) {
+        prefs.setString('userRole', role);
+      },
+    );
   }
 
   void route(String role) {
