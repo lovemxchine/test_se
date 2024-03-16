@@ -18,7 +18,21 @@ class _EditStockMenuState extends State<EditStockMenu> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Quantity Menu'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xff396870), Color(0xff17333C)],
+              stops: [0, 1],
+              begin: AlignmentDirectional(0, -0.8),
+              end: AlignmentDirectional(0, 1.5),
+              tileMode: TileMode.clamp,
+            ),
+          ),
+        ),
+        title: const Text(
+          'Quantity Menu',
+          style: TextStyle(color: Colors.white),
+        ),
         toolbarHeight: 80,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 10),
@@ -115,12 +129,27 @@ class _EditStockMenuState extends State<EditStockMenu> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          onPressed: () async {
-                            addquantity();
-                            await setMenuCollection(b, data['docId'])
-                                ?.then((value) => Navigator.pop(context));
-                          },
-                          child: const Text('ยืนยันเพิ่ม Stock'))
+                        onPressed: () async {
+                          addquantity();
+                          await setMenuCollection(b, data['docId'])
+                              ?.then((value) => Navigator.pop(context));
+                        },
+                        style: ButtonStyle(
+                          padding:
+                              MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          ),
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromARGB(255, 74, 172, 253)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                          ),
+                        ),
+                        child: const Text('ยืนยันเพิ่ม Stock'),
+                      ),
                     ],
                   ),
                   SizedBox(

@@ -16,7 +16,6 @@ import 'package:test_se/splash/splash.dart';
 
 bool show = false;
 
-
 Future main() async {
   AwesomeNotifications().initialize(
     null,
@@ -74,7 +73,7 @@ class _MyAppState extends State<MyApp> {
               primaryColor: Colors.blue,
             ),
             routes: {
-              '/': (context) => Login(),
+              '/': (context) => SplashScreen(),
               '/login': (context) => Login(),
               '/admin_reg': (context) => AdminRegister(),
               '/customer': (context) => const CustomerScreen(),

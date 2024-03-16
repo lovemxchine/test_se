@@ -47,12 +47,12 @@ class _StockMenuDetailState extends State<StockMenuDetail> {
                     ),
                   ],
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    InkWell(
-                      child: Container(
-                        margin: const EdgeInsets.all(7),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
                         height: MediaQuery.of(context).size.width * 0.4,
                         width: MediaQuery.of(context).size.width * 0.3,
                         decoration: BoxDecoration(
@@ -65,84 +65,75 @@ class _StockMenuDetailState extends State<StockMenuDetail> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                    ),
-                    Container(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.05,
-                          ),
-                          Container(
-                            child: Text(
-                              // Get the name from Firestore
-                              doc['name'],
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.001,
-                          ),
-                          Container(
-                            child: Text(
-                              // Get the name from Firestore
-                              'จำนวน : ${doc['quantity']}',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        const Spacer(),
-                        GestureDetector(
-                          onTap: () async {
-                            DocumentReference docRef = FirebaseFirestore
-                                .instance
-                                .collection('stock')
-                                .doc(doc['docId']);
-                            _navigateToDetailPage(docRef);
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.width * 0.09,
-                            width: MediaQuery.of(context).size.width * 0.18,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 33, 128, 223),
-                              borderRadius: BorderRadius.circular(16.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  blurRadius: 10,
-                                  color: Color.fromARGB(152, 0, 0, 0),
-                                  offset: Offset(1, 2),
-                                )
-                              ],
-                            ),
-                            child: Center(
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Column(
+                          children: [
+                            Spacer(),
+                            Container(
                               child: Text(
-                                'แก้ไข',
-                                style: GoogleFonts.poppins(
-                                  textStyle:
-                                      Theme.of(context).textTheme.titleLarge,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
+                                // Get the name from Firestore
+                                doc['name'],
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w300,
                                 ),
+                              ),
+                            ),
+                            Spacer(),
+                            Container(
+                              child: Text(
+                                // Get the name from Firestore
+                                'จำนวน : ${doc['quantity']}',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          DocumentReference docRef = FirebaseFirestore.instance
+                              .collection('stock')
+                              .doc(doc['docId']);
+                          _navigateToDetailPage(docRef);
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.width * 0.09,
+                          width: MediaQuery.of(context).size.width * 0.16,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 33, 128, 223),
+                            borderRadius: BorderRadius.circular(16.0),
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 10,
+                                color: Color.fromARGB(152, 0, 0, 0),
+                                offset: Offset(1, 2),
+                              )
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'แก้ไข',
+                              style: GoogleFonts.poppins(
+                                textStyle:
+                                    Theme.of(context).textTheme.titleLarge,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                        const Spacer(),
-                      ],
-                    )
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(

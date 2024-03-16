@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, "/chef");
         break;
       default:
-        Navigator.pushReplacementNamed(context, "login");
+        Navigator.pushReplacementNamed(context, "/login");
     }
   }
 }

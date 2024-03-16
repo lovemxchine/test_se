@@ -61,8 +61,8 @@ class _ManagerScreenState extends State<ManagerScreen> {
         body: Center(child: body[_currentIndex]),
         bottomNavigationBar: CurvedNavigationBar(
           height: 60,
-          buttonBackgroundColor: Colors.amber,
-          backgroundColor: Colors.white,
+          buttonBackgroundColor: Color.fromARGB(255, 240, 210, 120),
+          backgroundColor: Color.fromARGB(255, 240, 240, 240),
           color: const Color.fromARGB(255, 201, 225, 221),
           animationCurve: Curves.easeInOut,
           animationDuration: const Duration(milliseconds: 300),

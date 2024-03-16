@@ -20,6 +20,12 @@ class OrderList extends StatefulWidget {
 
 class _OrderListState extends State<OrderList> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  void initState() {
+    super.initState();
+    Provider.of<CartProvider>(context, listen: false).fetchCartFromSharedPref();
+    Provider.of<ConfirmCart>(context, listen: false)
+        .fetchConfirmCartFromSharedPref();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,404 +179,421 @@ class _OrderListState extends State<OrderList> {
               padding: EdgeInsets.all(12.0),
               child: Row(
                 children: [
-                  Spacer(),
-                  Text(
-                    'ราคารวม: ${formatCurrency.format(totalPrice)} บาท',
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.035),
-                  ),
-                  Spacer(),
-                  ElevatedButton(
-                    onPressed: () async {
-                      Provider.of<ConfirmCart>(context, listen: false)
-                          .confirmOrder(context);
-                      for (var item
-                          in Provider.of<CartProvider>(context, listen: false)
-                              .items) {
-                        DocumentSnapshot snapshot = await FirebaseFirestore
-                            .instance
-                            .collection('stock')
-                            .doc(item.id)
-                            .get();
-                        addWaitCollection(Timestamp.now(), user.uid, item.name,
-                            item.quantity);
-                        int currentQuantity = snapshot['quantity'];
-                        if (currentQuantity >= item.quantity) {
-                          FirebaseFirestore.instance
-                              .collection('stock')
-                              .doc(item.id)
-                              .update({
-                            'quantity': FieldValue.increment(-item.quantity),
-                          });
-                        }
-                      }
-
-                      Provider.of<CartProvider>(context, listen: false)
-                          .clearCart();
-                    },
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                        EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                      ),
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 74, 172, 253)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
+                  Container(
+                    //HERE
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    child: Text(
+                      'ราคารวม: ${formatCurrency.format(totalPrice)} บาท',
+                      style: GoogleFonts.mitr(
+                        textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: MediaQuery.of(context).size.width * 0.03,
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
-                    child: const Text('คอร์นเฟิร์ม'),
                   ),
-                  const Spacer(),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        ),
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 74, 172, 253)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Dialog(
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 1.5,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.6,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Consumer<ConfirmCart>(
-                                        builder: (context, cartConfirm, _) {
-                                          List<Product> cartItems =
-                                              cartConfirm.items;
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        Container(
+                          //HERE
 
-                                          if (cartItems.isEmpty) {
-                                            return const Center(
-                                              child:
-                                                  Text('No items in the cart.'),
-                                            );
-                                          } else {
-                                            return ListView.builder(
-                                              itemCount: cartItems.length,
-                                              itemBuilder: (context, index) {
-                                                Product product =
-                                                    cartItems[index];
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              Provider.of<ConfirmCart>(context, listen: false)
+                                  .confirmOrder(context);
+                              for (var item in Provider.of<CartProvider>(
+                                      context,
+                                      listen: false)
+                                  .items) {
+                                DocumentSnapshot snapshot =
+                                    await FirebaseFirestore.instance
+                                        .collection('stock')
+                                        .doc(item.id)
+                                        .get();
+                                addWaitCollection(Timestamp.now(), user.uid,
+                                    item.name, item.quantity);
+                                int currentQuantity = snapshot['quantity'];
+                                if (currentQuantity >= item.quantity) {
+                                  FirebaseFirestore.instance
+                                      .collection('stock')
+                                      .doc(item.id)
+                                      .update({
+                                    'quantity':
+                                        FieldValue.increment(-item.quantity),
+                                  });
+                                }
+                              }
 
-                                                return Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      1,
-                                                  margin: EdgeInsets.all(
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.04),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              0)),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    children: [
-                                                      Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.18,
-                                                        child: Text(
-                                                          '${product.name}',
-                                                          style:
-                                                              GoogleFonts.mitr(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        10,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.18,
-                                                        child: Text(
-                                                          'ราคา: ${product.price} บาท',
-                                                          style:
-                                                              GoogleFonts.mitr(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        10,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.18,
-                                                        child: Text(
-                                                          'จำนวณ: ${product.quantity}',
-                                                          style:
-                                                              GoogleFonts.mitr(
-                                                            textStyle:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        10,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Column(
-                                        children: [
-                                          Consumer<ConfirmCart>(
-                                            builder:
-                                                (context, cartProvider, _) {
-                                              int totalPriceConfirm =
-                                                  cartProvider.getTotalPrice();
-                                              return Text(
-                                                  "ราคาทั้งหมด: ${formatCurrency.format(totalPriceConfirm)} บาท");
-                                            },
-                                          ),
-                                          SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.025),
-                                          ElevatedButton(
-                                            onPressed: () async {
-                                              // print(user_id);
-                                              if (Provider.of<ConfirmCart>(
-                                                      context,
-                                                      listen: false)
-                                                  .items
-                                                  .isNotEmpty) {
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return Dialog(
-                                                      child: SizedBox(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            1.2,
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height *
-                                                            0.2,
-                                                        child: Center(
-                                                            child: Column(
-                                                          children: [
-                                                            Spacer(),
-                                                            Text(
-                                                              'ยืมยันที่จะเช็คบิล ใช่ หรือ ไม่',
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                textStyle: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleLarge,
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .black,
-                                                              ),
-                                                            ),
-                                                            Spacer(),
-                                                            Row(
-                                                              children: [
-                                                                Spacer(),
-                                                                ElevatedButton(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  style: ElevatedButton
-                                                                      .styleFrom(
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              25),
-                                                                    ),
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        vertical:
-                                                                            10,
-                                                                        horizontal:
-                                                                            20),
-                                                                    primary: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            253,
-                                                                            74,
-                                                                            74),
-                                                                  ),
-                                                                  child:
-                                                                      const Text(
-                                                                    'ยกเลิก',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          16,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Spacer(),
-                                                                ElevatedButton(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    addMenuCollection(
-                                                                        user_id,
-                                                                        Provider.of<ConfirmCart>(context, listen: false)
-                                                                            .getTotalPrice(),
-                                                                        Provider.of<ConfirmCart>(
-                                                                            context,
-                                                                            listen:
-                                                                                false));
-                                                                    print(Provider.of<ConfirmCart>(
-                                                                            context,
-                                                                            listen:
-                                                                                false)
-                                                                        .getTotalPrice());
-                                                                    Provider.of<ConfirmCart>(
-                                                                            context,
-                                                                            listen:
-                                                                                false)
-                                                                        .clearCart();
-
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  style: ElevatedButton
-                                                                      .styleFrom(
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              25),
-                                                                    ),
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        vertical:
-                                                                            10,
-                                                                        horizontal:
-                                                                            20),
-                                                                    primary: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            74,
-                                                                            172,
-                                                                            253),
-                                                                  ),
-                                                                  child:
-                                                                      const Text(
-                                                                    'ยืนยัน',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          16,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Spacer()
-                                                              ],
-                                                            ),
-                                                            Spacer()
-                                                          ],
-                                                        )),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              }
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 20),
-                                              primary: Color.fromARGB(
-                                                  255, 74, 172, 253),
-                                            ),
-                                            child: const Text(
-                                              'เช็คบิล',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.025),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .clearCart();
+                            },
+                            style: ButtonStyle(
+                              padding:
+                                  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                              ),
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Color.fromARGB(255, 74, 172, 253)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
                                 ),
                               ),
-                            );
-                          },
-                        );
-                      },
-                      child: Text('สรุปรายการ')),
-                  Spacer(),
+                            ),
+                            child: const Text('คอนเฟิร์ม'),
+                          ),
+                        ),
+                        Spacer(),
+                        Container(
+                          //HERE
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                padding: MaterialStateProperty.all<
+                                    EdgeInsetsGeometry>(
+                                  EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                ),
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Color.fromARGB(255, 74, 172, 253)),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                1.5,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.6,
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              child: Consumer<ConfirmCart>(
+                                                builder:
+                                                    (context, cartConfirm, _) {
+                                                  List<Product> cartItems =
+                                                      cartConfirm.items;
+
+                                                  if (cartItems.isEmpty) {
+                                                    return const Center(
+                                                      child: Text(
+                                                          'No items in the cart.'),
+                                                    );
+                                                  } else {
+                                                    return ListView.builder(
+                                                      itemCount:
+                                                          cartItems.length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        Product product =
+                                                            cartItems[index];
+
+                                                        return Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              1,
+                                                          margin: EdgeInsets.all(
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.04),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          0)),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            children: [
+                                                              Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.18,
+                                                                child: Text(
+                                                                  '${product.name}',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .mitr(
+                                                                    textStyle: const TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            10,
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.18,
+                                                                child: Text(
+                                                                  'ราคา: ${product.price} บาท',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .mitr(
+                                                                    textStyle: const TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            10,
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.18,
+                                                                child: Text(
+                                                                  'จำนวณ: ${product.quantity}',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .mitr(
+                                                                    textStyle: const TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            10,
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                            Center(
+                                              child: Column(
+                                                children: [
+                                                  Consumer<ConfirmCart>(
+                                                    builder: (context,
+                                                        cartProvider, _) {
+                                                      int totalPriceConfirm =
+                                                          cartProvider
+                                                              .getTotalPrice();
+                                                      return Text(
+                                                          "ราคาทั้งหมด: ${formatCurrency.format(totalPriceConfirm)} บาท");
+                                                    },
+                                                  ),
+                                                  SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.025),
+                                                  ElevatedButton(
+                                                    onPressed: () async {
+                                                      // print(user_id);
+                                                      if (Provider.of<
+                                                                  ConfirmCart>(
+                                                              context,
+                                                              listen: false)
+                                                          .items
+                                                          .isNotEmpty) {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return Dialog(
+                                                              child: SizedBox(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    1.2,
+                                                                height: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height *
+                                                                    0.2,
+                                                                child: Center(
+                                                                    child:
+                                                                        Column(
+                                                                  children: [
+                                                                    Spacer(),
+                                                                    Text(
+                                                                      'ยืมยันที่จะเช็คบิล ใช่ หรือ ไม่',
+                                                                      style: GoogleFonts
+                                                                          .poppins(
+                                                                        textStyle: Theme.of(context)
+                                                                            .textTheme
+                                                                            .titleLarge,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        color: Colors
+                                                                            .black,
+                                                                      ),
+                                                                    ),
+                                                                    Spacer(),
+                                                                    Row(
+                                                                      children: [
+                                                                        Spacer(),
+                                                                        ElevatedButton(
+                                                                          onPressed:
+                                                                              () async {
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                          style:
+                                                                              ElevatedButton.styleFrom(
+                                                                            shape:
+                                                                                RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(25),
+                                                                            ),
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                                                            primary: Color.fromARGB(
+                                                                                255,
+                                                                                253,
+                                                                                74,
+                                                                                74),
+                                                                          ),
+                                                                          child:
+                                                                              const Text(
+                                                                            'ยกเลิก',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Spacer(),
+                                                                        ElevatedButton(
+                                                                          onPressed:
+                                                                              () async {
+                                                                            addMenuCollection(
+                                                                                user_id,
+                                                                                Provider.of<ConfirmCart>(context, listen: false).getTotalPrice(),
+                                                                                Provider.of<ConfirmCart>(context, listen: false));
+                                                                            print(Provider.of<ConfirmCart>(context, listen: false).getTotalPrice());
+                                                                            Provider.of<ConfirmCart>(context, listen: false).clearCart();
+                                                                            Navigator.pop(context);
+                                                                            Navigator.pop(context);
+                                                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                                              const SnackBar(
+                                                                                content: Text('กรุณาติดต่อพนักงาน'),
+                                                                                duration: Duration(seconds: 2),
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                          style:
+                                                                              ElevatedButton.styleFrom(
+                                                                            shape:
+                                                                                RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(25),
+                                                                            ),
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                                                            primary: Color.fromARGB(
+                                                                                255,
+                                                                                74,
+                                                                                172,
+                                                                                253),
+                                                                          ),
+                                                                          child:
+                                                                              const Text(
+                                                                            'ยืนยัน',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Spacer()
+                                                                      ],
+                                                                    ),
+                                                                    Spacer()
+                                                                  ],
+                                                                )),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+                                                      }
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                      ),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 10,
+                                                          horizontal: 20),
+                                                      primary: Color.fromARGB(
+                                                          255, 74, 172, 253),
+                                                    ),
+                                                    child: const Text(
+                                                      'เช็คบิล',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.025),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Text('สรุปบิล')),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

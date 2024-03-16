@@ -19,6 +19,13 @@ class _MenuState extends State<Menu> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isSnackBarVisible = false;
   bool stockAlready = false;
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<CartProvider>(context, listen: false).fetchCartFromSharedPref();
+    Provider.of<ConfirmCart>(context, listen: false)
+        .fetchConfirmCartFromSharedPref();
+  }
 
   @override
   Widget build(BuildContext context) {

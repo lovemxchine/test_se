@@ -10,6 +10,21 @@ class Product {
     required this.price,
     this.quantity = 1,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'quantity': quantity,
+    };
+  }
 
-  get details => null;
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      name: json['name'],
+      price: json['price'],
+      quantity: json['quantity'] ?? 1,
+    );
+  }
 }

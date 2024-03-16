@@ -1,11 +1,33 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_se/model/product.dart';
 
 class CartProvider extends ChangeNotifier {
+  static const String _cartKey = 'cart';
+
   List<Product> _items = [];
 
   List<Product> get items => _items;
+
+  Future<void> fetchCartFromSharedPref() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? cartJson = prefs.getString(_cartKey);
+    if (cartJson != null) {
+      final List<dynamic> jsonList = jsonDecode(cartJson);
+      _items = jsonList.map((json) => Product.fromJson(json)).toList();
+    }
+  }
+
+  Future<void> saveCartToSharedPref() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String cartJson =
+        jsonEncode(_items.map((item) => item.toJson()).toList());
+    prefs.setString(_cartKey, cartJson);
+  }
 
   void addToCart(Product product) {
     if (_items.isNotEmpty) {
@@ -26,6 +48,7 @@ class CartProvider extends ChangeNotifier {
       product.quantity = 1;
       _items.add(product);
     }
+    saveCartToSharedPref();
     notifyListeners();
   }
 
@@ -40,11 +63,13 @@ class CartProvider extends ChangeNotifier {
         break;
       }
     }
+    saveCartToSharedPref();
     notifyListeners();
   }
 
   void clearCart() {
     _items.clear();
+    saveCartToSharedPref();
     notifyListeners();
   }
 
@@ -58,12 +83,27 @@ class CartProvider extends ChangeNotifier {
 }
 
 class ConfirmCart extends ChangeNotifier {
-  List<Product> _items = [];
-  // BuildContext _context;
+  static const String _confirmCartKey = 'confirm_cart';
 
-  // ConfirmCart(this._context);
+  List<Product> _items = [];
 
   List<Product> get items => _items;
+
+  Future<void> fetchConfirmCartFromSharedPref() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? confirmCartJson = prefs.getString(_confirmCartKey);
+    if (confirmCartJson != null) {
+      final List<dynamic> jsonList = jsonDecode(confirmCartJson);
+      _items = jsonList.map((json) => Product.fromJson(json)).toList();
+    }
+  }
+
+  Future<void> saveConfirmCartToSharedPref() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String confirmCartJson =
+        jsonEncode(_items.map((item) => item.toJson()).toList());
+    prefs.setString(_confirmCartKey, confirmCartJson);
+  }
 
   void confirmOrder(BuildContext context) {
     List<Product> cartItems =
@@ -82,10 +122,13 @@ class ConfirmCart extends ChangeNotifier {
         _items.add(cartItem);
       }
     }
+    saveConfirmCartToSharedPref();
+    notifyListeners();
   }
 
   void clearCart() {
     _items.clear();
+    saveConfirmCartToSharedPref();
     notifyListeners();
   }
 

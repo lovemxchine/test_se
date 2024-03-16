@@ -134,7 +134,132 @@ class _CheckBillState extends State<CheckBill> {
                                               0.025),
                                   ElevatedButton(
                                     onPressed: () async {
-                                      completePaid(doc['id']);
+                                      // completePaid(doc['id']);
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  1.2,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.2,
+                                              child: Center(
+                                                child: Column(
+                                                  children: [
+                                                    Spacer(),
+                                                    Text(
+                                                      'ต้องการยืนยัน ใช่ หรือ ไม่',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        textStyle:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .titleLarge,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    Spacer(),
+                                                    Row(
+                                                      children: [
+                                                        Spacer(),
+                                                        ElevatedButton(
+                                                          onPressed: () async {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          style: ButtonStyle(
+                                                            padding:
+                                                                MaterialStateProperty
+                                                                    .all<
+                                                                        EdgeInsetsGeometry>(
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 5,
+                                                                  horizontal:
+                                                                      10),
+                                                            ),
+                                                            foregroundColor:
+                                                                MaterialStateProperty.all<
+                                                                        Color>(
+                                                                    Color.fromARGB(
+                                                                        255,
+                                                                        253,
+                                                                        74,
+                                                                        74)),
+                                                            shape: MaterialStateProperty
+                                                                .all<
+                                                                    RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            18.0),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          child: const Text(
+                                                              'ยกเลิก'),
+                                                        ),
+                                                        Spacer(),
+                                                        ElevatedButton(
+                                                          onPressed: () async {
+                                                            completePaid(
+                                                                doc['id']);
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          style: ButtonStyle(
+                                                            padding:
+                                                                MaterialStateProperty
+                                                                    .all<
+                                                                        EdgeInsetsGeometry>(
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 5,
+                                                                  horizontal:
+                                                                      10),
+                                                            ),
+                                                            foregroundColor:
+                                                                MaterialStateProperty.all<
+                                                                        Color>(
+                                                                    Color.fromARGB(
+                                                                        255,
+                                                                        74,
+                                                                        172,
+                                                                        253)),
+                                                            shape: MaterialStateProperty
+                                                                .all<
+                                                                    RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            18.0),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          child: const Text(
+                                                              'ยืนยัน'),
+                                                        ),
+                                                        Spacer()
+                                                      ],
+                                                    ),
+                                                    Spacer(),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
                                     },
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
