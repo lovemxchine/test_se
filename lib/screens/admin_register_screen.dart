@@ -28,6 +28,7 @@ class _RegisterState extends State<AdminRegister> {
   final bool _obscureText = true;
   List roleList = ['manager', 'chef', 'employee', 'customer'];
   var roleChoose;
+  final bool noti = true;
   // late String newValue;
 
   @override
@@ -228,7 +229,9 @@ class _RegisterState extends State<AdminRegister> {
           int.parse(ageController.text.trim()),
           Timestamp.now(),
           uid,
-          telController.text);
+          telController.text,
+          noti
+          );
       print("User is successfully created");
       Navigator.pushNamed(context, "/home");
     } else {
@@ -237,7 +240,7 @@ class _RegisterState extends State<AdminRegister> {
   }
 
   Future addUserCollection(String name, String email, String role, int age,
-      Timestamp init_time, String uid, String tel // Add uid as an argument here
+      Timestamp init_time, String uid, String tel,bool notification // Add uid as an argument here
       ) async {
     await FirebaseFirestore.instance.collection('user').doc(uid).set({
       'name': name,
@@ -246,7 +249,8 @@ class _RegisterState extends State<AdminRegister> {
       'age': age,
       'init_time': init_time,
       'uid': uid, // Use uid here
-      'tel': tel
+      'tel': tel,
+      'noti':notification
     });
   }
 }

@@ -1,9 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_se/screens/checkbill_screen.dart';
-import 'package:test_se/screens/menu_screen.dart';
-import 'package:test_se/screens/order_list_screen.dart';
 import '../promotion/promotion_screen.dart';
 import '../status_order.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -78,14 +77,6 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
               Icons.checklist,
               color: Colors.black,
             ),
-            // Icon(
-            //   Icons.access_time_filled,
-            //   color: Colors.black,
-            // ),
-            // Icon(
-            //   Icons.settings,
-            //   color: Colors.black,
-            // ),
           ],
         ),
       ),
