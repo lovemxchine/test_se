@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,20 +12,6 @@ class DrawerList extends StatefulWidget {
 }
 
 class _DrawerListState extends State<DrawerList> {
-  void pushNotification() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    String user_id = user!.uid;
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: 10,
-            channelKey: 'restaurant',
-            title: user_id,
-            body: 'Need Service',
-            wakeUpScreen: true,
-            fullScreenIntent: true,
-            autoDismissible: false,
-            backgroundColor: Colors.orange));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +46,7 @@ class _DrawerListState extends State<DrawerList> {
                   title: "เรียกพนักงานเสร็จสิ้น",
                   desc: "พนักงานกำลังมาหาคุณกรุณารอสักครู่",
                   // btnCancelOnPress: (){},
-                  btnOkOnPress: () async {
-                    pushNotification();
+                  btnOkOnPress: () {
                   }).show()
             },
           ),
