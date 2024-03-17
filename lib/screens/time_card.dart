@@ -303,172 +303,172 @@ class _TimeCardState extends State<TimeCard> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Spacer(),
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Dialog(
-                                            child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.7,
-                                          child: SingleChildScrollView(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(
-                                                  MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.03),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      IconButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          icon:
-                                                              Icon(Icons.close))
-                                                    ],
-                                                  ),
-                                                  ListView.builder(
-                                                    physics:
-                                                        NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                    itemCount:
-                                                        todayCheckIns.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      DocumentSnapshot
-                                                          checkInDoc =
-                                                          todayCheckIns[index];
-                                                      String formattedTime =
-                                                          getOnlyHrAndMin(
-                                                              checkInDoc[
-                                                                  'time']);
-                                                      bool checkTime =
-                                                          formattedTime
-                                                                  .compareTo(
-                                                                      '10:00') >
-                                                              0;
-                                                      String checkTimeStr =
-                                                          checkTime
-                                                              ? 'เข้างานสาย'
-                                                              : 'เข้างานตรงเวลา';
-                                                      return Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Center(
-                                                            child: RichText(
-                                                              text: TextSpan(
-                                                                children: [
-                                                                  TextSpan(
-                                                                    text:
-                                                                        "เวลาเข้างาน: ",
-                                                                    style:
-                                                                        GoogleFonts
-                                                                            .mitr(
-                                                                      textStyle:
-                                                                          const TextStyle(
-                                                                        color: Color(
-                                                                            0xff3C696F),
-                                                                        fontSize:
-                                                                            17,
-                                                                        fontWeight:
-                                                                            FontWeight.w400,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  TextSpan(
-                                                                    text:
-                                                                        '${checkTimeStr}',
-                                                                    style:
-                                                                        GoogleFonts
-                                                                            .mitr(
-                                                                      textStyle: checkTime
-                                                                          ? const TextStyle(
-                                                                              color: Colors
-                                                                                  .red,
-                                                                              fontSize:
-                                                                                  17,
-                                                                              fontWeight: FontWeight
-                                                                                  .w400)
-                                                                          : const TextStyle(
-                                                                              color: Colors.green,
-                                                                              fontSize: 17,
-                                                                              fontWeight: FontWeight.w400),
-                                                                    ),
-                                                                  ),
-                                                                  TextSpan(
-                                                                    text:
-                                                                        "\n${timeStampFormat(checkInDoc['time'])}",
-                                                                    style:
-                                                                        GoogleFonts
-                                                                            .mitr(
-                                                                      textStyle: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize:
-                                                                              17,
-                                                                          fontWeight:
-                                                                              FontWeight.w400),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.03,
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ));
-                                      },
-                                    );
-                                  },
-                                  style: ButtonStyle(
-                                    elevation:
-                                        MaterialStateProperty.all<double>(3),
-                                    shadowColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.grey),
-                                    padding: MaterialStateProperty.all<
-                                        EdgeInsetsGeometry>(
-                                      EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 10),
-                                    ),
-                                    foregroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Color.fromARGB(255, 74, 74, 74)),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                    ),
-                                  ),
-                                  child: const Text('เช็คเวลาเข้างานวันนี้'),
-                                ),
+                                // Spacer(),
+                                // ElevatedButton(
+                                //   onPressed: () async {
+                                //     showDialog(
+                                //       context: context,
+                                //       builder: (context) {
+                                //         return Dialog(
+                                //             child: SizedBox(
+                                //           width:
+                                //               MediaQuery.of(context).size.width,
+                                //           height: MediaQuery.of(context)
+                                //                   .size
+                                //                   .height *
+                                //               0.7,
+                                //           child: SingleChildScrollView(
+                                //             child: Padding(
+                                //               padding: EdgeInsets.all(
+                                //                   MediaQuery.of(context)
+                                //                           .size
+                                //                           .width *
+                                //                       0.03),
+                                //               child: Column(
+                                //                 children: [
+                                //                   Row(
+                                //                     children: [
+                                //                       IconButton(
+                                //                           onPressed: () {
+                                //                             Navigator.pop(
+                                //                                 context);
+                                //                           },
+                                //                           icon:
+                                //                               Icon(Icons.close))
+                                //                     ],
+                                //                   ),
+                                //                   ListView.builder(
+                                //                     physics:
+                                //                         NeverScrollableScrollPhysics(),
+                                //                     shrinkWrap: true,
+                                //                     itemCount:
+                                //                         todayCheckIns.length,
+                                //                     itemBuilder:
+                                //                         (context, index) {
+                                //                       DocumentSnapshot
+                                //                           checkInDoc =
+                                //                           todayCheckIns[index];
+                                //                       String formattedTime =
+                                //                           getOnlyHrAndMin(
+                                //                               checkInDoc[
+                                //                                   'time']);
+                                //                       bool checkTime =
+                                //                           formattedTime
+                                //                                   .compareTo(
+                                //                                       '10:00') >
+                                //                               0;
+                                //                       String checkTimeStr =
+                                //                           checkTime
+                                //                               ? 'เข้างานสาย'
+                                //                               : 'เข้างานตรงเวลา';
+                                //                       return Column(
+                                //                         crossAxisAlignment:
+                                //                             CrossAxisAlignment
+                                //                                 .start,
+                                //                         children: [
+                                //                           Center(
+                                //                             child: RichText(
+                                //                               text: TextSpan(
+                                //                                 children: [
+                                //                                   TextSpan(
+                                //                                     text:
+                                //                                         "เวลาเข้างาน: ",
+                                //                                     style:
+                                //                                         GoogleFonts
+                                //                                             .mitr(
+                                //                                       textStyle:
+                                //                                           const TextStyle(
+                                //                                         color: Color(
+                                //                                             0xff3C696F),
+                                //                                         fontSize:
+                                //                                             17,
+                                //                                         fontWeight:
+                                //                                             FontWeight.w400,
+                                //                                       ),
+                                //                                     ),
+                                //                                   ),
+                                //                                   TextSpan(
+                                //                                     text:
+                                //                                         '${checkTimeStr}',
+                                //                                     style:
+                                //                                         GoogleFonts
+                                //                                             .mitr(
+                                //                                       textStyle: checkTime
+                                //                                           ? const TextStyle(
+                                //                                               color: Colors
+                                //                                                   .red,
+                                //                                               fontSize:
+                                //                                                   17,
+                                //                                               fontWeight: FontWeight
+                                //                                                   .w400)
+                                //                                           : const TextStyle(
+                                //                                               color: Colors.green,
+                                //                                               fontSize: 17,
+                                //                                               fontWeight: FontWeight.w400),
+                                //                                     ),
+                                //                                   ),
+                                //                                   TextSpan(
+                                //                                     text:
+                                //                                         "\n${timeStampFormat(checkInDoc['time'])}",
+                                //                                     style:
+                                //                                         GoogleFonts
+                                //                                             .mitr(
+                                //                                       textStyle: TextStyle(
+                                //                                           color: Colors
+                                //                                               .black,
+                                //                                           fontSize:
+                                //                                               17,
+                                //                                           fontWeight:
+                                //                                               FontWeight.w400),
+                                //                                     ),
+                                //                                   ),
+                                //                                 ],
+                                //                               ),
+                                //                             ),
+                                //                           ),
+                                //                           SizedBox(
+                                //                             height: MediaQuery.of(
+                                //                                         context)
+                                //                                     .size
+                                //                                     .width *
+                                //                                 0.03,
+                                //                           ),
+                                //                         ],
+                                //                       );
+                                //                     },
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ));
+                                //       },
+                                //     );
+                                //   },
+                                //   style: ButtonStyle(
+                                //     elevation:
+                                //         MaterialStateProperty.all<double>(3),
+                                //     shadowColor:
+                                //         MaterialStateProperty.all<Color>(
+                                //             Colors.grey),
+                                //     padding: MaterialStateProperty.all<
+                                //         EdgeInsetsGeometry>(
+                                //       EdgeInsets.symmetric(
+                                //           vertical: 10, horizontal: 10),
+                                //     ),
+                                //     foregroundColor:
+                                //         MaterialStateProperty.all<Color>(
+                                //             Color.fromARGB(255, 74, 74, 74)),
+                                //     shape: MaterialStateProperty.all<
+                                //         RoundedRectangleBorder>(
+                                //       RoundedRectangleBorder(
+                                //         borderRadius:
+                                //             BorderRadius.circular(5.0),
+                                //       ),
+                                //     ),
+                                //   ),
+                                //   child: const Text('เช็คเวลาเข้างานวันนี้'),
+                                // ),
                                 Spacer(),
                                 ElevatedButton(
                                   onPressed: () async {
@@ -626,7 +626,7 @@ class _TimeCardState extends State<TimeCard> {
                                       ),
                                     ),
                                   ),
-                                  child: const Text('เช็คเวลาทั้งหมด'),
+                                  child: const Text('เช็คประวัติการเข้างาน'),
                                 ),
                                 Spacer(),
                               ],

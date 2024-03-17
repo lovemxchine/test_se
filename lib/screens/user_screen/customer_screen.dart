@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:test_se/order_waiting_status.dart';
 import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
 import '../promotion/promotion_screen.dart';
@@ -20,6 +21,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
     const Menu(),
     const OrderList(),
     const Promotion(),
+    // OrderWaitingStatus()
   ];
   void _checkUserRole() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -42,10 +44,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (FirebaseAuth.instance.currentUser != null) {
-          // ถ้าผู้ใช้ล็อกอินอยู่ กำหนดให้ไม่สามารถย้อนกลับได้
           return false;
         } else {
-          // ถ้าไม่ได้ล็อกอิน อนุญาตให้ย้อนกลับได้
           return true;
         }
       },
@@ -77,6 +77,10 @@ class _CustomerScreenState extends State<CustomerScreen> {
               Icons.new_releases,
               color: Colors.black,
             ),
+            // Icon(
+            //   Icons.notes,
+            //   color: Colors.black,
+            // ),
           ],
         ),
       ),

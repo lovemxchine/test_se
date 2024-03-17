@@ -22,7 +22,7 @@ class _ManagerScreenState extends State<ManagerScreen> {
 
   List<Widget> body = [
     // CheckBill(),
-    const Promotion(),
+    // const Promotion(),
     const Status(),
     const ManagerFunc(),
   ];
@@ -74,10 +74,10 @@ class _ManagerScreenState extends State<ManagerScreen> {
             //     Icons.celebration,
             //     color: Colors.black,
             //   ),
-            Icon(
-              Icons.new_releases,
-              color: Colors.black,
-            ),
+            // Icon(
+            //   Icons.new_releases,
+            //   color: Colors.black,
+            // ),
             Icon(
               Icons.checklist,
               color: Colors.black,

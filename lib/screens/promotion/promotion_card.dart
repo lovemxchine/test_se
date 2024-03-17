@@ -57,7 +57,7 @@ class _PromotionCardState extends State<PromotionCard> {
                     ),
                   ),
                 ),
-                 Container(
+                Container(
                   alignment: Alignment.center,
                   child: Text(
                     'รายละเอียด : ${doc['detail']}',
