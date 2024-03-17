@@ -50,7 +50,7 @@ class _CheckBillState extends State<CheckBill> {
           ),
         ),
         title: const Text(
-          "Menu",
+          "CheckBill",
           style: TextStyle(color: Colors.white),
         ),
       ),

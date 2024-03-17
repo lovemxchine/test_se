@@ -260,7 +260,7 @@ class _TimeCardState extends State<TimeCard> {
                                 Text(
                                   'ชื่อ : ${doc['name']}',
                                   style: const TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w300,
                                   ),
@@ -271,7 +271,7 @@ class _TimeCardState extends State<TimeCard> {
                                   style: GoogleFonts.mitr(
                                     textStyle: const TextStyle(
                                         color: Color.fromARGB(255, 0, 0, 0),
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ),
                                   textAlign: TextAlign.left,
@@ -281,7 +281,7 @@ class _TimeCardState extends State<TimeCard> {
                                   style: GoogleFonts.mitr(
                                     textStyle: const TextStyle(
                                         color: Color.fromARGB(255, 0, 0, 0),
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ),
                                   textAlign: TextAlign.left,
@@ -291,7 +291,7 @@ class _TimeCardState extends State<TimeCard> {
                                   style: GoogleFonts.mitr(
                                     textStyle: const TextStyle(
                                         color: Color.fromARGB(255, 0, 0, 0),
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ),
                                   textAlign: TextAlign.left,

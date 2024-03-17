@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test_se/screens/checkbill_screen.dart';
 import 'package:test_se/screens/menu_screen.dart';
 import 'package:test_se/screens/order_list_screen.dart';
 import '../promotion/promotion_screen.dart';
@@ -18,8 +19,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   int _currentIndex = 0;
 
   List<Widget> body = [
-    const Menu(),
-    const OrderList(),
+    CheckBill(),
     const Promotion(),
     const Status(),
     // const TimeCheckIn_Out(),
@@ -67,11 +67,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           },
           items: const [
             Icon(
-              Icons.fastfood,
-              color: Colors.black,
-            ),
-            Icon(
-              Icons.shopping_basket,
+              Icons.price_check,
               color: Colors.black,
             ),
             Icon(
@@ -79,9 +75,13 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
               color: Colors.black,
             ),
             Icon(
-              Icons.access_time_filled,
+              Icons.checklist,
               color: Colors.black,
             ),
+            // Icon(
+            //   Icons.access_time_filled,
+            //   color: Colors.black,
+            // ),
             // Icon(
             //   Icons.settings,
             //   color: Colors.black,

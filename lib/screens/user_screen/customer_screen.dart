@@ -74,7 +74,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
               color: Colors.black,
             ),
             Icon(
-              Icons.celebration,
+              Icons.new_releases,
               color: Colors.black,
             ),
           ],

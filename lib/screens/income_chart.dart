@@ -18,6 +18,13 @@ class _IncomeChartState extends State<IncomeChart> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    List list = [
+      {'class': 'a', 'total': 16},
+      {'class': 'b', 'total': 20},
+      {'class': 'c', 'total': 22},
+      {'class': 'd', 'total': 23},
+      {'class': 'e', 'total': 34},
+    ];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
@@ -63,7 +70,21 @@ class _IncomeChartState extends State<IncomeChart> {
               AspectRatio(
                 aspectRatio: 16 / 9,
                 child: DChartBarCustom(
-                  listData: [DChartBarDataCustom(value: 5.5, label: 'Jan')],
+                  showMeasureLine: true,
+                  showDomainLine: true,
+                  spaceBetweenItem: 10,
+                  spaceDomainLinetoChart: 10,
+                  spaceMeasureLinetoChart: 10,
+                  max: 50,
+                  radiusBar: const BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8)),
+                  valueAlign: Alignment.bottomCenter,
+                  listData: List.generate(list.length, (index) {
+                    Map item = list[index];
+                    return DChartBarDataCustom(
+                        value: item['total'].toDouble(), label: item['class']);
+                  }),
                 ),
               )
             ],

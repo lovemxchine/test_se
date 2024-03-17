@@ -21,9 +21,7 @@ class _ManagerScreenState extends State<ManagerScreen> {
   int _currentIndex = 0;
 
   List<Widget> body = [
-    const Menu(),
-    const OrderList(),
-    CheckBill(),
+    // CheckBill(),
     const Promotion(),
     const Status(),
     const ManagerFunc(),
@@ -72,28 +70,20 @@ class _ManagerScreenState extends State<ManagerScreen> {
             });
           },
           items: const [
+            //  Icon(
+            //     Icons.celebration,
+            //     color: Colors.black,
+            //   ),
             Icon(
-              Icons.fastfood,
+              Icons.new_releases,
               color: Colors.black,
             ),
             Icon(
-              Icons.shopping_basket,
+              Icons.checklist,
               color: Colors.black,
             ),
             Icon(
-              Icons.celebration,
-              color: Colors.black,
-            ),
-            Icon(
-              Icons.alarm_add_sharp,
-              color: Colors.black,
-            ),
-            Icon(
-              Icons.access_time_filled,
-              color: Colors.black,
-            ),
-            Icon(
-              Icons.settings,
+              Icons.manage_accounts,
               color: Colors.black,
             ),
           ],

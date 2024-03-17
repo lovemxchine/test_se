@@ -20,9 +20,7 @@ class _ChefScreenState extends State<ChefScreen> {
   int _currentIndex = 0;
 
   List<Widget> body = [
-    const Menu(),
     const OrderWaiting(),
-    const Promotion(),
     const Status(),
   ];
   @override
@@ -72,19 +70,7 @@ class _ChefScreenState extends State<ChefScreen> {
               color: Colors.black,
             ),
             Icon(
-              Icons.notifications_active,
-              color: Colors.black,
-            ),
-            Icon(
-              Icons.celebration,
-              color: Colors.black,
-            ),
-            Icon(
-              Icons.access_time_filled,
-              color: Colors.black,
-            ),
-            Icon(
-              Icons.settings,
+              Icons.food_bank,
               color: Colors.black,
             ),
           ],
