@@ -207,34 +207,57 @@ class _RegisterState extends State<AdminRegister> {
   }
 
   void _signUp() async {
-    AwesomeDialog(
-      context: context,
-      dialogType: DialogType.warning,
-      animType: AnimType.topSlide,
-      showCloseIcon: true,
-      title: "สมัครสมาชิกเสร็จสิ้น",
-      btnOkOnPress: () {
+    try {
+      User? user = await _auth.signUpWithEmailAndPassword(
+          emailController.text, passwordController.text);
+      if (user != null) {
+        String uid = user.uid;
+        await addUserCollection(
+          userController.text.trim(),
+          emailController.text.trim(),
+          roleChoose,
+          int.parse(ageController.text.trim()),
+          Timestamp.now(),
+          uid,
+          telController.text,
+        );
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.warning,
+          animType: AnimType.topSlide,
+          showCloseIcon: true,
+          title: "สมัครสมาชิกเสร็จสิ้น",
+          btnOkOnPress: () {
+            Navigator.pop(context);
+          },
+        ).show();
+        print("User is successfully created");
         Navigator.pop(context);
-      },
-    ).show();
-    User? user = await _auth.signUpWithEmailAndPassword(
-        emailController.text, passwordController.text);
-
-    if (user != null) {
-      String uid = user.uid;
-      await addUserCollection(
-        userController.text.trim(),
-        emailController.text.trim(),
-        roleChoose,
-        int.parse(ageController.text.trim()),
-        Timestamp.now(),
-        uid,
-        telController.text,
-      );
-      print("User is successfully created");
-      Navigator.pushNamed(context, "/home");
-    } else {
-      print('Some error happen');
+      } else {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.warning,
+          animType: AnimType.topSlide,
+          showCloseIcon: true,
+          title:
+              "อีเมล์อาจจะมีการใช้แล้ว\nหรือข้อมูลอาจผิดพลาด\nกรุณาตรวจสอบอีกรอบ",
+          btnOkOnPress: () {
+            Navigator.pop(context);
+          },
+        ).show();
+      }
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.warning,
+        animType: AnimType.topSlide,
+        showCloseIcon: true,
+        title: "สมัครรหัสเสร็จสิ้น",
+        btnOkOnPress: () {
+          Navigator.pop(context);
+        },
+      ).show();
+    } catch (error) {
+      print(error);
     }
   }
 
