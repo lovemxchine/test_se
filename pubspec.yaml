@@ -60,18 +60,25 @@ dependencies:
   fl_chart: ^0.66.2
   d_chart: ^2.6.9
   d_method: ^0.2.6
+
   # d_method: ^0.0.3
   # d_chart: ^0.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
+flutter_icons:
+  android: true
+  # ios: true
+  image_path: "assets/images/logo.png"
+
   flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
