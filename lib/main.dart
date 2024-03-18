@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,13 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_se/firebase_options.dart';
 import 'package:test_se/provider/provider.dart';
-import 'package:test_se/screens/admin_register_screen.dart';
-import 'package:test_se/screens/login_screen.dart';
+import 'package:test_se/screens/main_screen/admin_register_screen.dart';
+import 'package:test_se/screens/main_screen/login_screen.dart';
 import 'package:test_se/screens/user_screen/chef_screen.dart';
 import 'package:test_se/screens/user_screen/customer_screen.dart';
 import 'package:test_se/screens/user_screen/employee_screen.dart';
 import 'package:test_se/screens/user_screen/manager_screen.dart';
-import 'package:test_se/splash/splash.dart';
+import 'package:test_se/screens/splash.dart';
 
 bool show = false;
 
@@ -34,7 +33,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [

@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:test_se/model/product.dart';
 import 'package:test_se/provider/provider.dart';
 
-import '../widgets/drawer_list.dart';
+import '../../widgets/drawer_list.dart';
 
 class OrderList extends StatefulWidget {
   const OrderList({super.key});
@@ -79,7 +79,7 @@ class _OrderListState extends State<OrderList> {
 
             if (cartItems.isEmpty) {
               return Center(
-                child: Text('No items in the cart.'),
+                child: Text('ยังไม่มีสินค้าในตะกร้า'),
               );
             } else {
               return ListView.builder(
@@ -202,6 +202,12 @@ class _OrderListState extends State<OrderList> {
 
                           child: ElevatedButton(
                             onPressed: () async {
+                              DocumentSnapshot snapshot =
+                                  await FirebaseFirestore.instance
+                                      .collection('user')
+                                      .doc(user_id)
+                                      .get();
+                              String name = snapshot['name'];
                               Provider.of<ConfirmCart>(context, listen: false)
                                   .confirmOrder(context);
                               for (var item in Provider.of<CartProvider>(
@@ -214,7 +220,7 @@ class _OrderListState extends State<OrderList> {
                                         .doc(item.id)
                                         .get();
                                 addWaitCollection(Timestamp.now(), user.uid,
-                                    item.name, item.quantity);
+                                    item.name, item.quantity, name);
                                 int currentQuantity = snapshot['quantity'];
                                 if (currentQuantity >= item.quantity) {
                                   FirebaseFirestore.instance
@@ -293,7 +299,7 @@ class _OrderListState extends State<OrderList> {
                                                   if (cartItems.isEmpty) {
                                                     return const Center(
                                                       child: Text(
-                                                          'No items in the cart.'),
+                                                          'ยังไม่มีสินค้าในตะกร้า'),
                                                     );
                                                   } else {
                                                     return ListView.builder(
@@ -476,13 +482,13 @@ class _OrderListState extends State<OrderList> {
                                                                                 RoundedRectangleBorder(
                                                                               borderRadius: BorderRadius.circular(25),
                                                                             ),
-                                                                            padding:
-                                                                                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                                                            primary: Color.fromARGB(
+                                                                            backgroundColor: Color.fromARGB(
                                                                                 255,
                                                                                 253,
                                                                                 74,
                                                                                 74),
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                                                           ),
                                                                           child:
                                                                               const Text(
@@ -498,10 +504,17 @@ class _OrderListState extends State<OrderList> {
                                                                         ElevatedButton(
                                                                           onPressed:
                                                                               () async {
+                                                                            DocumentSnapshot
+                                                                                snapshot =
+                                                                                await FirebaseFirestore.instance.collection('user').doc(user_id).get();
+                                                                            String
+                                                                                name =
+                                                                                snapshot['name'];
                                                                             addMenuCollection(
                                                                                 user_id,
                                                                                 Provider.of<ConfirmCart>(context, listen: false).getTotalPrice(),
-                                                                                Provider.of<ConfirmCart>(context, listen: false));
+                                                                                Provider.of<ConfirmCart>(context, listen: false),
+                                                                                name);
                                                                             print(Provider.of<ConfirmCart>(context, listen: false).getTotalPrice());
                                                                             Provider.of<ConfirmCart>(context, listen: false).clearCart();
                                                                             Navigator.pop(context);
@@ -519,13 +532,13 @@ class _OrderListState extends State<OrderList> {
                                                                                 RoundedRectangleBorder(
                                                                               borderRadius: BorderRadius.circular(25),
                                                                             ),
-                                                                            padding:
-                                                                                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                                                            primary: Color.fromARGB(
+                                                                            backgroundColor: Color.fromARGB(
                                                                                 255,
                                                                                 74,
                                                                                 172,
                                                                                 253),
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                                                           ),
                                                                           child:
                                                                               const Text(
@@ -557,12 +570,13 @@ class _OrderListState extends State<OrderList> {
                                                             BorderRadius
                                                                 .circular(25),
                                                       ),
+                                                      backgroundColor:
+                                                          Color.fromARGB(255,
+                                                              74, 172, 253),
                                                       padding: const EdgeInsets
                                                           .symmetric(
                                                           vertical: 10,
                                                           horizontal: 20),
-                                                      primary: Color.fromARGB(
-                                                          255, 74, 172, 253),
                                                     ),
                                                     child: const Text(
                                                       'เช็คบิล',
@@ -604,10 +618,7 @@ class _OrderListState extends State<OrderList> {
   }
 
   Future<void> addMenuCollection(
-    String uid,
-    int price,
-    ConfirmCart confirmCart,
-  ) async {
+      String uid, int price, ConfirmCart confirmCart, String name) async {
     List<Map<String, dynamic>> itemsData = [];
 
     for (Product product in confirmCart.items) {
@@ -625,6 +636,7 @@ class _OrderListState extends State<OrderList> {
       'time': DateTime.now(),
       'uid': uid,
       'list': itemsData,
+      'name': name,
     }).then((DocumentReference docRef) {
       String docId = docRef.id;
       FirebaseFirestore.instance.collection('income').doc(docId).update({
@@ -654,8 +666,8 @@ class _OrderListState extends State<OrderList> {
   //   });
   // }
 
-  Future addWaitCollection(
-      Timestamp init_time, String uid, String order, int orderQuantity) async {
+  Future addWaitCollection(Timestamp init_time, String uid, String order,
+      int orderQuantity, String name) async {
     var docWaiting =
         await FirebaseFirestore.instance.collection('waiting').doc(uid).get();
 
@@ -664,6 +676,7 @@ class _OrderListState extends State<OrderList> {
       int updatedOrderQuantity = currentOrderQuantity + orderQuantity;
       await FirebaseFirestore.instance.collection('waiting').doc(uid).update(
         {
+          'name': name,
           'init_time': init_time,
           'uid': uid,
           order: updatedOrderQuantity,
@@ -673,6 +686,7 @@ class _OrderListState extends State<OrderList> {
     } else {
       await FirebaseFirestore.instance.collection('waiting').doc(uid).set(
         {
+          'name': name,
           'init_time': init_time,
           'uid': uid,
           order: orderQuantity,

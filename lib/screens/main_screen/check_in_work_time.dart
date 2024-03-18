@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:test_se/screens/edit_page.dart';
-import 'package:test_se/screens/time_card.dart';
-import 'package:test_se/widgets/manage_card.dart';
+import 'package:test_se/screens/stock/edit_page.dart';
+import 'package:test_se/widgets/time_card.dart';
+import 'package:test_se/screens/stock/editmenu_card.dart';
 
 class CheckInWorkTime extends StatefulWidget {
   const CheckInWorkTime({Key? key}) : super(key: key);
@@ -104,7 +104,7 @@ class _CheckInWorkTimeState extends State<CheckInWorkTime> {
                       ],
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return CircularProgressIndicator();
                   }
                 },
               ),

@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:test_se/model/product.dart';
 import 'package:test_se/provider/provider.dart';
-import '../widgets/drawer_list.dart';
+import '../../widgets/drawer_list.dart';
 
 class OrderWaiting extends StatefulWidget {
   const OrderWaiting({Key? key}) : super(key: key);
@@ -138,12 +138,13 @@ class _OrderWaitingState extends State<OrderWaiting> {
                                                         BorderRadius.circular(
                                                             25),
                                                   ),
+                                                  backgroundColor:
+                                                      Color.fromARGB(
+                                                          255, 74, 172, 253),
                                                   padding: const EdgeInsets
                                                       .symmetric(
                                                       vertical: 10,
                                                       horizontal: 20),
-                                                  primary: Color.fromARGB(
-                                                      255, 74, 172, 253),
                                                 ),
                                                 child: const Text(
                                                   'Confirm',
@@ -174,19 +175,46 @@ class _OrderWaitingState extends State<OrderWaiting> {
                   },
                 ));
           } else {
-            return const CircularProgressIndicator();
+            return CircularProgressIndicator();
           }
         },
       ),
     );
   }
 
-  Future updateWaiting(String uid, bool status) async {
+  Future updateWaiting(
+    String uid,
+    bool status,
+  ) async {
     await FirebaseFirestore.instance.collection('waiting').doc(uid).delete();
     await FirebaseFirestore.instance
         .collection('waiting')
         .doc(uid)
         .set({'status': status, 'uid': uid});
+
+    CollectionReference userCollection =
+        FirebaseFirestore.instance.collection('user');
+    QuerySnapshot querySnapshot = await userCollection
+        .where('role', isEqualTo: 'employee')
+        .where('isReady', isEqualTo: false)
+        .where('call_number', isEqualTo: '')
+        .get(); //เอาข้อมูล user ที่ role เป็น employee ทั้งหมด
+    DocumentReference nameSnapshot = FirebaseFirestore.instance
+        .collection('user')
+        .doc(uid); //เอาข้อมูลfield:name ของ user ที่ login อยู่
+    String? name =
+        await nameSnapshot.get().then((snapshot) => snapshot['name']);
+
+    querySnapshot.docs.forEach(
+      (DocumentSnapshot documentSnapshot) {
+        userCollection.doc(documentSnapshot.id).update(
+          {
+            'isReady': true,
+            'employee_name': name,
+          },
+        );
+      },
+    );
   }
 
   Future<Map<String, dynamic>> dataWaiting(String uid) async {

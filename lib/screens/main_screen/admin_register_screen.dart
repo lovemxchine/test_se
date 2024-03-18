@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_se/auth/firebase_auth_service.dart';
-import '../components/button_field.dart';
-import '../components/text_field.dart';
-import '../widgets/logo_image.dart';
-import '../widgets/logo_zone.dart';
+import '../../components/button_field.dart';
+import '../../components/text_field.dart';
+import '../../widgets/logo_image.dart';
+import '../../widgets/logo_zone.dart';
 
 class AdminRegister extends StatefulWidget {
   AdminRegister({super.key});
@@ -223,15 +223,14 @@ class _RegisterState extends State<AdminRegister> {
     if (user != null) {
       String uid = user.uid;
       await addUserCollection(
-          userController.text.trim(),
-          emailController.text.trim(),
-          roleChoose,
-          int.parse(ageController.text.trim()),
-          Timestamp.now(),
-          uid,
-          telController.text,
-          noti
-          );
+        userController.text.trim(),
+        emailController.text.trim(),
+        roleChoose,
+        int.parse(ageController.text.trim()),
+        Timestamp.now(),
+        uid,
+        telController.text,
+      );
       print("User is successfully created");
       Navigator.pushNamed(context, "/home");
     } else {
@@ -239,18 +238,38 @@ class _RegisterState extends State<AdminRegister> {
     }
   }
 
-  Future addUserCollection(String name, String email, String role, int age,
-      Timestamp init_time, String uid, String tel,bool notification // Add uid as an argument here
-      ) async {
-    await FirebaseFirestore.instance.collection('user').doc(uid).set({
-      'name': name,
-      'email': email,
-      'role': role,
-      'age': age,
-      'init_time': init_time,
-      'uid': uid, // Use uid here
-      'tel': tel,
-      'noti':notification
-    });
+  Future addUserCollection(
+    String name,
+    String email,
+    String role,
+    int age,
+    Timestamp init_time,
+    String uid,
+    String tel,
+    // bool notification // Add uid as an argument here
+  ) async {
+    if (role != 'employee') {
+      await FirebaseFirestore.instance.collection('user').doc(uid).set({
+        'name': name,
+        'email': email,
+        'role': role,
+        'age': age,
+        'init_time': init_time,
+        'uid': uid, // Use uid here
+        'tel': tel,
+      });
+    } else {
+      await FirebaseFirestore.instance.collection('user').doc(uid).set({
+        'name': name,
+        'email': email,
+        'role': role,
+        'age': age,
+        'init_time': init_time,
+        'uid': uid, // Use uid here
+        'tel': tel,
+        'isRea': false,
+        'call_number': '0'
+      });
+    }
   }
 }

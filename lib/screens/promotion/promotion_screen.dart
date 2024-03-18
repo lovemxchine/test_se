@@ -18,7 +18,7 @@ class _PromotionState extends State<Promotion> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
-      drawer: const DrawerList(),
+      drawer: DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
@@ -48,7 +48,7 @@ class _PromotionState extends State<Promotion> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body:StreamBuilder<QuerySnapshot>(
+      body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('promotion').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -68,7 +68,7 @@ class _PromotionState extends State<Promotion> {
               ]),
             );
           } else {
-            return const CircularProgressIndicator();
+            return CircularProgressIndicator();
           }
         },
       ),

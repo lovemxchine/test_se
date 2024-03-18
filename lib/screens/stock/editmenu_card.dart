@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:test_se/screens/edit_menu_screen.dart';
+import 'package:test_se/screens/main_screen/edit_menu_screen.dart';
 
 class EditCard extends StatefulWidget {
   final List<DocumentSnapshot> availableStocks;
@@ -12,8 +12,6 @@ class EditCard extends StatefulWidget {
   State<EditCard> createState() => _EditCardState();
 }
 
-
-
 class _EditCardState extends State<EditCard> {
   void _navigateToDetailPage(DocumentReference docRef) {
     Navigator.push(
@@ -23,7 +21,6 @@ class _EditCardState extends State<EditCard> {
       ),
     );
   }
-  
 
   @override
   void initState() {

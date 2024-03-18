@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:test_se/widgets/wait_card.dart';
-import '../widgets/drawer_list.dart';
+import '../../widgets/drawer_list.dart';
 
 class Status extends StatefulWidget {
   const Status({Key? key}) : super(key: key);
@@ -70,7 +70,7 @@ class _StatusState extends State<Status> {
               ]),
             );
           } else {
-            return const CircularProgressIndicator();
+            return CircularProgressIndicator();
           }
         },
       ),

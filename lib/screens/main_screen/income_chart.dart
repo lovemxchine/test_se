@@ -3,7 +3,7 @@ import 'package:d_chart/bar_custom/view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../widgets/drawer_list.dart';
+import '../../widgets/drawer_list.dart';
 
 class IncomeChart extends StatefulWidget {
   const IncomeChart({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class _IncomeChartState extends State<IncomeChart> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
-      drawer: const DrawerList(),
+      drawer: DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
@@ -107,7 +107,7 @@ class _IncomeChartState extends State<IncomeChart> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(),
             );
           }

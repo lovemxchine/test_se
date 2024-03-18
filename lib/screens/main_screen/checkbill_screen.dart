@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -89,7 +87,7 @@ class _CheckBillState extends State<CheckBill> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Spacer(),
-                                  Text(doc['uid'],
+                                  Text('โต๊ะ ${doc['name']} กำลังเรียก...',
                                       style: GoogleFonts.poppins(
                                         textStyle: Theme.of(context)
                                             .textTheme
@@ -265,10 +263,11 @@ class _CheckBillState extends State<CheckBill> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(25),
                                       ),
+                                      backgroundColor: Color(0xFF4AACFD),
                                       padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 20),
-                                      primary:
-                                          Color.fromARGB(255, 74, 172, 253),
+                                          vertical: 10,
+                                          horizontal:
+                                              20), // Use Color class constructor with hex value
                                     ),
                                     child: const Text(
                                       'ยืนยันว่าจ่ายตังเรียนร้อย',

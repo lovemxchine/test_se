@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_se/auth/firebase_auth_service.dart';
-import '../components/text_field.dart';
-import '../widgets/logo_image.dart';
-import '../widgets/logo_zone.dart';
+import '../../components/text_field.dart';
+import '../../widgets/logo_image.dart';
+import '../../widgets/logo_zone.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);

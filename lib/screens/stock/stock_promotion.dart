@@ -74,7 +74,7 @@ class _StockPromotionState extends State<StockPromotion> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<DocumentSnapshot> documents = snapshot.data!.docs;
-                    
+
                     return ListView(
                       children: [
                         Container(
@@ -83,7 +83,7 @@ class _StockPromotionState extends State<StockPromotion> {
                       ],
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return CircularProgressIndicator();
                   }
                 },
               ),

@@ -109,7 +109,7 @@ class _ManagePromotionState extends State<ManagePromotion> {
                       ],
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return CircularProgressIndicator();
                   }
                 },
               ),

@@ -81,7 +81,7 @@ class _StockMenuState extends State<StockMenu> {
                       ],
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return CircularProgressIndicator();
                   }
                 },
               ),

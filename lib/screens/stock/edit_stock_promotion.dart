@@ -36,7 +36,7 @@ class _EditStockPromotionState extends State<EditStockPromotion> {
         future: widget.docRef.get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(),
             );
           }

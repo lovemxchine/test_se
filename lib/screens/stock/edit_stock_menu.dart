@@ -50,7 +50,7 @@ class _EditStockMenuState extends State<EditStockMenu> {
         future: widget.docRef.get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(),
             );
           }

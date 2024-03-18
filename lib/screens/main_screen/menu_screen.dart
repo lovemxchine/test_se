@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:test_se/model/product.dart';
 import 'package:test_se/provider/provider.dart';
-import '../widgets/drawer_list.dart';
+import '../../widgets/drawer_list.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class _MenuState extends State<Menu> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
-      drawer: const DrawerList(),
+      drawer: DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
@@ -233,7 +233,7 @@ class _MenuState extends State<Menu> {
               ]),
             );
           } else {
-            return const CircularProgressIndicator();
+            return CircularProgressIndicator();
           }
         },
       ),

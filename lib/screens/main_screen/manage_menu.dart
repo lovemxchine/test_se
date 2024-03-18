@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:test_se/screens/edit_page.dart';
-import 'package:test_se/widgets/manage_card.dart';
-
+import 'package:test_se/screens/stock/edit_page.dart';
+import 'package:test_se/screens/stock/editmenu_card.dart';
 
 class ManageMenu extends StatefulWidget {
   const ManageMenu({Key? key}) : super(key: key);
@@ -40,7 +39,7 @@ class _ManageMenuState extends State<ManageMenu> {
             color: Colors.white,
           ),
         ),
-        actions:<Widget>[
+        actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(20),
             child: IconButton(
@@ -93,7 +92,6 @@ class _ManageMenuState extends State<ManageMenu> {
                 ],
               ),
             ),
-            
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream:
@@ -117,7 +115,7 @@ class _ManageMenuState extends State<ManageMenu> {
                       ],
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return CircularProgressIndicator();
                   }
                 },
               ),

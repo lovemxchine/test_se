@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:test_se/screens/admin_register_screen.dart';
-import 'package:test_se/screens/check_in_work_time.dart';
-import 'package:test_se/screens/income_chart.dart';
-import 'package:test_se/screens/manage_menu.dart';
+import 'package:test_se/screens/main_screen/admin_register_screen.dart';
+import 'package:test_se/screens/main_screen/check_in_work_time.dart';
+import 'package:test_se/screens/main_screen/income_chart.dart';
+import 'package:test_se/screens/main_screen/manage_menu.dart';
 import 'package:test_se/screens/stock/manage_stock.dart';
-import '../widgets/drawer_list.dart';
-import 'promotion/manage_promotion.dart';
+import '../../widgets/drawer_list.dart';
+import '../promotion/manage_promotion.dart';
 
 class ManagerFunc extends StatefulWidget {
   const ManagerFunc({super.key});
@@ -22,7 +22,7 @@ class _ManagerFuncState extends State<ManagerFunc> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff17333C),
       key: scaffoldKey,
-      drawer: const DrawerList(),
+      drawer: DrawerList(),
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(

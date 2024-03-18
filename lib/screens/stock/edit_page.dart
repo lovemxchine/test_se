@@ -198,7 +198,7 @@ class _EditPageState extends State<EditPage> {
                 ElevatedButton(
                     onPressed: _isProcessing ? null : _accept,
                     child: _isProcessing
-                        ? const CircularProgressIndicator()
+                        ? CircularProgressIndicator()
                         : const Text('ยืนยันเพิ่มเมนู'))
               ],
             ),
