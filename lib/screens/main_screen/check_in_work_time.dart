@@ -55,7 +55,7 @@ class _CheckInWorkTimeState extends State<CheckInWorkTime> {
           ),
         ),
         title: const Text(
-          "Manage menu",
+          "Check Time Work",
           style: TextStyle(color: Colors.white),
         ),
       ),

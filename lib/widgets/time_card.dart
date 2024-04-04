@@ -36,7 +36,7 @@ class _TimeCardState extends State<TimeCard> {
         //  Text(
         // 'เช็คเวลาเข้างานวันนี้\nเวลาเข้างาน = 10:00 น.',textAlign: TextAlign.center,)
         Text(
-          'เวลาวันนี้: ' + time_Now + '\nเวลาเข้างาน = 10:00 น.',
+          'เวลาวันนี้: ' + time_Now + '\nเวลาเข้างาน : 10:00 น.',
           style: GoogleFonts.poppins(
             textStyle: Theme.of(context).textTheme.titleLarge,
             fontSize: 20,
