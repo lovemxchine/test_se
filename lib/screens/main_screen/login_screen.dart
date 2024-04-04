@@ -198,14 +198,16 @@ class _LoginState extends State<Login> {
       _isLoading = true;
     });
 
-    User? user = await _auth.signInWithEmailAndPassword(email, password);
+    User? user = await _auth.signInWithEmailAndPassword(
+        email, password); //สร้างข้อมูล user โดยใช้ class ที่สร้างไว้อีกไฟล์
 
     setState(() {
       _isLoading = false;
     });
-
+    // ตรวจว่า User ไม่ได้มีข้อมูลที่ login เข้ามาอยู่แล้ว
     if (user != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      SharedPreferences prefs = await SharedPreferences
+          .getInstance(); //สร้างตัวแปรสำหรับ sharedpreference
       print("Login is successfully signed");
 
       final snapshot = await FirebaseFirestore.instance
@@ -214,9 +216,12 @@ class _LoginState extends State<Login> {
           .get();
       final userData = snapshot.docs[0].data();
       if (userData.containsKey('role')) {
-        String role = userData['role'];
+        // เช็คว่าข้อมูลใน db มี field ที่เป็น role ไหม
+        String role =
+            userData['role']; //เก็บ field role ในตัวแปร role ที่สร้างมา
 
-        saveUserRole(role);
+        saveUserRole(
+            role); //ใช้ function saveUserRole เพื่อเก็บ role ในตัวแปรของ sharedpreference
 
         if (role == 'employee' || role == 'chef') {
           CollectionReference userCollection =

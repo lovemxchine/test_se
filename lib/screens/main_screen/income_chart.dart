@@ -153,9 +153,9 @@ class _IncomeChartState extends State<IncomeChart> {
               value: entry.value,
               valueStyle: GoogleFonts.poppins(
                 textStyle: Theme.of(context).textTheme.titleLarge,
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
+                color: const Color.fromARGB(255, 255, 255, 255),
               ),
               label: monthAbbreviation,
               color: Colors.blue,

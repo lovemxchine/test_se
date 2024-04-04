@@ -10,9 +10,7 @@ class CartProvider extends ChangeNotifier {
   static const String _cartKey = 'cart';
 
   List<Product> _items = [];
-
   List<Product> get items => _items;
-
   Future<void> fetchCartFromSharedPref() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? cartJson = prefs.getString(_cartKey);

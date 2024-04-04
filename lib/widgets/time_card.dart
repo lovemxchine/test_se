@@ -626,7 +626,7 @@ class _TimeCardState extends State<TimeCard> {
                                       ),
                                     ),
                                   ),
-                                  child: const Text('เช็คประวัติการเข้างาน'),
+                                  child: const Text('เช็คประวัติ'),
                                 ),
                                 Spacer(),
                               ],
