@@ -35,22 +35,28 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _route() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userRole = prefs.getString('userRole');
-
-    switch (userRole) {
-      case "manager":
-        Navigator.pushReplacementNamed(context, "/manager");
-        break;
-      case "customer":
-        Navigator.pushReplacementNamed(context, "/customer");
-        break;
-      case "employee":
-        Navigator.pushReplacementNamed(context, "/employee");
-        break;
-      case "chef":
-        Navigator.pushReplacementNamed(context, "/chef");
-        break;
-      default:
-        Navigator.pushReplacementNamed(context, "/login");
+    DateTime currentTime = DateTime.now();
+    if (currentTime.hour >= 0 &&
+        currentTime.hour < 8 &&
+        userRole != 'customer') {
+      await prefs.remove('userRole');
+    } else {
+      switch (userRole) {
+        case "manager":
+          Navigator.pushReplacementNamed(context, "/manager");
+          break;
+        case "customer":
+          Navigator.pushReplacementNamed(context, "/customer");
+          break;
+        case "employee":
+          Navigator.pushReplacementNamed(context, "/employee");
+          break;
+        case "chef":
+          Navigator.pushReplacementNamed(context, "/chef");
+          break;
+        default:
+          Navigator.pushReplacementNamed(context, "/login");
+      }
     }
   }
 }

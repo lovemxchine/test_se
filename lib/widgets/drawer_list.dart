@@ -62,6 +62,7 @@ class _DrawerListState extends State<DrawerList> {
                   CollectionReference userCollection =
                       FirebaseFirestore.instance.collection('user');
                   QuerySnapshot querySnapshot = await userCollection
+                      .where('role', isNotEqualTo: 'customer')
                       .where('role', isEqualTo: 'employee')
                       .where('isReady', isEqualTo: false)
                       .get(); //เอาข้อมูล user ที่ role เป็น employee ทั้งหมด

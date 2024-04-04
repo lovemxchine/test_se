@@ -96,7 +96,7 @@ class _WaitCardState extends State<WaitCard> {
                 const SizedBox(height: 10),
                 Container(
                   height: MediaQuery.of(context).size.width * 0.07,
-                  width: MediaQuery.of(context).size.width * 0.20,
+                  width: MediaQuery.of(context).size.width * 0.35,
                   padding: const EdgeInsets.all(5.0),
                   margin: const EdgeInsets.symmetric(horizontal: 25.0),
                   decoration: BoxDecoration(

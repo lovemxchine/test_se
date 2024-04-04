@@ -21,7 +21,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   List<Widget> body = [
     CheckBill(),
     const Promotion(),
-    const Status(),
+    // const Status(),
     // const TimeCheckIn_Out(),
   ];
   @override
@@ -149,10 +149,10 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
             Icons.celebration,
             color: Colors.black,
           ),
-          Icon(
-            Icons.checklist,
-            color: Colors.black,
-          ),
+          // Icon(
+          //   Icons.checklist,
+          //   color: Colors.black,
+          // ),
         ],
       ),
     );

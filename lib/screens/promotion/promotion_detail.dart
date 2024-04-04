@@ -33,7 +33,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
           Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.width * 0.45,
                 width: MediaQuery.of(context).size.width * 0.95,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -51,52 +51,66 @@ class _PromotionDetailState extends State<PromotionDetail> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    InkWell(
-                      child: Container(
-                        margin: const EdgeInsets.all(7),
-                        height: MediaQuery.of(context).size.width * 0.4,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(doc['url']),
-                            fit: BoxFit.cover,
-                          ),
-                          border:
-                              Border.all(width: 1, color: Colors.grey.shade200),
-                          borderRadius: BorderRadius.circular(12),
+                    Container(
+                      margin: const EdgeInsets.all(7),
+                      height: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(doc['url']),
+                          fit: BoxFit.cover,
                         ),
+                        border:
+                            Border.all(width: 1, color: Colors.grey.shade200),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     Container(
+                      height: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.25,
                       child: Column(
                         children: [
                           SizedBox(
                             height: MediaQuery.of(context).size.width * 0.03,
                           ),
-                          Container(
-                            child: Text(
-                              // Get the name from Firestore
-                              doc['name'],
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300,
+                          Flexible(
+                            child: Container(
+                              child: Text(
+                                // Get the name from Firestore
+                                doc['name'],
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                softWrap: true,
                               ),
                             ),
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.width * 0.001,
                           ),
-                          Container(
-                            child: Text(
-                              // Get the name from Firestore
-                              'รายละเอียด : ${doc['detail']}',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300,
-                              ),
+                          Text(
+                            // Get the name from Firestore
+                            'รายละเอียด :',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
                             ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.001,
+                          ),
+                          Text(
+                            // Get the detail from Firestore
+                            '${doc['detail']}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            softWrap: true,
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.width * 0.001,
@@ -119,8 +133,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                                 ),
                               ),
                             ),
-                          )
-                          
+                          ),
                         ],
                       ),
                     ),

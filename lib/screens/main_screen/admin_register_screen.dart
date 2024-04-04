@@ -290,8 +290,9 @@ class _RegisterState extends State<AdminRegister> {
         'init_time': init_time,
         'uid': uid, // Use uid here
         'tel': tel,
-        'isRea': false,
-        'call_number': '0'
+        'isReady': false,
+        'call_number': '',
+        'employee_name': '',
       });
     }
   }
