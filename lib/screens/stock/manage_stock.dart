@@ -69,23 +69,23 @@ class _ManageStockState extends State<ManageStock> {
                       fontWeight: FontWeight.w400),
                 ),
               )),
-              ListTile(
-                  title: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const StockPromotion()),
-                  );
-                },
-                child: const Text(
-                  'Stock Promotion',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400),
-                ),
-              )),
+              // ListTile(
+              //     title: ElevatedButton(
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => const StockPromotion()),
+              //     );
+              //   },
+              //   child: const Text(
+              //     'Stock Promotion',
+              //     style: TextStyle(
+              //         color: Colors.black,
+              //         fontSize: 25,
+              //         fontWeight: FontWeight.w400),
+              //   ),
+              // )),
             ],
           )),
     );
